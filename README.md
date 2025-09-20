@@ -1,2 +1,5 @@
 # Gamejam
 For the Beginner's Jam AUT2025
+
+THEME: RECREATION
+GAME WE RECREATED: GEOMETRY DASH
