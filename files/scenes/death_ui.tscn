@@ -1,0 +1,117 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqod1o7ku1gik"]
+
+[ext_resource type="Script" uid="uid://qramkd65jyn0" path="res://files/scripts/ui/death_ui.gd" id="1_7ojci"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/death_ui_theme.tres" id="2_4ownd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi8q6"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 0.8784314)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ojci"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 0.89411765)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DeathUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7ojci")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hi8q6")
+
+[node name="Margins" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 400
+theme_override_constants/margin_bottom = 90
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margins"]
+layout_mode = 2
+theme_override_constants/separation = 120
+
+[node name="PanelLabels" type="PanelContainer" parent="Panel/Margins/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ojci")
+
+[node name="MarginsLabels" type="MarginContainer" parent="Panel/Margins/VBox/PanelLabels"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Labels" type="VBoxContainer" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="AttemptsTxt" type="Label" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Attempts: 1"
+
+[node name="JumpsTxt" type="Label" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Jumps: 1"
+
+[node name="MarginsButtons" type="MarginContainer" parent="Panel/Margins/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 150
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Margins/VBox/MarginsButtons"]
+layout_mode = 2
+theme_override_constants/separation = 200
+
+[node name="Restart" type="Panel" parent="Panel/Margins/VBox/MarginsButtons/Buttons"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel/Margins/VBox/MarginsButtons/Buttons/Restart"]
+layout_mode = 0
+offset_left = -22.0
+offset_right = 188.0
+offset_bottom = 70.0
+theme = ExtResource("2_4ownd")
+theme_override_font_sizes/font_size = 30
+text = "Restart"
+
+[node name="Home" type="Panel" parent="Panel/Margins/VBox/MarginsButtons/Buttons"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel/Margins/VBox/MarginsButtons/Buttons/Home"]
+layout_mode = 0
+offset_right = 226.0
+offset_bottom = 70.0
+theme = ExtResource("2_4ownd")
+theme_override_font_sizes/font_size = 30
+text = "Home"
