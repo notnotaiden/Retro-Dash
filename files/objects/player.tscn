@@ -9,10 +9,10 @@ size = Vector2(80, 80)
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_mpttn")
 
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3v0qd")
+
 [node name="Texture" type="Sprite2D" parent="."]
 position = Vector2(0.5, -0.4999962)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("2_mpttn")
-
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_3v0qd")
