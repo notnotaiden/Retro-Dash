@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://u17y26jq64ft"]
+
+[ext_resource type="Script" uid="uid://ip5y5kk4sita" path="res://files/scripts/objects/orb.gd" id="1_0xhph"]
+[ext_resource type="Texture2D" uid="uid://bsg1urxhgscn5" path="res://files/assets/sprites/orbs.png" id="1_16qd1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16qd1"]
+size = Vector2(158, 158)
+
+[node name="Orb" type="Area2D"]
+script = ExtResource("1_0xhph")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_16qd1")
+
+[node name="Texture" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_16qd1")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)

@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://umvprbjo5u0o" path="res://files/levels/level1/level1.tscn" id="5_dnfnw"]
 [ext_resource type="PackedScene" uid="uid://cqod1o7ku1gik" path="res://files/scenes/death_ui.tscn" id="5_vuyq8"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u87vo"]
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xig57"]
 normal = Vector2(0.00990048, 0.999951)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u87vo"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_fvvnh")
@@ -27,37 +27,22 @@ repeat_times = 10
 position = Vector2(640, 360)
 texture = ExtResource("2_vcuyv")
 
-[node name="ParallaxGround" type="Parallax2D" parent="."]
-repeat_size = Vector2(1350, 0)
-repeat_times = 5
-
-[node name="BG" type="Sprite2D" parent="ParallaxGround"]
-position = Vector2(4, 665)
-texture = ExtResource("3_xig57")
-
-[node name="Ground" type="StaticBody2D" parent="ParallaxGround/BG"]
-position = Vector2(-4, -125)
-
-[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/BG/Ground"]
-position = Vector2(577.5, 1.5)
-shape = SubResource("WorldBoundaryShape2D_u87vo")
-
 [node name="ParallaxCeiling" type="Parallax2D" parent="."]
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
 [node name="Ceiling" type="Sprite2D" parent="ParallaxCeiling"]
-position = Vector2(14.000011, -260.46155)
+position = Vector2(14.000001, -138.94156)
 rotation = 3.1415927
-scale = Vector2(1, 2.0671551)
+scale = Vector2(1, 1.1027107)
 texture = ExtResource("3_xig57")
 
-[node name="Ceiling" type="StaticBody2D" parent="ParallaxCeiling/Ceiling" groups=["Ceiling"]]
+[node name="Ceiling" type="StaticBody2D" parent="ParallaxCeiling/Ceiling"]
 position = Vector2(1.9999887, -124.54874)
 rotation = 3.1415925
 scale = Vector2(1, 0.48375663)
 
-[node name="Hitbox" type="CollisionShape2D" parent="ParallaxCeiling/Ceiling/Ceiling" groups=["Ceiling"]]
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxCeiling/Ceiling/Ceiling"]
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_xig57")
 
@@ -76,7 +61,23 @@ text = "Attempt 1"
 
 [node name="Level" type="Node" parent="."]
 
-[node name="Level1" parent="Level" instance=ExtResource("5_dnfnw")]
+[node name="Level" parent="Level" instance=ExtResource("5_dnfnw")]
+
+[node name="ParallaxGround" type="Parallax2D" parent="."]
+z_index = 1
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="BG" type="Sprite2D" parent="ParallaxGround"]
+position = Vector2(4, 665)
+texture = ExtResource("3_xig57")
+
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround/BG" groups=["Ground"]]
+position = Vector2(-4, -125)
+
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/BG/Ground" groups=["Ground"]]
+position = Vector2(577.5, 1.5)
+shape = SubResource("WorldBoundaryShape2D_u87vo")
 
 [node name="Ground" type="CanvasLayer" parent="."]
 

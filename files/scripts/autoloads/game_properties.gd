@@ -4,7 +4,7 @@ extends Node
 ## The position the player starts with in every attempt
 const START_POS: Vector2 = Vector2(-64.0, 499.0)
 # Different jump heights of different gamemodes
-const CUBE_JUMPHEIGHT: float = -1230.0
+const CUBE_JUMPHEIGHT: float = -1270.0
 const SHIP_JUMPHEIGHT: float = -3050.0
 
 # Holds the level data

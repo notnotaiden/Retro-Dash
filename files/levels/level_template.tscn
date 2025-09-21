@@ -1,27 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm843bcxc12ll"]
+[gd_scene load_steps=9 format=3 uid="uid://bm843bcxc12ll"]
 
 [ext_resource type="Texture2D" uid="uid://bmbdysch1yx11" path="res://files/assets/sprites/spikes.png" id="1_j7xyf"]
 [ext_resource type="Texture2D" uid="uid://db43shrt6oa8y" path="res://files/assets/sprites/obstacles.png" id="2_5ap06"]
 [ext_resource type="PackedScene" uid="uid://ckjjp4xinqqsb" path="res://files/objects/portal.tscn" id="3_krx70"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7idx6"]
-texture = ExtResource("1_j7xyf")
-0:0/size_in_atlas = Vector2i(2, 2)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.507245, -8, 3.6871042, -8, 3.6871042, 8, -3.6871042, 8)
-2:0/size_in_atlas = Vector2i(2, 2)
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.6871042, 5.8454094, 4.22668, 5.8454094, 4.0468206, 12.140465, -3.8669624, 12.140465)
-4:0/size_in_atlas = Vector2i(2, 2)
-4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.1690817, 8, 2.0683756, 8, 2.2482347, 12.140465, -1.3489408, 12.140465)
-6:0/size_in_atlas = Vector2i(2, 2)
-6:0/0 = 0
-6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-
-[sub_resource type="TileSet" id="TileSet_2c7pi"]
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_7idx6")
+[ext_resource type="PackedScene" uid="uid://b8mifihhilnam" path="res://files/objects/speedportal.tscn" id="4_lw5jp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju3hr"]
 texture = ExtResource("2_5ap06")
@@ -87,19 +69,43 @@ texture_region_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_ju3hr")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7idx6"]
+texture = ExtResource("1_j7xyf")
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.507245, -8, 3.6871042, -8, 3.6871042, 8, -3.6871042, 8)
+2:0/size_in_atlas = Vector2i(2, 2)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.6871042, 5.8454094, 4.22668, 5.8454094, 4.0468206, 12.140465, -3.8669624, 12.140465)
+4:0/size_in_atlas = Vector2i(2, 2)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.1690817, 8, 2.0683756, 8, 2.2482347, 12.140465, -1.3489408, 12.140465)
+6:0/size_in_atlas = Vector2i(2, 2)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_2c7pi"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_7idx6")
+
 [node name="Level1" type="Node2D"]
 
 [node name="Level" type="Node" parent="."]
 
-[node name="Spikes" type="TileMap" parent="Level" groups=["Spikes"]]
-scale = Vector2(2.5, 2.5)
-tile_set = SubResource("TileSet_2c7pi")
-format = 2
-
-[node name="Obstacles" type="TileMap" parent="Level"]
+[node name="Obstacles" type="TileMap" parent="Level" groups=["Blocks"]]
 scale = Vector2(2.5, 2.5)
 tile_set = SubResource("TileSet_ywh82")
 format = 2
 
+[node name="Spikes" type="TileMap" parent="Level" groups=["Spikes"]]
+rotation = 9.0079906e-05
+scale = Vector2(2.5, 2.5)
+tile_set = SubResource("TileSet_2c7pi")
+format = 2
+
 [node name="Portal" parent="Level" instance=ExtResource("3_krx70")]
-position = Vector2(-71, 525)
+position = Vector2(286.99997, 885)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="SpeedPortal" parent="Level" instance=ExtResource("4_lw5jp")]
+position = Vector2(384, 883)

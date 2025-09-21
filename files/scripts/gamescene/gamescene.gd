@@ -7,6 +7,7 @@ extends Node2D
 @onready var death_ui: Control = $UI/DeathUI
 @onready var ceiling_sprite: Sprite2D = $ParallaxCeiling/Ceiling
 @onready var songplayer: AudioStreamPlayer = $SongPlayer
+@onready var level_node: Node = $Level
 
 var camera_follow: bool = false
 
@@ -36,12 +37,13 @@ func _process(_delta):
 			GameProperties.jumps += 1
 	
 	# Move the ceiling ONLY when the player is a cube
-	var offset: float = 800.0
+	var offset: float = 700.0
 	match player.gamemode:
 		1: # Cube
+			# Make the ceiling follow the player
 			ceiling_sprite.position.y = player.position.y - offset
 			ceiling_sprite.modulate.a = 0.0 # NO opacity when cube
-		2:
+		2: # Ship
 			# Make the ceiling transition to being visible
 			ceiling_sprite.modulate.a = lerp(ceiling_sprite.modulate.a, 1.0, 0.1) # NO opacity
 
@@ -84,11 +86,14 @@ func camera_check_state():
 ## Moves the camera
 ## (Main Function)
 func camera_move():
+	# Return if the camera_follow bool is false
 	if not camera_follow:
 		return
 	
+	# Sets the position x of the camera
 	camera.position.x = player.position.x + 250 # Offset
 	
+	# Sets the position y of the camera
 	var target_y: float
 	match player.gamemode:
 		1: # Cube
@@ -98,7 +103,7 @@ func camera_move():
 			# Vertical follow
 			target_y = ( player.position.y / 3.0 ) + 80
 	
-	# Smooth transition
+	# Smooth transition to position y
 	camera.position.y = lerp(camera.position.y, target_y, 0.05)
 
 # End of System
@@ -118,6 +123,7 @@ func on_player_death():
 	# Smoothly Animate death screen
 	death_ui.position.y = get_viewport().size.y / 2.0
 	
+	# Add tween animation to death screen
 	var tween = get_tree().create_tween()
 	tween.tween_property(death_ui, "position:y", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 

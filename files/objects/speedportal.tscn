@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8mifihhilnam"]
+
+[ext_resource type="Script" uid="uid://65iqu7qdoo6m" path="res://files/scripts/objects/speedportal.gd" id="1_yd1o7"]
+[ext_resource type="Texture2D" uid="uid://djqp3pawbkmqt" path="res://files/assets/sprites/speedportals.png" id="2_yd1o7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hq45"]
+size = Vector2(30, 191)
+
+[node name="SpeedPortal" type="Area2D"]
+script = ExtResource("1_yd1o7")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(2, 3.5)
+shape = SubResource("RectangleShape2D_7hq45")
+
+[node name="Texture" type="Sprite2D" parent="."]
+position = Vector2(4.000004, 1.0000001)
+scale = Vector2(4.484375, 5.453125)
+texture = ExtResource("2_yd1o7")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[connection signal="body_entered" from="." to="." method="on_body_entered"]

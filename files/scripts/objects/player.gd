@@ -2,23 +2,28 @@ extends CharacterBody2D
 
 # Reference childrens
 @onready var texture: Sprite2D = $Texture
+@onready var feet_area: Area2D = $FeetArea
 
 # Player Properies
 var GRAVITY: float = 5000.0
 var SPEED: float = 42000.0
-
 const ROTATIONAL_SPEED: float = 6.0
-
+## The rotational speed for the ship gamemode
 const SHIP_ROTATIONAL_SPEED: float = 6.0
-const SHIP_MAXANGLE_UP: float = -45.0
-const SHIP_MAXANGLE_DOWN: float = 45.0
+## The max angle the player can go upward for the ship gamemode
+const SHIP_MAXANGLE_UP: float = -70.0
+## The max angle the player can go downward for the ship gamemode
+const SHIP_MAXANGLE_DOWN: float = 60.0
+## The max y velocity the player could go for the ship gamemode
 const SHIP_MAXVELO_y: float = 1000.0
 
 # Skins
 var CUBE_SKIN = preload("res://files/assets/sprites/skins/cube1.png")
 var SHIP_SKIN = preload("res://files/assets/sprites/skins/ship1.png")
 
+## Holds the state for if the player has died
 var dead: bool = false
+## Holds the current gamemode the player is in
 @export var gamemode: int = 1
 
 signal player_death
@@ -40,19 +45,24 @@ func _physics_process(delta):
 		if gamemode == 1:
 			texture.rotation_degrees += ROTATIONAL_SPEED
 		if gamemode == 2:
+			var rotation_speed: float = ( SHIP_ROTATIONAL_SPEED * delta ) / 3.0
 			# Makes the ship tilt upward or downward
 			if Input.is_action_pressed("Player Jump"):
 				# Tilt upwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_UP, SHIP_ROTATIONAL_SPEED * delta)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_UP, rotation_speed)
 			else:
 				# Tilt downwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_DOWN, SHIP_ROTATIONAL_SPEED * delta)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_DOWN, rotation_speed)
 	else:
+		var snapped_rotation: float
 		if gamemode == 1:
 		# Round to nearest 0 or 180 rotation degress
-			texture.rotation_degrees = round(texture.rotation_degrees / 180.0) * 180.0
+			snapped_rotation = round(texture.rotation_degrees / 180.0) * 180.0
 		if gamemode == 2:
-			texture.rotation_degrees = 0.0
+			snapped_rotation = 0.0
+		
+		# Transition smoothly
+		texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 	
 	# Change texture for different gamemodes
 	match gamemode:
@@ -62,7 +72,8 @@ func _physics_process(delta):
 			texture.texture = SHIP_SKIN
 	
 	# Jumping Mechanic
-	player_jump(delta)
+	if Input.is_action_pressed("Player Jump"):
+		player_jump(delta)
 	# Move cube infinitely to the side
 	player_move(delta)
 	if not dead:
@@ -78,15 +89,14 @@ func _physics_process(delta):
 ## (Main Function)
 func player_jump(delta):
 	# Jumping Mechanic (Cube)
-	if Input.is_action_pressed("Player Jump"):
-		match gamemode:
-			1: # Cube
-				if is_on_floor():
-					velocity.y = GameProperties.CUBE_JUMPHEIGHT
-			2: # Ship
-				velocity.y += GameProperties.SHIP_JUMPHEIGHT * delta
-				# Clamp
-				velocity.y = clamp(velocity.y, -SHIP_MAXVELO_y, SHIP_MAXVELO_y)
+	match gamemode:
+		1: # Cube
+			if is_on_floor():
+				velocity.y = GameProperties.CUBE_JUMPHEIGHT
+		2: # Ship
+			velocity.y += GameProperties.SHIP_JUMPHEIGHT * delta
+			# Clamp
+			velocity.y = clamp(velocity.y, -SHIP_MAXVELO_y, SHIP_MAXVELO_y)
 ## Basic Player Movement:
 ## Responsible for infinitely moving the player on the x axis
 ## (Main Function)
@@ -109,16 +119,23 @@ func player_death_collide():
 		if collider.is_in_group("Ceiling"):
 			break
 		
-		# If the player collided with a spike
+		# Kill when colliding with a spike
 		if collider.is_in_group("Spikes"):
 			emit_signal("player_death")
 			dead = true
 			break
 		
-		# Check if the player is NOT on top of the blocks and collided with the sides
-		if not normal.is_equal_approx( Vector2(0, -1) ):
-			emit_signal("player_death")
-			dead = true
-			break
+		# Kill when colliding with the sides of a block
+		if collider.is_in_group("Blocks"):
+			# Tolerance system (So the player doesn't immediently die when it collides to the corner of the block)
+			var up_dot = Vector2(0, -1)
+			var tolerance: float = 0.5 
+			
+			if normal.dot(up_dot) > tolerance and velocity.y >= 0.0:
+				break
+			else:
+				emit_signal("player_death")
+				dead = true
+				break
 
 # End of System
