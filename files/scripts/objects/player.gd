@@ -5,11 +5,11 @@ extends CharacterBody2D
 
 # Player Properies
 var GRAVITY: float = 5000.0
-var SPEED: float = 35000.0
-var JUMP_HEIGHT: float = -1230.0
+var SPEED: float = 42000.0
 const ROTATIONAL_SPEED: float = 6.0
 
 var dead: bool = false
+@export var gamemode: int = 1
 
 signal player_death
 
@@ -25,11 +25,10 @@ func _physics_process(delta):
 		# Round to nearest 0 or 180 rotation degress
 		texture.rotation_degrees = round(texture.rotation_degrees / 180.0) * 180.0
 	
-	# Move cube infinitely to the side
-	player_move(delta)
 	# Jumping Mechanic
 	player_jump()
-	# Move Body
+	# Move cube infinitely to the side
+	player_move(delta)
 	if not dead:
 		move_and_slide()
 	# Death Mechanic
@@ -43,8 +42,13 @@ func _physics_process(delta):
 ## (Main Function)
 func player_jump():
 	# Jumping Mechanic (Cube)
-	if Input.is_action_pressed("Player Jump") and is_on_floor():
-		velocity.y = JUMP_HEIGHT
+	if Input.is_action_pressed("Player Jump"):
+		match gamemode:
+			1: # Cube
+				if is_on_floor():
+					velocity.y = GameProperties.CUBE_JUMPHEIGHT
+			2: # Ship
+				velocity.y = GameProperties.SHIP_JUMPHEIGHT
 ## Basic Player Movement:
 ## Responsible for infinitely moving the player on the x axis
 ## (Main Function)

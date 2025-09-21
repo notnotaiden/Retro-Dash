@@ -1,8 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=14 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
+[ext_resource type="PackedScene" uid="uid://ckjjp4xinqqsb" path="res://files/objects/portal.tscn" id="2_dnfnw"]
+[ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="2_vcuyv"]
 [ext_resource type="Texture2D" uid="uid://bmbdysch1yx11" path="res://files/assets/sprites/spikes.png" id="3_rafwx"]
+[ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="3_xig57"]
 [ext_resource type="Texture2D" uid="uid://db43shrt6oa8y" path="res://files/assets/sprites/obstacles.png" id="4_e0mnj"]
 [ext_resource type="PackedScene" uid="uid://cqod1o7ku1gik" path="res://files/scenes/death_ui.tscn" id="5_vuyq8"]
 
@@ -97,6 +100,23 @@ script = ExtResource("1_fvvnh")
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 
+[node name="ParallaxBG" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(260, 190)
+repeat_times = 10
+
+[node name="BG" type="Sprite2D" parent="ParallaxBG"]
+position = Vector2(640, 360)
+texture = ExtResource("2_vcuyv")
+
+[node name="ParallaxGround" type="Parallax2D" parent="."]
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="BG" type="Sprite2D" parent="ParallaxGround"]
+position = Vector2(4, 665)
+texture = ExtResource("3_xig57")
+
 [node name="Gameplay" type="Node" parent="."]
 
 [node name="Player" parent="Gameplay" instance=ExtResource("1_u87vo")]
@@ -123,13 +143,18 @@ text = "Attempt 1"
 scale = Vector2(2.5, 2.5)
 tile_set = SubResource("TileSet_vuyq8")
 format = 2
-layer_0/tile_data = PackedInt32Array(786447, 0, 0, 786449, 131072, 0, 786468, 131072, 0, 655391, 0, 0)
+layer_0/tile_data = PackedInt32Array(786447, 0, 0, 786449, 131072, 0, 786451, 0, 0, 655395, 0, 0, 786472, 131072, 0, 786490, 131072, 0, 786492, 131072, 0, 786494, 131072, 0, 786496, 131072, 0, 786498, 131072, 0, 786500, 131072, 0, 786502, 131072, 0, 786504, 131072, 0, 786506, 131072, 0, 262222, 0, 536870912)
 
 [node name="Obstacles" type="TileMap" parent="Level"]
 scale = Vector2(2.5, 2.5)
 tile_set = SubResource("TileSet_dnfnw")
 format = 2
-layer_0/tile_data = PackedInt32Array(786458, 1, 0, 786460, 655361, 0, 786462, 655361, 0, 786464, 655361, 0, 786466, 1, 0)
+layer_0/tile_data = PackedInt32Array(786462, 1, 0, 786464, 655361, 0, 786466, 655361, 0, 786468, 655361, 0, 786470, 1, 0, 786488, 1, 0, 786490, 720897, 0, 655424, 1, 0, 655426, 720897, 0, 524359, 1, 0, 524361, 720897, 0, 131150, 1, 0)
+
+[node name="Portal" parent="Level" instance=ExtResource("2_dnfnw")]
+position = Vector2(3364, 435)
+
+[node name="Ground" type="CanvasLayer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -47,15 +47,18 @@ func camera_check_state():
 ## Moves the camera
 ## (Main Function)
 func camera_move():
-	if camera_follow:
-		camera.position.x = player.position.x + 250 # Offset
-		
-		# Follow the player y position ONLY if the player has reached a certain y position (Near Y 0)
-		if player.position.y <= 200.0:
-			camera.position.y = player.position.y
+	if not camera_follow:
+		return
+	
+	camera.position.x = player.position.x + 250 # Offset
+	
+	# Vertical follow
+	var target_y: float = player.position.y - 100
+	
+	# Smooth transition
+	camera.position.y = lerp(camera.position.y, target_y, 0.05)
 
 # End of System
-
 
 # Death Mechanic
 ## Death Mechanic:
@@ -64,6 +67,12 @@ func camera_move():
 func on_player_death():
 	death_ui.visible = true
 	death_ui.update(GameProperties.attempts, GameProperties.jumps)
+	
+	# Smoothly Animate death screen
+	death_ui.position.y = get_viewport().size.y / 2.0
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(death_ui, "position:y", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 ## Death Mechanic:
 ## Restarts everything after the player clicks restart

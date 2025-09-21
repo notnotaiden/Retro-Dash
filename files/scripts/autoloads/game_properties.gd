@@ -5,6 +5,7 @@ extends Node
 const START_POS: Vector2 = Vector2(-64.0, 499.0)
 # Different jump heights of different gamemodes
 const CUBE_JUMPHEIGHT: float = -1230.0
+const SHIP_JUMPHEIGHT: float = -400.0
 
 # Holds the level data
 var attempts: int = 1
