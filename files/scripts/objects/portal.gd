@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var texture: Sprite2D = $Texture
-@export_enum("Cube","Ship") var gamemode_type: String = "Ship"
+@export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
 
@@ -15,6 +15,12 @@ func _ready():
 		"Ship": # Ship
 			texture.region_rect = Rect2(50.0, 0.0, 13.0, 32.0)
 			gamemode = 2
+		"Ball": # Ball
+			texture.region_rect = Rect2(2.0, 32.0, 13.0, 32.0)
+			gamemode = 3
+		"Flipped Gravity": # Flips the gravity of the player
+			texture.region_rect = Rect2(18.0, 0.0, 13.0, 32.0)
+			gamemode = 4
 
 # Change Gamemode
 ## Change Gamemode System:
@@ -22,4 +28,14 @@ func _ready():
 ## (Signal Function)
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
-		body.gamemode = gamemode
+		var gamemodes: Array = [1, 2, 3]
+		if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
+			body.gamemode = gamemode
+			body.gamemode_portal = self
+			body.change_gamemode()
+		else:
+			if body.gamemode == 3: # If it's ball
+				body.flipped_gravity = !body.flipped_gravity
+				body.GRAVITY = -body.GRAVITY
+			else: # If its any other gamemode
+				body.flipped_gravity = !body.flipped_gravity

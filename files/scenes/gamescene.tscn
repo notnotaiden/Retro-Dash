@@ -32,7 +32,7 @@ repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
 [node name="Ceiling" type="Sprite2D" parent="ParallaxCeiling"]
-position = Vector2(14.000001, -138.94156)
+position = Vector2(14, -5000)
 rotation = 3.1415927
 scale = Vector2(1, 1.1027107)
 texture = ExtResource("3_xig57")
@@ -68,14 +68,14 @@ z_index = 1
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
-[node name="BG" type="Sprite2D" parent="ParallaxGround"]
+[node name="Ground" type="Sprite2D" parent="ParallaxGround"]
 position = Vector2(4, 665)
 texture = ExtResource("3_xig57")
 
-[node name="Ground" type="StaticBody2D" parent="ParallaxGround/BG" groups=["Ground"]]
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround/Ground" groups=["Ground"]]
 position = Vector2(-4, -125)
 
-[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/BG/Ground" groups=["Ground"]]
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/Ground/Ground" groups=["Ground"]]
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_u87vo")
 
