@@ -67,8 +67,8 @@ func gamemode_boundary(gamemode):
 			ceiling_pos_y = ground_pos_y - boundary_height
 	
 	# Make both the ceiling and ground transition smoothly (Since the ceiling is higher, make it go faster)
-	ceiling_sprite.position.y = lerp(ceiling_sprite.position.y, ceiling_pos_y, 0.1)
-	ground_sprite.position.y = lerp(ground_sprite.position.y, ground_pos_y, 0.05)
+	ceiling_sprite.position.y = lerp(ceiling_sprite.position.y, ceiling_pos_y, 0.15)
+	ground_sprite.position.y = lerp(ground_sprite.position.y, ground_pos_y, 0.15)
 
 # End of System
 
@@ -130,7 +130,7 @@ func camera_move():
 			var ceiling_pos_y: float = player.gamemode_portal.position.y - GameProperties.SHIP_BOUNDARY_OFFSET
 			var ground_pos_y: float = player.gamemode_portal.position.y + GameProperties.SHIP_BOUNDARY_OFFSET
 			
-			var offset: float = 30.0
+			var offset: float = 10.0
 			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
 		3: # Ball
 			# Vertical follow (Makes the camera centered)
@@ -138,7 +138,7 @@ func camera_move():
 			var ceiling_pos_y: float = player.gamemode_portal.position.y - GameProperties.BALL_BOUNDARY_OFFSET
 			var ground_pos_y: float = player.gamemode_portal.position.y + GameProperties.BALL_BOUNDARY_OFFSET
 			
-			var offset: float = 30.0
+			var offset: float = 0.0
 			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
 	
 	# Smooth transition to position y

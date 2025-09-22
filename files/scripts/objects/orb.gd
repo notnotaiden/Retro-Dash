@@ -4,6 +4,8 @@ extends Area2D
 @export_enum("Yellow", "Blue") var orb_type: String = "Yellow"
 
 var orb: int
+## Prevents the user from clicking the orb again
+var has_clicked: bool = false
 
 # General Functions
 func _ready():
@@ -24,31 +26,36 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Player Jump"):
 		for body in get_overlapping_bodies():
 			if body is CharacterBody2D:
-				match orb:
-					1: # Yellow ( Extra Jump )
-						match body.gamemode:
-							1: # Cube
-								if body.GRAVITY < 0.0: # If the player gravity is flipped
-									body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT
-								else:
-									body.velocity.y = GameProperties.CUBE_JUMPHEIGHT
-							2: # Ship
-								if body.GRAVITY < 0.0: # If the player gravity is flipped
-									body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 2.0
-								else:
-									body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 2.0
-							3: # Ball
-								# Flip bool back  so it doesn't switch gravitiy
-								body.flipped_gravity = !body.flipped_gravity 
-								
-								if body.GRAVITY < 0.0: # If the player gravity is flipped
-									body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 1.5
-								else:
-									body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 1.5
-					2: # Blue ( Flip gravtiy )
-						if body.gamemode == 3:
-							body.flipped_gravity = !body.flipped_gravity
-							body.GRAVITY = -body.GRAVITY
-							body.velocity.y = 0.0
-						else:
-							body.flipped_gravity = !body.flipped_gravity
+				if not has_clicked:
+					match orb:
+						1: # Yellow ( Extra Jump )
+							has_clicked = true
+							
+							match body.gamemode:
+								1: # Cube
+									if body.GRAVITY < 0.0: # If the player gravity is flipped
+										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT
+									else:
+										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT
+								2: # Ship
+									if body.GRAVITY < 0.0: # If the player gravity is flipped
+										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 2.0
+									else:
+										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 2.0
+								3: # Ball
+									# Flip bool back  so it doesn't switch gravitiy
+									body.flipped_gravity = !body.flipped_gravity 
+									
+									if body.GRAVITY < 0.0: # If the player gravity is flipped
+										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 1.5
+									else:
+										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 1.5
+						2: # Blue ( Flip gravtiy )
+							has_clicked = true
+							
+							if body.gamemode == 3:
+								body.flipped_gravity = !body.flipped_gravity
+								body.GRAVITY = -body.GRAVITY
+								body.velocity.y = 0.0
+							else:
+								body.flipped_gravity = !body.flipped_gravity

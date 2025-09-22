@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bm843bcxc12ll"]
+[gd_scene load_steps=11 format=3 uid="uid://bm843bcxc12ll"]
 
 [ext_resource type="Texture2D" uid="uid://bmbdysch1yx11" path="res://files/assets/sprites/spikes.png" id="1_j7xyf"]
+[ext_resource type="Script" uid="uid://cbbkcap7vdshv" path="res://files/scripts/objects/level.gd" id="1_lw5jp"]
 [ext_resource type="Texture2D" uid="uid://db43shrt6oa8y" path="res://files/assets/sprites/obstacles.png" id="2_5ap06"]
 [ext_resource type="PackedScene" uid="uid://ckjjp4xinqqsb" path="res://files/objects/portal.tscn" id="3_krx70"]
 [ext_resource type="PackedScene" uid="uid://b8mifihhilnam" path="res://files/objects/speedportal.tscn" id="4_lw5jp"]
+[ext_resource type="PackedScene" uid="uid://u17y26jq64ft" path="res://files/objects/orb.tscn" id="5_p0xwf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju3hr"]
 texture = ExtResource("2_5ap06")
@@ -88,7 +90,8 @@ texture = ExtResource("1_j7xyf")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_7idx6")
 
-[node name="Level1" type="Node2D"]
+[node name="Level" type="Node2D"]
+script = ExtResource("1_lw5jp")
 
 [node name="Level" type="Node" parent="."]
 
@@ -109,3 +112,9 @@ scale = Vector2(0.99999994, 0.99999994)
 
 [node name="SpeedPortal" parent="Level" instance=ExtResource("4_lw5jp")]
 position = Vector2(384, 883)
+
+[node name="Orb" parent="Level" instance=ExtResource("5_p0xwf")]
+position = Vector2(559, 887)
+
+[node name="InfinitePanning" type="Node2D" parent="Level"]
+position = Vector2(50000, -5000)

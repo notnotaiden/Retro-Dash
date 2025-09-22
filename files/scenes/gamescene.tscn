@@ -4,11 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="2_vcuyv"]
 [ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="3_xig57"]
-[ext_resource type="PackedScene" uid="uid://umvprbjo5u0o" path="res://files/levels/level1/level1.tscn" id="5_dnfnw"]
+[ext_resource type="PackedScene" uid="uid://cllsvsp8i6vf6" path="res://files/levels/level1/level1.tscn" id="5_dnfnw"]
 [ext_resource type="PackedScene" uid="uid://cqod1o7ku1gik" path="res://files/scenes/death_ui.tscn" id="5_vuyq8"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xig57"]
-normal = Vector2(0.00990048, 0.999951)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u87vo"]
 
@@ -38,13 +37,12 @@ scale = Vector2(1, 1.1027107)
 texture = ExtResource("3_xig57")
 
 [node name="Ceiling" type="StaticBody2D" parent="ParallaxCeiling/Ceiling"]
-position = Vector2(1.9999887, -124.54874)
-rotation = 3.1415925
+position = Vector2(1.9999883, -117.89123)
 scale = Vector2(1, 0.48375663)
 
 [node name="Hitbox" type="CollisionShape2D" parent="ParallaxCeiling/Ceiling/Ceiling"]
 position = Vector2(577.5, 1.5)
-shape = SubResource("WorldBoundaryShape2D_xig57")
+shape = SubResource("WorldBoundaryShape2D_dnfnw")
 
 [node name="Gameplay" type="Node" parent="."]
 

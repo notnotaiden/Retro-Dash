@@ -80,6 +80,8 @@ func _physics_process(delta):
 ## Updates player properties whenever it becomes a new gamemode
 ## (Main Function
 func change_gamemode():
+	texture.rotation_degrees = 0.0
+	
 	match gamemode:
 		1: # Cube
 			texture.texture = CUBE_SKIN # Changing texture for different gamemodes
@@ -123,7 +125,7 @@ func rotate_texture(on_floor: bool, delta: float):
 			# Transition smoothly
 			texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 		if gamemode == 2: # Ship
-			texture.rotation_degrees = 0.0
+			texture.rotation_degrees = lerp(texture.rotation_degrees, 0.0, 0.2)
 		if gamemode == 3: # Ball
 			# Rotate it regardless if its on the ground
 			texture.rotation_degrees += ROTATIONAL_SPEED
