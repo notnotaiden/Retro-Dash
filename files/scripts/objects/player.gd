@@ -28,13 +28,23 @@ var dead: bool = false
 var flipped_gravity: bool = false
 ## Holds the current gamemode the player is in
 @export var gamemode: int = 1
+
+## Holds the recently collided gamemode portal
 var gamemode_portal: Area2D
+## Holds the recently collided color trigger
+var color_trigger: Area2D
+var COLOR_TRIGGER_SCENE_FILE: PackedScene = preload("res://files/objects/color_trigger.tscn")
 
 signal player_death
 
 # General Functions
 func _ready():
 	change_gamemode()
+	
+	# Default BG and Ground Color
+	# Immediently instantiate a color trigger node so it doesn't throw an error
+	# Instantiate a new color trigger node and store it in color_trigger
+	color_trigger = COLOR_TRIGGER_SCENE_FILE.instantiate()
 
 func _physics_process(delta):
 	# Apply gravity

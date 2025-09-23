@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=11 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
@@ -10,6 +10,33 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u87vo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dnfnw"]
+bg_color = Color(0.24840015, 0.24840021, 0.24840006, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcuyv"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.018584823, 0.733077, 0.4778821, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_fvvnh")
@@ -60,6 +87,7 @@ text = "Attempt 1"
 [node name="Level" type="Node" parent="."]
 
 [node name="Level" parent="Level" instance=ExtResource("5_dnfnw")]
+position = Vector2(631, -31)
 
 [node name="ParallaxGround" type="Parallax2D" parent="."]
 z_index = 1
@@ -81,16 +109,6 @@ shape = SubResource("WorldBoundaryShape2D_u87vo")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="PauseButton" type="Button" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -107.0
-offset_top = 11.0
-offset_right = -13.0
-offset_bottom = 100.0
-grow_horizontal = 0
-
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -100,6 +118,9 @@ offset_right = -319.0
 offset_bottom = 35.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 13
+theme_override_styles/background = SubResource("StyleBoxFlat_dnfnw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vcuyv")
+value = 50.0
 
 [node name="DeathUI" parent="UI" instance=ExtResource("5_vuyq8")]
 visible = false

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://vot6m3ydasuf"]
+
+[ext_resource type="Script" uid="uid://cndaokh1p5fmb" path="res://files/scripts/objects/color_trigger.gd" id="1_riwfd"]
+[ext_resource type="Texture2D" uid="uid://cr2djeau3eks1" path="res://icon.svg" id="2_f7gyf"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pdx3s"]
+
+[node name="ColorTrigger" type="Area2D"]
+script = ExtResource("1_riwfd")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_pdx3s")
+
+[node name="Texture" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_f7gyf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

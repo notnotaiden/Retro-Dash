@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cllsvsp8i6vf6"]
+[gd_scene load_steps=12 format=3 uid="uid://cllsvsp8i6vf6"]
 
 [ext_resource type="Script" uid="uid://cbbkcap7vdshv" path="res://files/scripts/objects/level.gd" id="1_55p6u"]
 [ext_resource type="Texture2D" uid="uid://db43shrt6oa8y" path="res://files/assets/sprites/obstacles.png" id="1_tvkxc"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ckjjp4xinqqsb" path="res://files/objects/portal.tscn" id="3_xpcas"]
 [ext_resource type="PackedScene" uid="uid://b8mifihhilnam" path="res://files/objects/speedportal.tscn" id="4_8uqel"]
 [ext_resource type="PackedScene" uid="uid://u17y26jq64ft" path="res://files/objects/orb.tscn" id="5_5lbo2"]
+[ext_resource type="PackedScene" uid="uid://vot6m3ydasuf" path="res://files/objects/color_trigger.tscn" id="7_2c7pi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju3hr"]
 texture = ExtResource("1_tvkxc")
@@ -121,3 +122,10 @@ position = Vector2(559, 887)
 
 [node name="InfinitePanning" type="Node2D" parent="Level"]
 position = Vector2(50000, -5000)
+
+[node name="ColorTrigger" parent="Level" instance=ExtResource("7_2c7pi")]
+position = Vector2(964, 892)
+bg_color = Color(0.5764944, 0.06384744, 0.9051929, 1)
+bg_change_time = 20.0
+ground_color = Color(0.5764944, 0.06384744, 0.9051929, 1)
+ground_change_time = 20.0

@@ -3,10 +3,18 @@ extends Node2D
 # Referencing Scene Nodes
 @onready var camera: Camera2D = $Camera
 @onready var player: CharacterBody2D = $Gameplay/Player
+
+# Ui
 @onready var attempts_text: Label = $Gameplay/AttemptsTxt
 @onready var death_ui: Control = $UI/DeathUI
+@onready var progress_bar: ProgressBar = $UI/ProgressBar
+
+# Parallax
+@onready var bg_sprite: Sprite2D = $ParallaxBG/BG
 @onready var ceiling_sprite: Sprite2D = $ParallaxCeiling/Ceiling
 @onready var ground_sprite: Sprite2D = $ParallaxGround/Ground
+
+# Others
 @onready var songplayer: AudioStreamPlayer = $SongPlayer
 @onready var level_node: Node = $Level
 
@@ -26,7 +34,7 @@ func _ready():
 	# Update attempts text
 	attempts_text.text = "Attempt %d" % [GameProperties.attempts]
 
-func _process(_delta):
+func _process(delta):
 	# Camera follow
 	camera_move()
 	if GameProperties.attempts == 1:
@@ -39,6 +47,62 @@ func _process(_delta):
 	
 	# Gamemode boundaries system
 	gamemode_boundary(player.gamemode)
+	
+	# Changes the color for both the background and ground
+	# Checks if the ground and bg hasn't reached the desired color yet
+	if ground_sprite.modulate != player.color_trigger.ground_color or bg_sprite.modulate != player.color_trigger.bg_color:
+		color_change(player.color_trigger, delta)
+	
+	# Progress Bar
+	update_progress_bar()
+
+# Progress Bar Ssytem
+## Progress Bar System:
+## Displays the amount of time the user has in a level
+## (Main Function)
+func update_progress_bar():
+	if songplayer.stream and songplayer.playing:
+		var song_length: float = songplayer.stream.get_length()
+		var current_time: float = songplayer.get_playback_position()
+		
+		if song_length > 0.0:
+			# Turn into 0-100 percentage
+			var progress: float = (current_time / song_length) * 100.0
+			progress_bar.value = progress
+
+# Color System
+## Color System:
+## Changes the BG and Ground tint color
+## (Signal Function)
+func color_change(color_trigger, delta):
+	var bg_color: Color = color_trigger.bg_color
+	var ground_color: Color = color_trigger.ground_color
+	
+	# Turn seconds into a usable weight for lerp() to use
+	var bg_change_time: float = color_trigger.bg_change_time
+	var bg_change_weight: float = clamp(delta / bg_change_time, 0.0, 1.0)
+	
+	var ground_change_time: float = color_trigger.ground_change_time
+	var ground_change_weight: float = clamp(delta / ground_change_time, 0.0, 1.0)
+	
+	# Transition BG and Ground tint color to new color
+	if bg_change_weight > 0.0:
+		# Slowly transition onto it
+		bg_sprite.modulate = lerp(bg_sprite.modulate, bg_color, bg_change_weight)
+	else:
+		# Immediently apply it
+		bg_sprite.modulate = bg_color
+	
+	if ground_change_weight > 0.0:
+		# Slowly transition onto it
+		ground_sprite.modulate = lerp(ground_sprite.modulate, ground_color, ground_change_weight)
+		ceiling_sprite.modulate = lerp(ceiling_sprite.modulate, ground_color, ground_change_weight)
+	else:
+		# Immediently apply it
+		ground_sprite.modulate = ground_color
+		ceiling_sprite.modulate = ground_color
+
+# End
 
 # Gamemode Boundary system
 ## Gamemode Boundary System:
