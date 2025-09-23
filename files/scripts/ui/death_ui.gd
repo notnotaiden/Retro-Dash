@@ -4,6 +4,7 @@ extends Control
 @onready var attempt_text: Label = $Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels/AttemptsTxt
 @onready var jumps_text: Label = $Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels/JumpsTxt
 @onready var restart_button: Button = $Panel/Margins/VBox/MarginsButtons/Buttons/Restart/Button
+@onready var home_button: Button = $Panel/Margins/VBox/MarginsButtons/Buttons/Home/Button
 
 # Update Labels:
 ## Update Labels:

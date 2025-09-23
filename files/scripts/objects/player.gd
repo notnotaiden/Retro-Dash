@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 # Reference childrens
 @onready var texture: Sprite2D = $Texture
-@onready var feet_area: Area2D = $FeetArea
 
 # Player Properies
 var GRAVITY: float
@@ -60,19 +59,9 @@ func _physics_process(delta):
 	else:
 		rotate_texture(false, delta)
 	
-	# Gravity switching (Using a boolean variable makes it more forgiving and less annoying to switch)
-	# Basically a pending gravity switch system
-	# It allows the player to change the flipped_gravity bool in midair
-	# And the player won't switch gravity not until it hits a surface
 	if gamemode == 3:
-		if flipped_gravity and ( is_on_floor() or is_on_ceiling() ):
-			GRAVITY = -GRAVITY
-			velocity.y = 0.0
-			flipped_gravity = false
-	else:
-		if flipped_gravity:
-			GRAVITY = -GRAVITY
-			flipped_gravity = false
+		if is_on_ceiling() or is_on_floor():
+			switch_gravity(0.0)
 	
 	# Jumping Mechanic
 	player_jump(delta)
@@ -130,7 +119,7 @@ func rotate_texture(on_floor: bool, delta: float):
 		if gamemode == 1: # Cube
 			var snapped_rotation: float
 			# Round to nearest 0 or 180 rotation degress
-			snapped_rotation = round(texture.rotation_degrees / 180.0) * 180.0
+			snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
 			
 			# Transition smoothly
 			texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
@@ -174,6 +163,19 @@ func player_jump(delta):
 func player_move(delta):
 	velocity.x = SPEED * delta
 
+## Basic Player Movement:
+## Responsible for switching the player's gravity
+## (Helper Function)
+func switch_gravity(velo: float):
+	# Gravity switching (Using a boolean variable makes it more forgiving and less annoying to switch)
+	# Basically a pending gravity switch system
+	# It allows the player to change the flipped_gravity bool in midair
+	# And the player won't switch gravity not until it hits a surface
+	if flipped_gravity:
+		GRAVITY = -GRAVITY
+		velocity.y = velo
+		flipped_gravity = false
+
 # End System
 
 # Death Mechanic
@@ -186,30 +188,61 @@ func player_death_collide():
 		var collider = collision.get_collider()
 		var normal = collision.get_normal()
 		
-		# If the player collided with the ceiling do nothing
-		if collider.is_in_group("Ceiling"):
-			break
+		# If the player collided with the ceiling do nothing EXCEPT if its a cube
+		if is_on_ceiling():
+			if not GRAVITY < 0.0 and gamemode == 1: # Check if the cube gravity is flipped:
+				emit_signal("player_death")
+				dead = true
+		
+		if is_on_floor(): # Kill the player when it touched the floor, is a cube and gravity is flipped
+			if GRAVITY < 0.0 and gamemode == 1:
+				emit_signal("player_death")
+				dead = true
 		
 		# Kill when colliding with a spike
 		if collider.is_in_group("Spikes"):
 			emit_signal("player_death")
 			dead = true
-			break
 		
 		# Kill when colliding with the sides of a block
 		if collider.is_in_group("Blocks"):
-			# Tolerance system (So the player doesn't immediently die when it collides to the corner of the block)
-			var up_dot = Vector2(0, -1)
-			var down_dot = Vector2(0, 1)
-			var tolerance: float = 0.5 
+			# Find the exact pixel where the collision started
+			var collision_point = collision.get_position()
+			# Find the exact cell of the block
+			var cell = collider.local_to_map(collider.to_local(collision_point))
+			# Find the exact position of that same cell
+			var cell_pos = collider.map_to_local(cell)
+			# Find tile top y postion
+			var tile_size = collider.tile_set.tile_size.y * collider.scale.y
+			var top_y = collider.to_global(cell_pos).y - tile_size
+			# Find the bottom position of the player
+			var bottom_y = global_position.y + (50.0 / 2) 
 			
-			if normal.dot(up_dot) > tolerance and velocity.y >= 0.0:
-				break
-			# If the player has its gravity flipped or is a ball 
-			# allow them to not die upon hitting the bottom of a block
-			elif normal.dot(down_dot)> tolerance and velocity.y >= 0.0 and ( gamemode == 3 or GRAVITY < 0.0) :
-				break
-			else:
+			if normal.y < -0.5: # Forgiveness, teleport player on top of the block
+				# Snap position
+				if not gamemode == 3:
+					global_position.y = top_y * sign(GRAVITY)
+				
+				# Round to nearest 0 or 180 rotation degress
+				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				
+				# Transition smoothly
+				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.5)
+				
+				velocity.y = 0.0
+			elif abs(bottom_y - top_y) <= 50: # Checks how close the bottom of the player on top of the block
+				# Snap position
+				if not gamemode == 3:
+					global_position.y = top_y - 1 * sign(GRAVITY)
+				
+				# Round to nearest 0 or 180 rotation degress
+				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				
+				# Transition smoothly
+				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.5)
+				
+				velocity.y = 0.0
+			elif abs(normal.x) > 0.5 and normal.y > -0.5: # The player has collided with the sides of the block
 				emit_signal("player_death")
 				dead = true
 				break

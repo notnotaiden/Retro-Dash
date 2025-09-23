@@ -4,6 +4,7 @@ extends Area2D
 @export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
+var has_touched: bool = false
 
 # General Functions
 func _ready():
@@ -28,14 +29,18 @@ func _ready():
 ## (Signal Function)
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
-		var gamemodes: Array = [1, 2, 3]
-		if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
-			body.gamemode = gamemode
-			body.gamemode_portal = self
-			body.change_gamemode()
-		else:
-			if body.gamemode == 3: # If it's ball
+		if not has_touched:
+			has_touched = true
+			
+			var gamemodes: Array = [1, 2, 3]
+			if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
+				body.gamemode = gamemode
+				body.gamemode_portal = self
+				body.change_gamemode()
+			else:
 				body.flipped_gravity = !body.flipped_gravity
-				body.GRAVITY = -body.GRAVITY
-			else: # If its any other gamemode
-				body.flipped_gravity = !body.flipped_gravity
+				
+				if body.GRAVITY < 0.0: # If its flipped
+					body.switch_gravity(-500.0 ) 
+				else:
+					body.switch_gravity(500.0 ) 

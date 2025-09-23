@@ -27,35 +27,19 @@ func _process(_delta):
 		for body in get_overlapping_bodies():
 			if body is CharacterBody2D:
 				if not has_clicked:
+					has_clicked = true
+					
 					match orb:
 						1: # Yellow ( Extra Jump )
-							has_clicked = true
-							
 							match body.gamemode:
 								1: # Cube
-									if body.GRAVITY < 0.0: # If the player gravity is flipped
-										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT
-									else:
-										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT
+									body.velocity.y = GameProperties.CUBE_JUMPHEIGHT * sign(body.GRAVITY)
 								2: # Ship
-									if body.GRAVITY < 0.0: # If the player gravity is flipped
-										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 2.0
-									else:
-										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 2.0
+									body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT / 2.0 ) * sign(body.GRAVITY)
 								3: # Ball
 									# Flip bool back  so it doesn't switch gravitiy
 									body.flipped_gravity = !body.flipped_gravity 
 									
-									if body.GRAVITY < 0.0: # If the player gravity is flipped
-										body.velocity.y = -GameProperties.CUBE_JUMPHEIGHT / 1.5
-									else:
-										body.velocity.y = GameProperties.CUBE_JUMPHEIGHT / 1.5
+									body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT / 1.5 ) * sign(body.GRAVITY)
 						2: # Blue ( Flip gravtiy )
-							has_clicked = true
-							
-							if body.gamemode == 3:
-								body.flipped_gravity = !body.flipped_gravity
-								body.GRAVITY = -body.GRAVITY
-								body.velocity.y = 0.0
-							else:
-								body.flipped_gravity = !body.flipped_gravity
+							body.switch_gravity(0.0)

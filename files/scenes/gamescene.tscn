@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=14 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="2_vcuyv"]
 [ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="3_xig57"]
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="4_le3s8"]
 [ext_resource type="PackedScene" uid="uid://cllsvsp8i6vf6" path="res://files/levels/level1/level1.tscn" id="5_dnfnw"]
 [ext_resource type="PackedScene" uid="uid://cqod1o7ku1gik" path="res://files/scenes/death_ui.tscn" id="5_vuyq8"]
+[ext_resource type="PackedScene" uid="uid://cown771khe0pp" path="res://files/scenes/pause_menu.tscn" id="7_vcuyv"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/ui_theme.tres" id="7_xig57"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
@@ -45,6 +48,7 @@ script = ExtResource("1_fvvnh")
 position = Vector2(640, 360)
 
 [node name="ParallaxBG" type="Parallax2D" parent="."]
+process_mode = 1
 scroll_scale = Vector2(0.1, 0.1)
 repeat_size = Vector2(260, 190)
 repeat_times = 10
@@ -53,7 +57,28 @@ repeat_times = 10
 position = Vector2(640, 360)
 texture = ExtResource("2_vcuyv")
 
+[node name="Gameplay" type="Node" parent="."]
+
+[node name="Player" parent="Gameplay" instance=ExtResource("1_u87vo")]
+position = Vector2(-64, 499)
+
+[node name="AttemptsTxt" type="Label" parent="Gameplay"]
+offset_left = 199.0
+offset_top = 253.0
+offset_right = 515.0
+offset_bottom = 322.79166
+theme_override_fonts/font = ExtResource("4_le3s8")
+theme_override_font_sizes/font_size = 60
+text = "Attempt 1"
+
+[node name="Level" type="Node" parent="."]
+
+[node name="Level" parent="Level" instance=ExtResource("5_dnfnw")]
+position = Vector2(631, -31)
+
 [node name="ParallaxCeiling" type="Parallax2D" parent="."]
+process_mode = 1
+z_index = 1
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
@@ -71,25 +96,8 @@ scale = Vector2(1, 0.48375663)
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_dnfnw")
 
-[node name="Gameplay" type="Node" parent="."]
-
-[node name="Player" parent="Gameplay" instance=ExtResource("1_u87vo")]
-position = Vector2(-64, 499)
-
-[node name="AttemptsTxt" type="Label" parent="Gameplay"]
-offset_left = 165.0
-offset_top = 213.0
-offset_right = 407.0
-offset_bottom = 282.79166
-theme_override_font_sizes/font_size = 50
-text = "Attempt 1"
-
-[node name="Level" type="Node" parent="."]
-
-[node name="Level" parent="Level" instance=ExtResource("5_dnfnw")]
-position = Vector2(631, -31)
-
 [node name="ParallaxGround" type="Parallax2D" parent="."]
+process_mode = 1
 z_index = 1
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
@@ -105,8 +113,6 @@ position = Vector2(-4, -125)
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_u87vo")
 
-[node name="Ground" type="CanvasLayer" parent="."]
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
@@ -117,6 +123,7 @@ offset_top = 12.0
 offset_right = -319.0
 offset_bottom = 35.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_le3s8")
 theme_override_font_sizes/font_size = 13
 theme_override_styles/background = SubResource("StyleBoxFlat_dnfnw")
 theme_override_styles/fill = SubResource("StyleBoxFlat_vcuyv")
@@ -125,6 +132,18 @@ value = 50.0
 [node name="DeathUI" parent="UI" instance=ExtResource("5_vuyq8")]
 visible = false
 
+[node name="PauseButton" type="Button" parent="UI"]
+process_mode = 3
+offset_left = 1197.0
+offset_top = 6.0
+offset_right = 1273.0
+offset_bottom = 80.0
+theme = ExtResource("7_xig57")
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("7_vcuyv")]
+visible = false
+
 [node name="SongPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="player_death" from="Gameplay/Player" to="." method="on_player_death"]
+[connection signal="pressed" from="UI/PauseButton" to="." method="pausebtn_pressed"]

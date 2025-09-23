@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b218b7ivplo1t"]
+
+[ext_resource type="Script" uid="uid://c0n2snblbrimi" path="res://files/scripts/objects/jump_pad.gd" id="1_4p0uy"]
+[ext_resource type="Texture2D" uid="uid://c71q22o8uyjc7" path="res://files/assets/sprites/jump_pads.png" id="1_lncdl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lncdl"]
+size = Vector2(65, 10)
+
+[node name="JumpPad" type="Area2D"]
+script = ExtResource("1_4p0uy")
+
+[node name="Texture" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_lncdl")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 27)
+shape = SubResource("RectangleShape2D_lncdl")
+
+[connection signal="body_entered" from="." to="." method="on_body_entered"]

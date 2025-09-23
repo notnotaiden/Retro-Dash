@@ -8,6 +8,7 @@ extends Node2D
 @onready var attempts_text: Label = $Gameplay/AttemptsTxt
 @onready var death_ui: Control = $UI/DeathUI
 @onready var progress_bar: ProgressBar = $UI/ProgressBar
+@onready var pause_ui: Control = $UI/PauseMenu
 
 # Parallax
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -25,6 +26,10 @@ func _ready():
 	# Connecting signals
 	# Death UI restart button pressed
 	death_ui.restart_button.connect("pressed", on_player_restart)
+	# Pause UI resturn button pressed
+	pause_ui.return_button.connect("pressed", unpaused)
+	# Pause UI restart button pressed
+	pause_ui.restart_button.connect("pressed", pause_restart)
 	
 	# Check state on runtime
 	camera_check_state()
@@ -55,6 +60,68 @@ func _process(delta):
 	
 	# Progress Bar
 	update_progress_bar()
+	
+	# Pause System
+	if Input.is_key_pressed(KEY_ESCAPE):
+		if not player.dead:
+			get_tree().paused = true
+			paused()
+
+# Pause System
+## Pause System:
+## Moves the pause screen after being paused
+## (Main Function)
+func paused():
+	pause_ui.visible = true
+	
+	# Smoothly Animate pause screen
+	pause_ui.position.y = get_viewport().size.y
+	
+	# Add tween animation to death screen
+	var tween = pause_ui.create_tween()
+	tween.tween_property(pause_ui, "position:y", 0.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+# Pause System
+## Pause System:
+## Moves the pause screen after being paused (Button Version)
+## (Signal Function)
+func pausebtn_pressed():
+	if not player.dead:
+		get_tree().paused = true
+		paused()
+
+## Pause System:
+## Moves the pause screen off screen after being unpaused
+## (Signal Function)
+func unpaused():
+	pause_ui.return_button.release_focus()
+	
+	# Unpause scene
+	get_tree().paused = false
+	
+	# Smoothly Animate pause screen back to off screen
+	var pos_y = get_viewport().size.y
+	
+	# Add tween animation to death screen
+	var tween = pause_ui.create_tween()
+	tween.tween_property(pause_ui, "position:y", pos_y, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+## Pause System:
+## Restarts entire scene
+## (Signal Function)
+func pause_restart():
+	# Increment attempts
+	GameProperties.attempts += 1
+	# Restart Jumps
+	GameProperties.jumps = 0
+	
+	# unpause scene first
+	get_tree().paused = false
+	
+	# Reload entire scene
+	get_tree().reload_current_scene()
+
+# End of System
 
 # Progress Bar Ssytem
 ## Progress Bar System:
@@ -118,17 +185,19 @@ func gamemode_boundary(gamemode):
 			ground_pos_y = GameProperties.MAX_GROUND_YPOS
 			ceiling_pos_y = -5000.0
 		2: # Ship
-			var boundary_height = 2 * GameProperties.SHIP_BOUNDARY_OFFSET
+			
 			# Clamp the ground first so it doesn't go past the max floor level
-			ground_pos_y = min(player.gamemode_portal.position.y + GameProperties.SHIP_BOUNDARY_OFFSET, GameProperties.MAX_GROUND_YPOS)
+			var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
+			ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
 			# Ceiling is just boundary_height above the ground
-			ceiling_pos_y = ground_pos_y - boundary_height
+			ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
 		3: # Ball
-			var boundary_height = 2 * GameProperties.BALL_BOUNDARY_OFFSET
+			
 			# Clamp the ground first so it doesn't go past the max floor level
-			ground_pos_y = min(player.gamemode_portal.position.y + GameProperties.SHIP_BOUNDARY_OFFSET, GameProperties.MAX_GROUND_YPOS)
+			var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
+			ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
 			# Ceiling is just boundary_height above the ground
-			ceiling_pos_y = ground_pos_y - boundary_height
+			ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
 	
 	# Make both the ceiling and ground transition smoothly (Since the ceiling is higher, make it go faster)
 	ceiling_sprite.position.y = lerp(ceiling_sprite.position.y, ceiling_pos_y, 0.15)
@@ -187,20 +256,28 @@ func camera_move():
 	match player.gamemode:
 		1: # Cube
 			# Vertical follow
-			target_y = player.position.y - 100
+			target_y = player.position.y - 80
 		2: # Ship
 			# Vertical follow (Makes the camera centered)
 			# Find ceiling and ground position
-			var ceiling_pos_y: float = player.gamemode_portal.position.y - GameProperties.SHIP_BOUNDARY_OFFSET
-			var ground_pos_y: float = player.gamemode_portal.position.y + GameProperties.SHIP_BOUNDARY_OFFSET
+			
+			# Clamp the ground first so it doesn't go past the max floor level
+			var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
+			var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+			# Ceiling is just boundary_height above the ground
+			var ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
 			
 			var offset: float = 10.0
 			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
 		3: # Ball
 			# Vertical follow (Makes the camera centered)
 			# Find ceiling and ground position
-			var ceiling_pos_y: float = player.gamemode_portal.position.y - GameProperties.BALL_BOUNDARY_OFFSET
-			var ground_pos_y: float = player.gamemode_portal.position.y + GameProperties.BALL_BOUNDARY_OFFSET
+			
+			# Clamp the ground first so it doesn't go past the max floor level
+			var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
+			var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+			# Ceiling is just boundary_height above the ground
+			var ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
 			
 			var offset: float = 0.0
 			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
@@ -223,7 +300,7 @@ func on_player_death():
 	death_ui.update(GameProperties.attempts, GameProperties.jumps)
 	
 	# Smoothly Animate death screen
-	death_ui.position.y = get_viewport().size.y / 2.0
+	death_ui.position.y = get_viewport().size.y
 	
 	# Add tween animation to death screen
 	var tween = get_tree().create_tween()

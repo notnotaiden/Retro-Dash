@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bm843bcxc12ll"]
+[gd_scene load_steps=13 format=3 uid="uid://bm843bcxc12ll"]
 
 [ext_resource type="Texture2D" uid="uid://bmbdysch1yx11" path="res://files/assets/sprites/spikes.png" id="1_j7xyf"]
 [ext_resource type="Script" uid="uid://cbbkcap7vdshv" path="res://files/scripts/objects/level.gd" id="1_lw5jp"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b8mifihhilnam" path="res://files/objects/speedportal.tscn" id="4_lw5jp"]
 [ext_resource type="PackedScene" uid="uid://u17y26jq64ft" path="res://files/objects/orb.tscn" id="5_p0xwf"]
 [ext_resource type="PackedScene" uid="uid://vot6m3ydasuf" path="res://files/objects/color_trigger.tscn" id="7_td5hn"]
+[ext_resource type="PackedScene" uid="uid://b218b7ivplo1t" path="res://files/objects/jump_pad.tscn" id="8_ekmen"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju3hr"]
 texture = ExtResource("2_5ap06")
@@ -107,6 +108,9 @@ scale = Vector2(2.5, 2.5)
 tile_set = SubResource("TileSet_2c7pi")
 format = 2
 
+[node name="InfinitePanning" type="Node2D" parent="Level"]
+position = Vector2(50000, -5000)
+
 [node name="Portal" parent="Level" instance=ExtResource("3_krx70")]
 position = Vector2(286.99997, 885)
 scale = Vector2(0.99999994, 0.99999994)
@@ -117,7 +121,8 @@ position = Vector2(384, 883)
 [node name="Orb" parent="Level" instance=ExtResource("5_p0xwf")]
 position = Vector2(559, 887)
 
-[node name="InfinitePanning" type="Node2D" parent="Level"]
-position = Vector2(50000, -5000)
-
 [node name="ColorTrigger" parent="Level" instance=ExtResource("7_td5hn")]
+position = Vector2(829, 904)
+
+[node name="JumpPad" parent="Level" instance=ExtResource("8_ekmen")]
+position = Vector2(732, 884)

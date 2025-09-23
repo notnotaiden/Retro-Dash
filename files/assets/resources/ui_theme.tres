@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://n7dt8mjg02qd"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://n7dt8mjg02qd"]
+
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="1_mflyo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nj4mq"]
 bg_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
@@ -45,6 +47,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [resource]
+Button/fonts/font = ExtResource("1_mflyo")
 Button/styles/focus = SubResource("StyleBoxFlat_nj4mq")
 Button/styles/hover = SubResource("StyleBoxFlat_57cpf")
 Button/styles/normal = SubResource("StyleBoxFlat_rb5qi")
