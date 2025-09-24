@@ -23,15 +23,13 @@ func on_body_entered(body):
 				"Yellow":
 					match body.gamemode:
 						1: # Cube
-							body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT * 1.35 ) * sign(body.GRAVITY)
+							body.velocity.y = GameProperties.PAD_CUBE_JUMPHEIGHT * sign(body.GRAVITY)
 						2: # Ship
-							body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT * 1.0 ) * sign(body.GRAVITY)
+							body.velocity.y = GameProperties.PAD_SHIP_JUMPHEIGHT * sign(body.GRAVITY)
 						3: # Ball
-							body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT * 1.0 ) * sign(body.GRAVITY)
+							body.velocity.y = GameProperties.PAD_BALL_JUMPHEIGHT * sign(body.GRAVITY)
 				"Blue":
-					body.flipped_gravity = !body.flipped_gravity
+					if not body.gamemode == 3:
+						body.flipped_gravity = !body.flipped_gravity
 					
-					if body.GRAVITY < 0.0: # If its flipped
-						body.switch_gravity(500.0 ) 
-					else:
-						body.switch_gravity(-500.0 ) 
+					body.switch_gravity(1.0, true) 

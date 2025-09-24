@@ -34,6 +34,9 @@ signal player_death
 
 # General Functions
 func _ready():
+	# Pass self to texture
+	texture.parent = self
+	
 	change_gamemode()
 	texture.change_skin(gamemode)
 	
@@ -44,7 +47,7 @@ func _ready():
 
 func _physics_process(delta):
 	# Apply gravity
-	if gamemode == 3:
+	if not gamemode == 1:
 		velocity.y += GRAVITY * delta
 	else:
 		if not is_on_floor():
@@ -58,7 +61,7 @@ func _physics_process(delta):
 	
 	if gamemode == 3:
 		if is_on_ceiling() or is_on_floor():
-			switch_gravity(0.0)
+			switch_gravity(0.0, true)
 	
 	# Jumping Mechanic
 	player_jump(delta)
@@ -172,14 +175,20 @@ func player_move(delta):
 ## Basic Player Movement:
 ## Responsible for switching the player's gravity
 ## (Helper Function)
-func switch_gravity(velo: float):
+func switch_gravity(velo: float, instant: bool):
 	# Gravity switching (Using a boolean variable makes it more forgiving and less annoying to switch)
 	# Basically a pending gravity switch system
 	# It allows the player to change the flipped_gravity bool in midair
 	# And the player won't switch gravity not until it hits a surface
 	if flipped_gravity:
 		GRAVITY = -GRAVITY
-		velocity.y = velo
+		
+		# if basically stopped, apply a small push in the new direction
+		if instant:
+			velocity.y = 1.0 * sign(GRAVITY)
+		if abs(velocity.y) < 10.0:
+			velocity.y = velo * sign(GRAVITY)
+		
 		flipped_gravity = false
 
 # End System

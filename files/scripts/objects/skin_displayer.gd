@@ -12,6 +12,50 @@ extends Node2D
 @onready var ship_p1: Sprite2D = $Ship/P1
 @onready var ship_p2: Sprite2D = $Ship/P2
 
+@onready var parent: CharacterBody2D
+
+# General Functions
+func _process(_delta):
+	if parent == null:
+		return
+	
+	if parent.GRAVITY < 0.0:
+		outline.flip_v = true
+		p1.flip_v = true
+		p2.flip_v = true
+		
+		if parent.gamemode == 2:
+			ship_outline.flip_v = true
+			ship_p1.flip_v = true
+			ship_p2.flip_v = true
+			
+			# Update position of cube and ship
+			ship_outline.position.y = -15.0
+			ship_p1.position.y = -15.0
+			ship_p2.position.y = -15.0
+			
+			outline.position.y = 23.0
+			p1.position.y = 23.0
+			p2.position.y = 23.0
+	else:
+		outline.flip_v = false
+		p1.flip_v = false
+		p2.flip_v = false
+		
+		if parent.gamemode == 2:
+			ship_outline.flip_v = false
+			ship_p1.flip_v = false
+			ship_p2.flip_v = false
+			
+			# Update position of cube and ship
+			ship_outline.position.y = 38.0
+			ship_p1.position.y = 38.0
+			ship_p2.position.y = 38.0
+			
+			outline.position.y = 0.0
+			p1.position.y = 0.0
+			p2.position.y = 0.0
+
 # Change Skin System
 ## Change Skin System:
 ## Changes the texture for different gamemodes

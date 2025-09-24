@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cllsvsp8i6vf6"]
+[gd_scene load_steps=13 format=3 uid="uid://cllsvsp8i6vf6"]
 
 [ext_resource type="Script" uid="uid://cbbkcap7vdshv" path="res://files/scripts/objects/level.gd" id="1_55p6u"]
 [ext_resource type="Texture2D" uid="uid://db43shrt6oa8y" path="res://files/assets/sprites/obstacles.png" id="1_tvkxc"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://u17y26jq64ft" path="res://files/objects/orb.tscn" id="5_5lbo2"]
 [ext_resource type="PackedScene" uid="uid://vot6m3ydasuf" path="res://files/objects/color_trigger.tscn" id="7_2c7pi"]
 [ext_resource type="PackedScene" uid="uid://b218b7ivplo1t" path="res://files/objects/jump_pad.tscn" id="8_ju3hr"]
-[ext_resource type="Texture2D" uid="uid://cxwj8jxmbi5e2" path="res://files/assets/sprites/skins/skin.png" id="9_ywh82"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ju3hr"]
 texture = ExtResource("1_tvkxc")
@@ -116,22 +115,21 @@ layer_0/tile_data = PackedInt32Array(786460, 0, 0, 786486, 131072, 0, 786488, 13
 position = Vector2(50000, -5000)
 
 [node name="JumpPad" parent="Level" instance=ExtResource("8_ju3hr")]
-position = Vector2(1072, 886)
+position = Vector2(872, 885)
 
 [node name="Portal" parent="Level" instance=ExtResource("3_xpcas")]
 position = Vector2(22227, -150.00006)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Portal2" parent="Level" instance=ExtResource("3_xpcas")]
-position = Vector2(553, 884)
+position = Vector2(506.00003, 891)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="SpeedPortal" parent="Level" instance=ExtResource("4_8uqel")]
 position = Vector2(384, 883)
 
 [node name="Orb" parent="Level" instance=ExtResource("5_5lbo2")]
-position = Vector2(786, 895)
-orb_type = "Blue"
+position = Vector2(696, 892)
 
 [node name="ColorTrigger" parent="Level" instance=ExtResource("7_2c7pi")]
 position = Vector2(964, 892)
@@ -153,9 +151,3 @@ bg_color = Color(0.5764706, 0.0627451, 0.90588236, 1)
 bg_change_time = 0.1
 ground_color = Color(0.5764706, 0.0627451, 0.90588236, 1)
 ground_change_time = 0.1
-
-[node name="Outline" type="Sprite2D" parent="."]
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("9_ywh82")
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 32)

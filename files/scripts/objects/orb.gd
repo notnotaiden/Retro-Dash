@@ -33,13 +33,16 @@ func _process(_delta):
 						1: # Yellow ( Extra Jump )
 							match body.gamemode:
 								1: # Cube
-									body.velocity.y = GameProperties.CUBE_JUMPHEIGHT * sign(body.GRAVITY)
+									body.velocity.y = GameProperties.ORB_CUBE_JUMPHEIGHT * sign(body.GRAVITY)
 								2: # Ship
-									body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT / 2.0 ) * sign(body.GRAVITY)
+									body.velocity.y = GameProperties.ORB_SHIP_JUMPHEIGHT * sign(body.GRAVITY)
 								3: # Ball
-									# Flip bool back  so it doesn't switch gravitiy
-									body.flipped_gravity = !body.flipped_gravity 
+									# Flip bool back to false so it doesn't switch gravitiy
+									body.flipped_gravity = false
 									
-									body.velocity.y = ( GameProperties.CUBE_JUMPHEIGHT / 1.5 ) * sign(body.GRAVITY)
+									body.velocity.y = GameProperties.ORB_BALL_JUMPHEIGHT * sign(body.GRAVITY)
 						2: # Blue ( Flip gravtiy )
-							body.switch_gravity(0.0)
+							if not body.gamemode == 3:
+								body.flipped_gravity = !body.flipped_gravity
+							
+							body.switch_gravity(1.0, true)

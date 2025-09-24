@@ -40,7 +40,4 @@ func on_body_entered(body):
 			else:
 				body.flipped_gravity = !body.flipped_gravity
 				
-				if body.GRAVITY < 0.0: # If its flipped
-					body.switch_gravity(-500.0 ) 
-				else:
-					body.switch_gravity(500.0 ) 
+				body.switch_gravity(1.0, false) 

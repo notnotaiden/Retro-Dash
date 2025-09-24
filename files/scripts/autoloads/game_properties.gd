@@ -45,6 +45,15 @@ const CUBE_GRAVITY: float = 5000.0
 const SHIP_GRAVITY: float = 1500.0
 const BALL_GRAVITY: float = 3800.0
 
+# Different orb jump heights and pad jump heights for different gamemodes
+const ORB_CUBE_JUMPHEIGHT: float = -1270.0
+const ORB_SHIP_JUMPHEIGHT: float = -550.0
+const ORB_BALL_JUMPHEIGHT: float = -850.0
+
+const PAD_CUBE_JUMPHEIGHT: float = -1714.5
+const PAD_SHIP_JUMPHEIGHT: float = -850.0
+const PAD_BALL_JUMPHEIGHT: float = -1450.0
+
 # Holds the amount of attempts and jumps you currently have on this playthrough
 var attempts: int = 1
 var jumps: int = 0
