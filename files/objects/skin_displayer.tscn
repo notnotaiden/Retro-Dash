@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://dshfptxfmwf7m"]
+
+[ext_resource type="Texture2D" uid="uid://cxwj8jxmbi5e2" path="res://files/assets/sprites/skins/skin.png" id="1_j2b60"]
+[ext_resource type="Script" uid="uid://c0wdjlicg16f" path="res://files/scripts/objects/skin_displayer.gd" id="1_lydfh"]
+
+[node name="SkinDisplayer" type="Node2D"]
+script = ExtResource("1_lydfh")
+
+[node name="P1" type="Sprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="P2" type="Sprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
+
+[node name="Outline" type="Sprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Ship" type="Node2D" parent="."]
+visible = false
+
+[node name="P1" type="Sprite2D" parent="Ship"]
+position = Vector2(0, 38)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="P2" type="Sprite2D" parent="Ship"]
+position = Vector2(0, 38)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(32, 32, 32, 32)
+
+[node name="Outline" type="Sprite2D" parent="Ship"]
+position = Vector2(0, 38)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_j2b60")
+region_enabled = true
+region_rect = Rect2(96, 0, 32, 32)

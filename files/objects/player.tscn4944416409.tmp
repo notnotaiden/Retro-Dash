@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cruwwsh44nrac"]
 
 [ext_resource type="Script" uid="uid://bpouvfyqk0wgw" path="res://files/scripts/objects/player.gd" id="1_mpttn"]
-[ext_resource type="PackedScene" uid="uid://dshfptxfmwf7m" path="res://files/objects/skin_displayer.tscn" id="2_mpttn"]
+[ext_resource type="PackedScene" uid="uid://b27rl0d1woo6" path="res://files/assets/sprites/skins/cube_skin.tscn" id="2_mpttn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3v0qd"]
 size = Vector2(80, 80)
@@ -13,4 +13,4 @@ script = ExtResource("1_mpttn")
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3v0qd")
 
-[node name="SkinDisplayer" parent="." instance=ExtResource("2_mpttn")]
+[node name="CubeSkin" parent="." instance=ExtResource("2_mpttn")]

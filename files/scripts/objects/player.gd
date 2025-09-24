@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 # Reference childrens
-@onready var texture: Sprite2D = $Texture
+@onready var texture: Node2D = $SkinDisplayer
+@onready var hitbox: CollisionShape2D = $Hitbox
 
 # Player Properies
 var GRAVITY: float
@@ -15,11 +16,6 @@ const SHIP_MAXANGLE_UP: float = -70.0
 const SHIP_MAXANGLE_DOWN: float = 60.0
 ## The max y velocity the player could go for the ship gamemode
 const SHIP_MAXVELO_y: float = 1000.0
-
-# Skins
-var CUBE_SKIN = preload("res://files/assets/sprites/skins/cube1.png")
-var SHIP_SKIN = preload("res://files/assets/sprites/skins/ship1.png")
-var BALL_SKIN = preload("res://files/assets/sprites/skins/ball1.png")
 
 ## Holds the state for if the player has died
 var dead: bool = false
@@ -39,6 +35,7 @@ signal player_death
 # General Functions
 func _ready():
 	change_gamemode()
+	texture.change_skin(gamemode)
 	
 	# Default BG and Ground Color
 	# Immediently instantiate a color trigger node so it doesn't throw an error
@@ -83,14 +80,23 @@ func change_gamemode():
 	
 	match gamemode:
 		1: # Cube
-			texture.texture = CUBE_SKIN # Changing texture for different gamemodes
+			hitbox.shape.size = Vector2(80.0, 80.0)
+			hitbox.position.y = 0.0
+			
 			GRAVITY = GameProperties.CUBE_GRAVITY # Change gravity based on gamemode
 		2: # Ship
-			texture.texture = SHIP_SKIN # Changing texture for different gamemodes
+			hitbox.shape.size = Vector2(80.0, 68.0)
+			hitbox.position.y = 8.0
+			
 			GRAVITY = GameProperties.SHIP_GRAVITY # Change gravity based on gamemode
 		3: # Ball
-			texture.texture = BALL_SKIN # Changing texture for different gamemodes
+			hitbox.shape.size = Vector2(80.0, 80.0)
+			hitbox.position.y = 0.0
+			
 			GRAVITY = GameProperties.BALL_GRAVITY # Change gravity based on gamemode
+	
+	# Update texture
+	texture.change_skin(gamemode)
 
 # End
 
@@ -216,30 +222,30 @@ func player_death_collide():
 			var tile_size = collider.tile_set.tile_size.y * collider.scale.y
 			var top_y = collider.to_global(cell_pos).y - tile_size
 			# Find the bottom position of the player
-			var bottom_y = global_position.y + (50.0 / 2) 
+			var bottom_y = global_position.y + (hitbox.shape.size.y / 2) 
 			
 			if normal.y < -0.5: # Forgiveness, teleport player on top of the block
 				# Snap position
-				if not gamemode == 3:
+				if gamemode == 1:
 					global_position.y = top_y * sign(GRAVITY)
 				
 				# Round to nearest 0 or 180 rotation degress
 				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
 				
 				# Transition smoothly
-				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.5)
+				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 				
 				velocity.y = 0.0
 			elif abs(bottom_y - top_y) <= 50: # Checks how close the bottom of the player on top of the block
 				# Snap position
-				if not gamemode == 3:
+				if gamemode == 1:
 					global_position.y = top_y - 1 * sign(GRAVITY)
 				
 				# Round to nearest 0 or 180 rotation degress
 				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
 				
 				# Transition smoothly
-				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.5)
+				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 				
 				velocity.y = 0.0
 			elif abs(normal.x) > 0.5 and normal.y > -0.5: # The player has collided with the sides of the block

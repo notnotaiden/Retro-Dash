@@ -1,6 +1,33 @@
 extends Node
 
 # Game Properties
+## Holds the user choosen settings
+var user_settings: Dictionary = {
+	"settings": {
+		"sound_vol": 1.0,
+		"music_vol": 1.0
+	},
+	"customization": {
+		"p1_color": Color.YELLOW,
+		"p2_color": Color.DEEP_SKY_BLUE,
+		"cube_skin": {
+			"outline": Rect2(0.0, 0.0, 32.0, 32.0),
+			"p1": Rect2(32.0, 0.0, 32.0, 32.0),
+			"p2": Rect2(64.0, 0.0, 32.0, 32.0)
+		},
+		"ship_skin": {
+			"outline": Rect2(96.0, 0.0, 32.0, 32.0),
+			"p1": Rect2(0.0, 32.0, 32.0, 32.0),
+			"p2": Rect2(32.0, 32.0, 32.0, 32.0)
+		},
+		"ball_skin": {
+			"outline": Rect2(64.0, 32.0, 32.0, 32.0),
+			"p1": Rect2(96.0, 32.0, 32.0, 32.0),
+			"p2": Rect2(0.0, 64.0, 32.0, 32.0)
+		}
+	},
+}
+
 ## The position the player starts with in every attempt
 const START_POS: Vector2 = Vector2(-64.0, 499.0)
 ## The max y position the ground can go
