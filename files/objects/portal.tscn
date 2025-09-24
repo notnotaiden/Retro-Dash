@@ -21,6 +21,7 @@ shape = SubResource("RectangleShape2D_7hq45")
 position = Vector2(-108, 6)
 scale = Vector2(0.99999994, 0.99999994)
 amount = 20
+preprocess = 10.0
 emission_shape = 3
 emission_rect_extents = Vector2(30, 100)
 gravity = Vector2(200, 0)

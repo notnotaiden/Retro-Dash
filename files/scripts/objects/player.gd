@@ -50,14 +50,8 @@ func _physics_process(delta):
 		if not is_on_floor():
 			velocity.y += GRAVITY * delta
 	
-	# Feet Dusts
-	if not dead:
-		if is_on_floor() and GRAVITY > 0.0:
-			feet_particles.emitting = true
-		else:
-			feet_particles.emitting = false
-	else:
-		feet_particles.emitting = false
+	# Feet Dust Particles
+	emit_dust_particles()
 	
 	# Rotating texture
 	if is_on_ceiling() or is_on_floor():
@@ -65,6 +59,7 @@ func _physics_process(delta):
 	else:
 		rotate_texture(false, delta)
 	
+	# Ball Gamemode Switching gravity system
 	if not finished:
 		if gamemode == 3:
 			if is_on_ceiling() or is_on_floor():
@@ -84,6 +79,43 @@ func _physics_process(delta):
 		player_death_collide()
 
 # End
+
+# Feet Dust Particles System
+## Feet Dust Particles System:
+## Emits particles on the player's feet
+## (Main Function)
+func emit_dust_particles():
+	if not dead:
+		# If is on floor and gravity not flipped
+		if is_on_floor() and GRAVITY > 0.0:
+			feet_particles.emitting = true
+			
+			feet_particles.position.y = 33.0
+			feet_particles.rotation_degrees = 0.0
+		
+		# If is on ceiling and gravity flipped
+		elif is_on_ceiling() and GRAVITY < 0.0:
+			feet_particles.emitting = true
+			
+			if gamemode == 2:
+				feet_particles.position.y = -10.0
+			else:
+				feet_particles.position.y = -25.0
+			
+			feet_particles.rotation_degrees = 180.0
+		
+		else:
+			feet_particles.emitting = false
+	else:
+		feet_particles.emitting = false
+	
+	# Move the dust particles closer to the center if ball
+	if gamemode == 3:
+		feet_particles.position.x = 0.0
+	else:
+		feet_particles.position.x = -38.0
+
+# End of System
 
 # Change gamemode system
 ## Change gamemode system:
@@ -128,10 +160,10 @@ func rotate_texture(on_floor: bool, delta: float):
 			# Makes the ship tilt upward or downward
 			if Input.is_action_pressed("Player Jump"):
 				# Tilt upwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_UP, rotation_speed)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_UP * sign(GRAVITY), rotation_speed)
 			else:
 				# Tilt downwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_DOWN, rotation_speed)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_DOWN * sign(GRAVITY), rotation_speed)
 		if gamemode == 3: # Ball
 			texture.rotation_degrees += ROTATIONAL_SPEED
 	else:

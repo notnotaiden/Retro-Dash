@@ -26,6 +26,7 @@ region_rect = Rect2(32, 0, 32, 32)
 
 [node name="Particles" type="CPUParticles2D" parent="."]
 position = Vector2(-2, 25)
+preprocess = 10.0
 emission_shape = 3
 emission_rect_extents = Vector2(80, 80)
 gravity = Vector2(0, -50)

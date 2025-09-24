@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dshfptxfmwf7m"]
+[gd_scene load_steps=5 format=3 uid="uid://dshfptxfmwf7m"]
 
 [ext_resource type="Texture2D" uid="uid://cxwj8jxmbi5e2" path="res://files/assets/sprites/skins/skin.png" id="1_j2b60"]
 [ext_resource type="Script" uid="uid://c0wdjlicg16f" path="res://files/scripts/objects/skin_displayer.gd" id="1_lydfh"]
+
+[sub_resource type="Curve" id="Curve_lydfh"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_lydfh"]
+colors = PackedColorArray(1, 1, 0.011764706, 1, 0.9999996, 0.41763973, 0.07506687, 1)
 
 [node name="SkinDisplayer" type="Node2D"]
 script = ExtResource("1_lydfh")
@@ -25,7 +32,25 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Ship" type="Node2D" parent="."]
-visible = false
+
+[node name="FireParticles" type="CPUParticles2D" parent="Ship"]
+position = Vector2(-44, 25)
+rotation = -3.1415925
+lifetime = 0.3
+preprocess = 10.0
+draw_order = 1
+spread = 180.0
+gravity = Vector2(1000, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+radial_accel_min = -2000.0
+radial_accel_max = -1500.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_lydfh")
+color = Color(1.4909492, 0.64041513, 0, 1)
+color_ramp = SubResource("Gradient_lydfh")
+hue_variation_max = 1.0
 
 [node name="P1" type="Sprite2D" parent="Ship"]
 position = Vector2(0, 38)
