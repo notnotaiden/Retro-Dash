@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var texture: Sprite2D = $Texture
+@onready var particles: CPUParticles2D = $Particle
 @export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
@@ -12,15 +13,19 @@ func _ready():
 	match gamemode_type:
 		"Cube": # Cube
 			texture.region_rect = Rect2(34.0, 0.0, 13.0, 32.0)
+			particles.color = Color.GREEN
 			gamemode = 1
 		"Ship": # Ship
 			texture.region_rect = Rect2(50.0, 0.0, 13.0, 32.0)
+			particles.color = Color.PINK
 			gamemode = 2
 		"Ball": # Ball
 			texture.region_rect = Rect2(2.0, 32.0, 13.0, 32.0)
+			particles.color = Color.RED
 			gamemode = 3
 		"Flipped Gravity": # Flips the gravity of the player
 			texture.region_rect = Rect2(18.0, 0.0, 13.0, 32.0)
+			particles.color = Color.YELLOW
 			gamemode = 4
 
 # Change Gamemode

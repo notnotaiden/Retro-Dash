@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var texture: Sprite2D = $Texture
+@onready var particles: CPUParticles2D = $Particles
 @export_enum("Yellow", "Blue") var orb_type: String = "Yellow"
 
 var orb: int
@@ -13,9 +14,11 @@ func _ready():
 	match orb_type:
 		"Yellow":
 			texture.region_rect = Rect2(0.0, 0.0, 32.0, 32.0)
+			particles.color = Color.YELLOW
 			orb = 1
 		"Blue":
 			texture.region_rect = Rect2(32.0, 0.0, 32.0, 32.0)
+			particles.color = Color.DEEP_SKY_BLUE
 			orb = 2
 
 # Orb System

@@ -3,22 +3,19 @@ extends CharacterBody2D
 # Reference childrens
 @onready var texture: Node2D = $SkinDisplayer
 @onready var hitbox: CollisionShape2D = $Hitbox
+@onready var death_particle: CPUParticles2D = $ExplosionParticle
+@onready var death_sfx: AudioStreamPlayer = $DeathSFX
+@onready var feet_particles: CPUParticles2D = $FeetParticles
 
 # Player Properies
 var GRAVITY: float
 var SPEED: float = 42000.0
 const ROTATIONAL_SPEED: float = 6.0
-## The rotational speed for the ship gamemode
-const SHIP_ROTATIONAL_SPEED: float = 6.0
-## The max angle the player can go upward for the ship gamemode
-const SHIP_MAXANGLE_UP: float = -70.0
-## The max angle the player can go downward for the ship gamemode
-const SHIP_MAXANGLE_DOWN: float = 60.0
-## The max y velocity the player could go for the ship gamemode
-const SHIP_MAXVELO_y: float = 1000.0
 
 ## Holds the state for if the player has died
 var dead: bool = false
+## Holds the state whether the player has reached the finish line
+var finished: bool = false
 ## Holds the state to check if the player gravity should be flipped
 var flipped_gravity: bool = false
 ## Holds the current gamemode the player is in
@@ -53,24 +50,38 @@ func _physics_process(delta):
 		if not is_on_floor():
 			velocity.y += GRAVITY * delta
 	
+	# Feet Dusts
+	if not dead:
+		if is_on_floor() and GRAVITY > 0.0:
+			feet_particles.emitting = true
+		else:
+			feet_particles.emitting = false
+	else:
+		feet_particles.emitting = false
+	
 	# Rotating texture
 	if is_on_ceiling() or is_on_floor():
 		rotate_texture(true, delta)
 	else:
 		rotate_texture(false, delta)
 	
-	if gamemode == 3:
-		if is_on_ceiling() or is_on_floor():
-			switch_gravity(0.0, true)
+	if not finished:
+		if gamemode == 3:
+			if is_on_ceiling() or is_on_floor():
+				switch_gravity(0.0, true)
 	
-	# Jumping Mechanic
-	player_jump(delta)
+	if not finished:
+		# Jumping Mechanic
+		player_jump(delta)
+	
 	# Move cube infinitely to the side
 	player_move(delta)
+	
 	if not dead:
 		move_and_slide()
 	# Death Mechanic
-	player_death_collide()
+	if not finished:
+		player_death_collide()
 
 # End
 
@@ -113,14 +124,14 @@ func rotate_texture(on_floor: bool, delta: float):
 		if gamemode == 1: # Cube
 			texture.rotation_degrees += ROTATIONAL_SPEED
 		if gamemode == 2: # Ship
-			var rotation_speed: float = ( SHIP_ROTATIONAL_SPEED * delta ) / 3.0
+			var rotation_speed: float = ( GameProperties.SHIP_ROTATIONAL_SPEED * delta ) / 3.0
 			# Makes the ship tilt upward or downward
 			if Input.is_action_pressed("Player Jump"):
 				# Tilt upwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_UP, rotation_speed)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_UP, rotation_speed)
 			else:
 				# Tilt downwards
-				texture.rotation_degrees = lerp(texture.rotation_degrees , SHIP_MAXANGLE_DOWN, rotation_speed)
+				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_DOWN, rotation_speed)
 		if gamemode == 3: # Ball
 			texture.rotation_degrees += ROTATIONAL_SPEED
 	else:
@@ -162,7 +173,7 @@ func player_jump(delta):
 					velocity.y += GameProperties.SHIP_JUMPHEIGHT * delta
 				
 				# Clamp velocity so it doesn't goes past the max velocity
-				velocity.y = clamp(velocity.y, -SHIP_MAXVELO_y, SHIP_MAXVELO_y)
+				velocity.y = clamp(velocity.y, -GameProperties.SHIP_MAXVELO_y, GameProperties.SHIP_MAXVELO_y)
 		3: # Ball (Switching Gravity)
 			if Input.is_action_just_pressed("Player Jump"):
 				flipped_gravity = !flipped_gravity
@@ -206,18 +217,24 @@ func player_death_collide():
 		# If the player collided with the ceiling do nothing EXCEPT if its a cube
 		if is_on_ceiling():
 			if not GRAVITY < 0.0 and gamemode == 1: # Check if the cube gravity is flipped:
-				emit_signal("player_death")
-				dead = true
+				if not dead:
+					emit_signal("player_death")
+					death_particles()
+					dead = true
 		
 		if is_on_floor(): # Kill the player when it touched the floor, is a cube and gravity is flipped
 			if GRAVITY < 0.0 and gamemode == 1:
-				emit_signal("player_death")
-				dead = true
+				if not dead:
+					emit_signal("player_death")
+					death_particles()
+					dead = true
 		
 		# Kill when colliding with a spike
 		if collider.is_in_group("Spikes"):
-			emit_signal("player_death")
-			dead = true
+			if not dead:
+				emit_signal("player_death")
+				death_particles()
+				dead = true
 		
 		# Kill when colliding with the sides of a block
 		if collider.is_in_group("Blocks"):
@@ -258,8 +275,24 @@ func player_death_collide():
 				
 				velocity.y = 0.0
 			elif abs(normal.x) > 0.5 and normal.y > -0.5: # The player has collided with the sides of the block
-				emit_signal("player_death")
-				dead = true
+				if not dead:
+					emit_signal("player_death")
+					death_particles()
+					dead = true
 				break
+
+## Death Mechanic:
+## Emits particles upon death, hides the texture, and plays a sound effect
+## (Helper Function)
+func death_particles():
+	# Hide texture
+	texture.visible = false
+	
+	# Play sound effect
+	if not death_sfx.playing:
+		death_sfx.play()
+	
+	# Emit particles
+	death_particle.emitting = true
 
 # End of System

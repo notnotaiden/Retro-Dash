@@ -115,21 +115,22 @@ layer_0/tile_data = PackedInt32Array(786460, 0, 0, 786486, 131072, 0, 786488, 13
 position = Vector2(50000, -5000)
 
 [node name="JumpPad" parent="Level" instance=ExtResource("8_ju3hr")]
-position = Vector2(872, 885)
+position = Vector2(870, 884)
 
 [node name="Portal" parent="Level" instance=ExtResource("3_xpcas")]
 position = Vector2(22227, -150.00006)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Portal2" parent="Level" instance=ExtResource("3_xpcas")]
-position = Vector2(506.00003, 891)
+position = Vector2(500.00006, 877.99994)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="SpeedPortal" parent="Level" instance=ExtResource("4_8uqel")]
-position = Vector2(384, 883)
+position = Vector2(348, 872)
+speed = "1.75"
 
 [node name="Orb" parent="Level" instance=ExtResource("5_5lbo2")]
-position = Vector2(696, 892)
+position = Vector2(666, 896)
 
 [node name="ColorTrigger" parent="Level" instance=ExtResource("7_2c7pi")]
 position = Vector2(964, 892)

@@ -54,6 +54,15 @@ const PAD_CUBE_JUMPHEIGHT: float = -1714.5
 const PAD_SHIP_JUMPHEIGHT: float = -850.0
 const PAD_BALL_JUMPHEIGHT: float = -1450.0
 
+## The rotational speed for the ship gamemode
+const SHIP_ROTATIONAL_SPEED: float = 6.0
+## The max angle the player can go upward for the ship gamemode
+const SHIP_MAXANGLE_UP: float = -70.0
+## The max angle the player can go downward for the ship gamemode
+const SHIP_MAXANGLE_DOWN: float = 60.0
+## The max y velocity the player could go for the ship gamemode
+const SHIP_MAXVELO_y: float = 1000.0
+
 # Holds the amount of attempts and jumps you currently have on this playthrough
 var attempts: int = 1
 var jumps: int = 0

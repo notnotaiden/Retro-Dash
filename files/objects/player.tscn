@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cruwwsh44nrac"]
+[gd_scene load_steps=7 format=3 uid="uid://cruwwsh44nrac"]
 
 [ext_resource type="Script" uid="uid://bpouvfyqk0wgw" path="res://files/scripts/objects/player.gd" id="1_mpttn"]
 [ext_resource type="PackedScene" uid="uid://dshfptxfmwf7m" path="res://files/objects/skin_displayer.tscn" id="2_mpttn"]
+[ext_resource type="AudioStream" uid="uid://ctkmxymbu6k53" path="res://files/assets/sound/death_sfx.ogg" id="3_b3t1j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3v0qd"]
 size = Vector2(80, 80)
+
+[sub_resource type="Curve" id="Curve_b3t1j"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mpttn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.06614792), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Player" type="CharacterBody2D"]
 process_mode = 1
@@ -13,4 +22,35 @@ script = ExtResource("1_mpttn")
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3v0qd")
 
+[node name="FeetParticles" type="CPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.6901961)
+position = Vector2(-38, 33)
+amount = 20
+lifetime = 0.3
+gravity = Vector2(-200, -200)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_b3t1j")
+
 [node name="SkinDisplayer" parent="." instance=ExtResource("2_mpttn")]
+
+[node name="ExplosionParticle" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 500.0
+scale_amount_min = 25.0
+scale_amount_max = 30.0
+scale_amount_curve = SubResource("Curve_mpttn")
+
+[node name="DeathSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_b3t1j")
+
+[connection signal="finished" from="DeathSFX" to="." method="on_death_sfx_finished"]

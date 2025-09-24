@@ -9,6 +9,7 @@ extends Node2D
 @onready var death_ui: Control = $UI/DeathUI
 @onready var progress_bar: ProgressBar = $UI/ProgressBar
 @onready var pause_ui: Control = $UI/PauseMenu
+@onready var scene_particles: CPUParticles2D = $SceneParticles
 
 # Parallax
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -41,9 +42,10 @@ func _ready():
 
 func _process(delta):
 	# Camera follow
-	camera_move()
-	if GameProperties.attempts == 1:
-		camera_check_state()
+	if not player.finished:
+		camera_move()
+		if GameProperties.attempts == 1:
+			camera_check_state()
 	
 	# Increment whenever the player JUST jumped
 	if Input.is_action_just_pressed("Player Jump"):
@@ -55,17 +57,28 @@ func _process(delta):
 	
 	# Changes the color for both the background and ground
 	# Checks if the ground and bg hasn't reached the desired color yet
-	if ground_sprite.modulate != player.color_trigger.ground_color or bg_sprite.modulate != player.color_trigger.bg_color:
-		color_change(player.color_trigger, delta)
+	if not player.dead:
+		if ground_sprite.modulate != player.color_trigger.ground_color or bg_sprite.modulate != player.color_trigger.bg_color:
+			color_change(player.color_trigger, delta)
 	
 	# Progress Bar
-	update_progress_bar()
+	if not player.dead:
+		update_progress_bar()
 	
 	# Pause System
 	if Input.is_key_pressed(KEY_ESCAPE):
 		if not player.dead:
 			get_tree().paused = true
 			paused()
+	
+	# Scene Particles System
+	scene_particles.position = player.position + Vector2(get_viewport().size.x / 2.0, 0)
+	if player.gamemode == 1:
+		scene_particles.visible = false
+		scene_particles.emitting = false
+	else:
+		scene_particles.visible = true
+		scene_particles.emitting = true
 
 # Pause System
 ## Pause System:
@@ -295,6 +308,10 @@ func on_player_death():
 	# Stop song
 	songplayer.stop()
 	
+	# Camera shake
+	if not player.dead:
+		camera.apply_shake(9.0)
+	
 	# Update death screen properties
 	death_ui.visible = true
 	death_ui.update(GameProperties.attempts, GameProperties.jumps)
@@ -304,7 +321,7 @@ func on_player_death():
 	
 	# Add tween animation to death screen
 	var tween = get_tree().create_tween()
-	tween.tween_property(death_ui, "position:y", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(death_ui, "position:y", 0.0, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
 
 ## Death Mechanic:
 ## Restarts everything after the player clicks restart

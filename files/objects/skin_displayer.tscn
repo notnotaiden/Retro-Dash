@@ -25,6 +25,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Ship" type="Node2D" parent="."]
+visible = false
 
 [node name="P1" type="Sprite2D" parent="Ship"]
 position = Vector2(0, 38)
