@@ -1,10 +1,12 @@
 extends Area2D
+class_name Portal
 
 @onready var texture: Sprite2D = $Texture
 @onready var particles: CPUParticles2D = $Particle
 @export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
+var has_used: bool = false
 
 # General Functions
 func _ready():
@@ -33,12 +35,15 @@ func _ready():
 ## (Signal Function)
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
-		var gamemodes: Array = [1, 2, 3]
-		if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
-			body.gamemode = gamemode
-			body.gamemode_portal = self
-			body.change_gamemode()
-		else:
-			body.flipped_gravity = !body.flipped_gravity
+		if not has_used:
+			has_used = true
 			
-			body.switch_gravity(1.0, false) 
+			var gamemodes: Array = [1, 2, 3]
+			if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
+				body.gamemode = gamemode
+				body.gamemode_portal = self
+				body.change_gamemode()
+			else:
+				body.flipped_gravity = !body.flipped_gravity
+				
+				body.switch_gravity(1.0, false) 

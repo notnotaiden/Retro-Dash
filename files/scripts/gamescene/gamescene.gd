@@ -21,6 +21,7 @@ extends Node2D
 # Others
 @onready var songplayer: AudioStreamPlayer = $SongPlayer
 @onready var level_node: Node = $Level
+@onready var level_blocks_node: Node
 @onready var checkpoints_node: Node = $Checkpoints
 @onready var practice_timer: Timer = $PracticeModeDelayReset
 
@@ -77,7 +78,7 @@ func _ready():
 
 func _process(delta):
 	# Camera follow
-	if not player.finished:
+	if not player.finished and not player.dead:
 		camera_move()
 		if GameProperties.attempts == 1:
 			camera_check_state()
@@ -214,6 +215,7 @@ func load_level():
 	var new_level = level.instantiate()
 	# Add to scene
 	level_node.add_child(new_level)
+	level_blocks_node = new_level.get_node("Level")
 
 # End of system
 
@@ -485,13 +487,21 @@ func on_timer_finished():
 				attempts_text.text = "Attempt %d" % [GameProperties.attempts]
 				# Restart Jumps
 				GameProperties.jumps = 0
-				# Play song again
+				
 				if GameProperties.practice_mode:
 					if GameProperties.placed_checkpoints.size() > 0.0:
+						# Play song again
 						# Retrieve the last song playback position
+						# Retrieve the last camera position
 						var checkpoint = GameProperties.placed_checkpoints[ GameProperties.placed_checkpoints.size() - 1]
 						
 						songplayer.play(checkpoint["song_playback"])
+						camera.position = checkpoint["camera_pos"]
+				
+				# Restart has_used bool state for every orbs, pads, and portals
+				for node in level_blocks_node.get_children():
+					if node is Orb or node is Pad or node is Portal or node is Speedportal:
+						node.has_used = false
 		else:
 			# Increment attempts
 			GameProperties.attempts += 1

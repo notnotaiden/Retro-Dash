@@ -1,8 +1,11 @@
 extends Area2D
+class_name Speedportal
 
 @onready var texture: Sprite2D = $Texture
 @onready var particles: CPUParticles2D = $Particles
 @export_enum("0.75","1.0","1.2","1.5","1.75") var speed: String = "1.0"
+
+var has_used: bool = false
 
 # General Functions
 func _ready():
@@ -30,5 +33,8 @@ func _ready():
 ## (Signal Function)
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
-		# Speed Portals
-		body.SPEED = body.SPEED * float(speed)
+		if not has_used:
+			has_used = true
+			
+			# Speed Portals
+			body.SPEED = body.SPEED * float(speed)

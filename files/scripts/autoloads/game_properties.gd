@@ -73,7 +73,7 @@ var practice_music_player: AudioStreamPlayer = AudioStreamPlayer.new()
 var placed_checkpoints: Array = []
 
 # Holds the level data of the current level
-var level_path: String = "res://files/levels/level1"  # Just change the path to the level folder
+var level_path: String = "res://files/levels/level5"  # Just change the path to the level folder
 var level_data: Dictionary = {}
 
 # General Functions

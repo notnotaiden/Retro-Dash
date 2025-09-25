@@ -82,34 +82,34 @@ text = "Attempt 1"
 
 [node name="Checkpoints" type="Node" parent="."]
 
-[node name="ParallaxCeiling" type="Parallax2D" parent="."]
+[node name="ParallaxCeiling" type="Parallax2D" parent="." groups=["Ceiling"]]
 process_mode = 1
 z_index = 1
 scroll_offset = Vector2(24, -5)
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
-[node name="Ceiling" type="Sprite2D" parent="ParallaxCeiling"]
+[node name="Ceiling" type="Sprite2D" parent="ParallaxCeiling" groups=["Ceiling"]]
 position = Vector2(14, -5000)
 rotation = 3.1415927
 scale = Vector2(1, 1.1027107)
 texture = ExtResource("3_xig57")
 
-[node name="Ceiling" type="StaticBody2D" parent="ParallaxCeiling/Ceiling"]
+[node name="Ceiling" type="StaticBody2D" parent="ParallaxCeiling/Ceiling" groups=["Ceiling"]]
 position = Vector2(1.9999883, -117.89123)
 scale = Vector2(1, 0.48375663)
 
-[node name="Hitbox" type="CollisionShape2D" parent="ParallaxCeiling/Ceiling/Ceiling"]
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxCeiling/Ceiling/Ceiling" groups=["Ceiling"]]
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_dnfnw")
 
-[node name="ParallaxGround" type="Parallax2D" parent="."]
+[node name="ParallaxGround" type="Parallax2D" parent="." groups=["Ground"]]
 process_mode = 1
 z_index = 1
 repeat_size = Vector2(1350, 0)
 repeat_times = 5
 
-[node name="Ground" type="Sprite2D" parent="ParallaxGround"]
+[node name="Ground" type="Sprite2D" parent="ParallaxGround" groups=["Ground"]]
 position = Vector2(4, 665)
 texture = ExtResource("3_xig57")
 

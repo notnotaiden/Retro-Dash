@@ -101,6 +101,11 @@ func return_by_death(): # Re:Zero *wink*
 	gamemode = checkpoint["gamemode"]
 	
 	change_gamemode()
+	
+	# Flip gravity if gravity is negative on the checkpoint data
+	if checkpoint["gravity"] < 0.0:
+		flipped_gravity = !flipped_gravity
+		switch_gravity(1.0, true)
 
 # Feet Dust Particles System
 ## Feet Dust Particles System:
@@ -173,10 +178,14 @@ func change_gamemode():
 ## How the texture rotates based on different gamemodes
 ## (Main Function)
 func rotate_texture(on_floor: bool, delta: float):
+	if gamemode == 3: # Ball
+		# Rotate it regardless if its on the ground/ceiling
+		texture.rotation_degrees += ROTATIONAL_SPEED
+	
 	if not on_floor:
 		# How the texture rotates based on different gamemodes
 		if gamemode == 1: # Cube
-			texture.rotation_degrees += ROTATIONAL_SPEED
+			texture.rotation_degrees += ROTATIONAL_SPEED * sign(GRAVITY)
 		if gamemode == 2: # Ship
 			var rotation_speed: float = ( GameProperties.SHIP_ROTATIONAL_SPEED * delta ) / 3.0
 			# Makes the ship tilt upward or downward
@@ -186,22 +195,17 @@ func rotate_texture(on_floor: bool, delta: float):
 			else:
 				# Tilt downwards
 				texture.rotation_degrees = lerp(texture.rotation_degrees , GameProperties.SHIP_MAXANGLE_DOWN * sign(GRAVITY), rotation_speed)
-		if gamemode == 3: # Ball
-			texture.rotation_degrees += ROTATIONAL_SPEED
 	else:
 		# How the texture snaps back to the default rotation based on different gamemodes
 		if gamemode == 1: # Cube
 			var snapped_rotation: float
 			# Round to nearest 0 or 180 rotation degress
-			snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+			snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0 * sign(GRAVITY)
 			
 			# Transition smoothly
 			texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 		if gamemode == 2: # Ship
 			texture.rotation_degrees = lerp(texture.rotation_degrees, 0.0, 0.2)
-		if gamemode == 3: # Ball
-			# Rotate it regardless if its on the ground
-			texture.rotation_degrees += ROTATIONAL_SPEED
 
 # End of System
 
@@ -273,9 +277,15 @@ func player_death_collide():
 		var collider = collision.get_collider()
 		var normal = collision.get_normal()
 		
-		# If the player collided with the ceiling do nothing EXCEPT if its a cube
+		if collider.is_in_group("Ceiling"):
+			if not dead and gamemode == 1:
+				emit_signal("player_death")
+				death_particles()
+				dead = true
+		
+		# If the player collided with the ceiling
 		if is_on_ceiling():
-			if not GRAVITY < 0.0 and gamemode == 1: # Check if the cube gravity is flipped:
+			if not GRAVITY < 0.0 and gamemode == 1: # Check if the cube gravity is flipped
 				if not dead:
 					emit_signal("player_death")
 					death_particles()
