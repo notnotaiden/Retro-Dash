@@ -5,7 +5,7 @@ extends Node
 var user_settings: Dictionary = {
 	"settings": {
 		"sound_vol": 1.0,
-		"music_vol": 1.0
+		"music_vol": 0.7
 	},
 	"customization": {
 		"p1_color": Color.YELLOW,
@@ -67,13 +67,28 @@ const SHIP_MAXVELO_y: float = 1000.0
 var attempts: int = 1
 var jumps: int = 0
 
+var practice_mode: bool = false
+var practice_music_player: AudioStreamPlayer = AudioStreamPlayer.new()
+## Holds an array of checkpoints nodes placed on the scene
+var placed_checkpoints: Array = []
+
 # Holds the level data of the current level
-var level_path: String = "res://files/levels/level1"
+var level_path: String = "res://files/levels/level1"  # Just change the path to the level folder
 var level_data: Dictionary = {}
 
 # General Functions
 func _ready():
 	load_level_data()
+	
+	add_child(practice_music_player)
+	# Update practice music player stream
+	practice_music_player.stream = load("res://files/assets/music/practice.mp3")
+
+func _process(_delta):
+	if practice_mode:
+		play_practice_song()
+	else:
+		practice_music_player.stop()
 
 # Level Load System
 ## Level Load System:
@@ -88,3 +103,16 @@ func load_level_data():
 	level_data = JSON.parse_string(json_text)
 
 # End
+
+# Practice Mode Music
+## Practice Mode Music:
+## Plays the practice mode music when practice mode is turned on
+## (Main Function)
+func play_practice_song():
+	practice_music_player.volume_linear = user_settings["settings"]["music_vol"]
+	
+	if practice_mode:
+		if not practice_music_player.playing:
+			practice_music_player.play()
+	else:
+		practice_music_player.stop()

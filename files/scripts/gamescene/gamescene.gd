@@ -10,6 +10,8 @@ extends Node2D
 @onready var progress_bar: ProgressBar = $UI/ProgressBar
 @onready var pause_ui: Control = $UI/PauseMenu
 @onready var scene_particles: CPUParticles2D = $SceneParticles
+@onready var place_checkpoint_btn: Button  = $UI/PlaceCheckpoint
+@onready var delete_checkpoint_btn: Button = $UI/DeleteCheckpoint
 
 # Parallax
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -19,23 +21,56 @@ extends Node2D
 # Others
 @onready var songplayer: AudioStreamPlayer = $SongPlayer
 @onready var level_node: Node = $Level
+@onready var checkpoints_node: Node = $Checkpoints
+@onready var practice_timer: Timer = $PracticeModeDelayReset
 
 var camera_follow: bool = false
+## Holds the state if the player is not touching a ui node
+var on_ui: bool = false
+
+## Checkpoint node
+var CHECKPOINT_FILE: PackedScene = preload("res://files/objects/checkpoint.tscn")
 
 # General Functions
 func _ready():
+	# Adding level to the scene
+	load_level()
+	
 	# Connecting signals
 	# Death UI restart button pressed
 	death_ui.restart_button.connect("pressed", on_player_restart)
 	# Pause UI resturn button pressed
 	pause_ui.return_button.connect("pressed", unpaused)
 	# Pause UI restart button pressed
-	pause_ui.restart_button.connect("pressed", pause_restart)
+	pause_ui.practice_button.connect("pressed", pause_practice)
+	
+	# Update ground, ceiling, and bg color
+	ground_sprite.modulate = Color.ROYAL_BLUE
+	ceiling_sprite.modulate = Color.ROYAL_BLUE
+	bg_sprite.modulate = Color.ROYAL_BLUE
 	
 	# Check state on runtime
 	camera_check_state()
 	# Load song
 	load_song(GameProperties.level_data)
+	
+	# Practice mode
+	if GameProperties.practice_mode:
+		place_checkpoint_btn.visible = true
+		delete_checkpoint_btn.visible = true
+		
+		if GameProperties.placed_checkpoints.size() > 0.0:
+			# Update camera position
+			
+			# Retrieves the last camera position
+			var checkpoint = GameProperties.placed_checkpoints[ GameProperties.placed_checkpoints.size() - 1]
+			camera.position = checkpoint["camera_pos"]
+			
+			# Recreating checkpoint nodes
+			recreate_checkpoints()
+	else:
+		place_checkpoint_btn.visible = false
+		delete_checkpoint_btn.visible = false
 	
 	# Update attempts text
 	attempts_text.text = "Attempt %d" % [GameProperties.attempts]
@@ -79,6 +114,108 @@ func _process(delta):
 	else:
 		scene_particles.visible = true
 		scene_particles.emitting = true
+	
+	if GameProperties.practice_mode:
+		# Don't completely stop the music but js lower down the volume for the progress bar system
+		songplayer.volume_linear = 0.0
+
+func _input(event):
+	if event is InputEventKey:
+		if event.is_pressed() and not event.is_echo():
+			# Checkpoint System
+			if GameProperties.practice_mode:
+				if event.keycode == KEY_Z:
+					place_checkpoint()
+				if event.keycode == KEY_X:
+					delete_checkpoint()
+
+# Checkpoint System
+## Checkpoint System:
+## Places a checkpoint node
+## (Main Function)
+func place_checkpoint():
+	# Add checkpoint to scene
+	var new_checkpoint = CHECKPOINT_FILE.instantiate()
+	checkpoints_node.add_child(new_checkpoint)
+	
+	# Update checkpoint data
+	new_checkpoint.data["position"] = player.global_position
+	new_checkpoint.data["camera_pos"] = camera.global_position
+	new_checkpoint.data["velocity"] = player.velocity
+	new_checkpoint.data["song_playback"] = songplayer.get_playback_position()
+	new_checkpoint.data["gravity"] = player.GRAVITY
+	new_checkpoint.data["gamemode"] = player.gamemode
+	
+	var checkpoint_data: Dictionary = {
+		"position": player.global_position,
+		"camera_pos": camera.global_position,
+		"velocity": player.velocity,
+		"song_playback": songplayer.get_playback_position(),
+		"gravity": player.GRAVITY,
+		"gamemode": player.gamemode
+	}
+	
+	# Update checkpoint position
+	new_checkpoint.global_position = player.global_position
+	
+	# Update checkpoints array
+	GameProperties.placed_checkpoints.append(checkpoint_data)
+	
+	# Unfocus button
+	place_checkpoint_btn.release_focus()
+
+## Checkpoint System:
+## Deletes the recently created checkpoint node
+## (Main Function)
+func delete_checkpoint():
+	# Removes last placed checkpoint
+	var last_checkpoint = GameProperties.placed_checkpoints.pop_back()
+	
+	# Loop through every checkpoints node and if it matches the position in the data, delete it
+	for checkpoint in checkpoints_node.get_children():
+		if checkpoint.data["position"] == last_checkpoint["position"]:
+			checkpoint.queue_free()
+			break
+	
+	# Unfocus button
+	delete_checkpoint_btn.release_focus()
+
+# Checkpoint System
+## Checkpoint System:
+## Recreates the placed checkpoints
+## (Main Function)
+func recreate_checkpoints():
+	# Loops through every placed checkpoints in the array
+	for checkpoint in GameProperties.placed_checkpoints:
+		var new_checkpoint = CHECKPOINT_FILE.instantiate()
+		checkpoints_node.add_child(new_checkpoint)
+		
+		# Update checkpoint data
+		new_checkpoint.data["position"] = checkpoint["position"]
+		new_checkpoint.data["camera_pos"] = checkpoint["camera_pos"]
+		new_checkpoint.data["velocity"] = checkpoint["velocity"]
+		new_checkpoint.data["song_playback"] = checkpoint["song_playback"]
+		new_checkpoint.data["gravity"] = checkpoint["gravity"]
+		new_checkpoint.data["gamemode"] = checkpoint["gamemode"]
+		
+		new_checkpoint.position = checkpoint["position"]
+
+# End of System
+
+# Loading Level
+## Loading Level:
+## Adds the respective level to the scene
+## (Main Function)
+func load_level():
+	# Construct path to the scene file
+	var level_path: String = GameProperties.level_path.path_join("level.tscn")
+	# Instantiate
+	var level: PackedScene = load(level_path)
+	var new_level = level.instantiate()
+	# Add to scene
+	level_node.add_child(new_level)
+
+# End of system
 
 # Pause System
 ## Pause System:
@@ -122,11 +259,13 @@ func unpaused():
 ## Pause System:
 ## Restarts entire scene
 ## (Signal Function)
-func pause_restart():
-	# Increment attempts
-	GameProperties.attempts += 1
+func pause_practice():
+	# Reset attempts
+	GameProperties.attempts = 1
 	# Restart Jumps
 	GameProperties.jumps = 0
+	# Update practice mode bool
+	GameProperties.practice_mode = !GameProperties.practice_mode
 	
 	# unpause scene first
 	get_tree().paused = false
@@ -237,6 +376,7 @@ func load_song(data: Dictionary):
 		return
 	
 	# Update songplayer stream
+	songplayer.volume_linear = GameProperties.user_settings["settings"]["music_vol"]
 	songplayer.stream = mp3_stream
 	songplayer.play()
 	file.close()
@@ -319,9 +459,48 @@ func on_player_death():
 	# Smoothly Animate death screen
 	death_ui.position.y = get_viewport().size.y
 	
-	# Add tween animation to death screen
-	var tween = get_tree().create_tween()
-	tween.tween_property(death_ui, "position:y", 0.0, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	if not GameProperties.practice_mode:
+		# Add tween animation to death screen
+		var tween = get_tree().create_tween()
+		tween.tween_property(death_ui, "position:y", 0.0, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	else:
+		practice_timer.start(1.0)
+
+## Death Mechanic:
+## Restarts everything upon timer finish (Practice mode)
+## (Signal Function)
+func on_timer_finished():
+	if GameProperties.practice_mode:
+		if GameProperties.placed_checkpoints.size() > 0:
+			if player.dead:
+				player.return_by_death()
+				
+				# Restart dead bool
+				player.dead = false
+				# Make texture visible again
+				player.texture.visible = true
+				# Increment attempts
+				GameProperties.attempts += 1
+				# Update attempts text
+				attempts_text.text = "Attempt %d" % [GameProperties.attempts]
+				# Restart Jumps
+				GameProperties.jumps = 0
+				# Play song again
+				if GameProperties.practice_mode:
+					if GameProperties.placed_checkpoints.size() > 0.0:
+						# Retrieve the last song playback position
+						var checkpoint = GameProperties.placed_checkpoints[ GameProperties.placed_checkpoints.size() - 1]
+						
+						songplayer.play(checkpoint["song_playback"])
+		else:
+			# Increment attempts
+			GameProperties.attempts += 1
+			# Restart Jumps
+			GameProperties.jumps = 0
+			# Restart dead bool
+			player.dead = false
+			
+			get_tree().reload_current_scene()
 
 ## Death Mechanic:
 ## Restarts everything after the player clicks restart
@@ -338,3 +517,18 @@ func on_player_restart():
 	get_tree().reload_current_scene()
 
 # End
+
+# On UI
+## On UI System
+## Checks if the player has touched on a UI element or not (Mouse enter)
+## (Signal Function)
+func on_ui_mouse_entered():
+	on_ui = true
+
+## On UI System
+## Checks if the player has touched on a UI element or not (Mouse exit)
+## (Signal Function)
+func on_ui_mouse_exited():
+	on_ui = false
+
+# End of system

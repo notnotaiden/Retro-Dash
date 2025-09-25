@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmwpt5ewduts1"]
+
+[ext_resource type="Texture2D" uid="uid://b2i47w40wxogd" path="res://files/assets/sprites/checkpoint.png" id="1_cgkx8"]
+[ext_resource type="Script" uid="uid://dcqnucgjegs6v" path="res://files/scripts/objects/checkpoint.gd" id="2_0o6e4"]
+
+[node name="Checkpoint" type="Sprite2D"]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_cgkx8")
+script = ExtResource("2_0o6e4")

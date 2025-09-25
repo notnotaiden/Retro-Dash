@@ -31,6 +31,11 @@ signal player_death
 
 # General Functions
 func _ready():
+	# If practice mode is on and there's a checkpoint placed, return to last gameplay state
+	if GameProperties.practice_mode:
+		if GameProperties.placed_checkpoints.size() > 0:
+			return_by_death()
+	
 	# Pass self to texture
 	texture.parent = self
 	
@@ -66,8 +71,9 @@ func _physics_process(delta):
 				switch_gravity(0.0, true)
 	
 	if not finished:
-		# Jumping Mechanic
-		player_jump(delta)
+		if not get_parent().get_parent().on_ui:
+			# Jumping Mechanic
+			player_jump(delta)
 	
 	# Move cube infinitely to the side
 	player_move(delta)
@@ -79,6 +85,22 @@ func _physics_process(delta):
 		player_death_collide()
 
 # End
+
+# Practice Mode System
+## Practice Mode System:
+## Returns the player to the last saved gameplay state upon death
+## (Main Function)
+func return_by_death(): # Re:Zero *wink*
+	# Retrieves the last placed checkpoint in the array
+	var checkpoint = GameProperties.placed_checkpoints[ GameProperties.placed_checkpoints.size() - 1]
+	
+	# Update the player's gameplay state
+	position = checkpoint["position"]
+	velocity = checkpoint["velocity"]
+	GRAVITY = checkpoint["gravity"]
+	gamemode = checkpoint["gamemode"]
+	
+	change_gamemode()
 
 # Feet Dust Particles System
 ## Feet Dust Particles System:
@@ -228,7 +250,12 @@ func switch_gravity(velo: float, instant: bool):
 		
 		# if basically stopped, apply a small push in the new direction
 		if instant:
-			velocity.y = 1.0 * sign(GRAVITY)
+			if gamemode == 1:
+				velocity.y = 700.0 * sign(GRAVITY)
+			elif gamemode == 2:
+				velocity.y = 1.0 * sign(GRAVITY)
+			elif gamemode == 3:
+				velocity.y = 400.0 * sign(GRAVITY)
 		if abs(velocity.y) < 10.0:
 			velocity.y = velo * sign(GRAVITY)
 		
@@ -322,6 +349,7 @@ func death_particles():
 	
 	# Play sound effect
 	if not death_sfx.playing:
+		death_sfx.volume_linear = GameProperties.user_settings["settings"]["sound_vol"]
 		death_sfx.play()
 	
 	# Emit particles

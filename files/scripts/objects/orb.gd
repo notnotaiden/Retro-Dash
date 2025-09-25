@@ -5,8 +5,6 @@ extends Area2D
 @export_enum("Yellow", "Blue") var orb_type: String = "Yellow"
 
 var orb: int
-## Prevents the user from clicking the orb again
-var has_clicked: bool = false
 
 # General Functions
 func _ready():
@@ -29,23 +27,20 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Player Jump"):
 		for body in get_overlapping_bodies():
 			if body is CharacterBody2D:
-				if not has_clicked:
-					has_clicked = true
-					
-					match orb:
-						1: # Yellow ( Extra Jump )
-							match body.gamemode:
-								1: # Cube
-									body.velocity.y = GameProperties.ORB_CUBE_JUMPHEIGHT * sign(body.GRAVITY)
-								2: # Ship
-									body.velocity.y = GameProperties.ORB_SHIP_JUMPHEIGHT * sign(body.GRAVITY)
-								3: # Ball
-									# Flip bool back to false so it doesn't switch gravitiy
-									body.flipped_gravity = false
-									
-									body.velocity.y = GameProperties.ORB_BALL_JUMPHEIGHT * sign(body.GRAVITY)
-						2: # Blue ( Flip gravtiy )
-							if not body.gamemode == 3:
-								body.flipped_gravity = !body.flipped_gravity
-							
-							body.switch_gravity(1.0, true)
+				match orb:
+					1: # Yellow ( Extra Jump )
+						match body.gamemode:
+							1: # Cube
+								body.velocity.y = GameProperties.ORB_CUBE_JUMPHEIGHT * sign(body.GRAVITY)
+							2: # Ship
+								body.velocity.y = GameProperties.ORB_SHIP_JUMPHEIGHT * sign(body.GRAVITY)
+							3: # Ball
+								# Flip bool back to false so it doesn't switch gravitiy
+								body.flipped_gravity = false
+								
+								body.velocity.y = GameProperties.ORB_BALL_JUMPHEIGHT * sign(body.GRAVITY)
+					2: # Blue ( Flip gravtiy )
+						if not body.gamemode == 3:
+							body.flipped_gravity = !body.flipped_gravity
+						
+						body.switch_gravity(1.0, true)

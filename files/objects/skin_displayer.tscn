@@ -32,6 +32,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Ship" type="Node2D" parent="."]
+visible = false
 
 [node name="FireParticles" type="CPUParticles2D" parent="Ship"]
 position = Vector2(-44, 25)

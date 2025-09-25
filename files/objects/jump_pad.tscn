@@ -22,6 +22,7 @@ position = Vector2(-1, 27)
 amount = 20
 lifetime = 1.5
 preprocess = 10.0
+local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(30, 1)
 gravity = Vector2(0, -500)

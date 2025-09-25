@@ -5,7 +5,6 @@ extends Area2D
 @export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
-var has_touched: bool = false
 
 # General Functions
 func _ready():
@@ -13,7 +12,7 @@ func _ready():
 	match gamemode_type:
 		"Cube": # Cube
 			texture.region_rect = Rect2(34.0, 0.0, 13.0, 32.0)
-			particles.color = Color.GREEN
+			particles.color = Color.LIGHT_GREEN
 			gamemode = 1
 		"Ship": # Ship
 			texture.region_rect = Rect2(50.0, 0.0, 13.0, 32.0)
@@ -21,7 +20,7 @@ func _ready():
 			gamemode = 2
 		"Ball": # Ball
 			texture.region_rect = Rect2(2.0, 32.0, 13.0, 32.0)
-			particles.color = Color.RED
+			particles.color = Color.LIGHT_CORAL
 			gamemode = 3
 		"Flipped Gravity": # Flips the gravity of the player
 			texture.region_rect = Rect2(18.0, 0.0, 13.0, 32.0)
@@ -34,15 +33,12 @@ func _ready():
 ## (Signal Function)
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
-		if not has_touched:
-			has_touched = true
+		var gamemodes: Array = [1, 2, 3]
+		if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
+			body.gamemode = gamemode
+			body.gamemode_portal = self
+			body.change_gamemode()
+		else:
+			body.flipped_gravity = !body.flipped_gravity
 			
-			var gamemodes: Array = [1, 2, 3]
-			if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball
-				body.gamemode = gamemode
-				body.gamemode_portal = self
-				body.change_gamemode()
-			else:
-				body.flipped_gravity = !body.flipped_gravity
-				
-				body.switch_gravity(1.0, false) 
+			body.switch_gravity(1.0, false) 
