@@ -34,6 +34,16 @@ scale_amount_min = 5.0
 scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_b3t1j")
 
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
+position = Vector2(-23, 3)
+emitting = false
+amount = 20
+lifetime = 0.35000000000000003
+gravity = Vector2(-200, -200)
+scale_amount_min = 20.0
+scale_amount_max = 30.0
+scale_amount_curve = SubResource("Curve_b3t1j")
+
 [node name="SkinDisplayer" parent="." instance=ExtResource("2_mpttn")]
 
 [node name="ExplosionParticle" type="CPUParticles2D" parent="."]
@@ -53,4 +63,8 @@ scale_amount_curve = SubResource("Curve_mpttn")
 [node name="DeathSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_b3t1j")
 
+[node name="StopEmittingTrails" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="finished" from="DeathSFX" to="." method="on_death_sfx_finished"]
+[connection signal="timeout" from="StopEmittingTrails" to="." method="on_stop_emitting_trails_timeout"]

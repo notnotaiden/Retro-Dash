@@ -67,13 +67,16 @@ const SHIP_MAXVELO_y: float = 1000.0
 var attempts: int = 1
 var jumps: int = 0
 
+# Animations
+var orb_scale: float = 3.0
+
 var practice_mode: bool = false
 var practice_music_player: AudioStreamPlayer = AudioStreamPlayer.new()
 ## Holds an array of checkpoints nodes placed on the scene
 var placed_checkpoints: Array = []
 
 # Holds the level data of the current level
-var level_path: String = "res://files/levels/level5"  # Just change the path to the level folder
+var level_path: String = "res://files/levels/level1"  # Just change the path to the level folder
 var level_data: Dictionary = {}
 
 # General Functions

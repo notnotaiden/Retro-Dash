@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=17 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cqod1o7ku1gik" path="res://files/scenes/death_ui.tscn" id="5_vuyq8"]
 [ext_resource type="PackedScene" uid="uid://cown771khe0pp" path="res://files/scenes/pause_menu.tscn" id="7_vcuyv"]
 [ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/ui_theme.tres" id="7_xig57"]
+[ext_resource type="AudioStream" uid="uid://bnw6blivq0762" path="res://files/assets/sound/complete.mp3" id="10_fr3gv"]
+[ext_resource type="PackedScene" uid="uid://bh51c8xeu0ig7" path="res://files/scenes/complete_screen.tscn" id="10_lp4b5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
@@ -122,6 +124,26 @@ shape = SubResource("WorldBoundaryShape2D_u87vo")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="FadeOutFinish" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CompleteText" type="Label" parent="UI"]
+offset_left = 332.0
+offset_top = 266.0
+offset_right = 988.0
+offset_bottom = 337.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(328, 35)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("4_le3s8")
+theme_override_font_sizes/font_size = 80
+text = "LEVEL COMPLETE"
+
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -135,17 +157,6 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/background = SubResource("StyleBoxFlat_dnfnw")
 theme_override_styles/fill = SubResource("StyleBoxFlat_vcuyv")
 value = 50.0
-
-[node name="PauseButton" type="Button" parent="UI"]
-process_mode = 3
-anchors_preset = -1
-anchor_left = 0.99500006
-anchor_right = 0.99500006
-offset_left = -76.6001
-offset_top = 6.0
-offset_right = -0.60009766
-offset_bottom = 80.0
-theme = ExtResource("7_xig57")
 
 [node name="PlaceCheckpoint" type="Button" parent="UI"]
 anchors_preset = 7
@@ -191,11 +202,26 @@ theme_override_fonts/font = ExtResource("4_le3s8")
 theme_override_font_sizes/font_size = 50
 text = "X"
 
+[node name="PauseButton" type="Button" parent="UI"]
+process_mode = 3
+anchors_preset = -1
+anchor_left = 0.99500006
+anchor_right = 0.99500006
+offset_left = -76.6001
+offset_top = 6.0
+offset_right = -0.60009766
+offset_bottom = 80.0
+theme = ExtResource("7_xig57")
+
 [node name="DeathUI" parent="UI" instance=ExtResource("5_vuyq8")]
 visible = false
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("7_vcuyv")]
 visible = false
+
+[node name="CompleteScreen" parent="UI" instance=ExtResource("10_lp4b5")]
+offset_top = 1280.0
+offset_bottom = 1280.0
 
 [node name="SongPlayer" type="AudioStreamPlayer" parent="."]
 
@@ -212,14 +238,17 @@ scale_amount_curve = SubResource("Curve_fr3gv")
 
 [node name="PracticeModeDelayReset" type="Timer" parent="."]
 
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_fr3gv")
+
 [connection signal="player_death" from="Gameplay/Player" to="." method="on_player_death"]
-[connection signal="mouse_entered" from="UI/PauseButton" to="." method="on_ui_mouse_entered"]
-[connection signal="mouse_exited" from="UI/PauseButton" to="." method="on_ui_mouse_exited"]
-[connection signal="pressed" from="UI/PauseButton" to="." method="pausebtn_pressed"]
 [connection signal="mouse_entered" from="UI/PlaceCheckpoint" to="." method="on_ui_mouse_entered"]
 [connection signal="mouse_exited" from="UI/PlaceCheckpoint" to="." method="on_ui_mouse_exited"]
 [connection signal="pressed" from="UI/PlaceCheckpoint" to="." method="place_checkpoint"]
 [connection signal="mouse_entered" from="UI/DeleteCheckpoint" to="." method="on_ui_mouse_entered"]
 [connection signal="mouse_exited" from="UI/DeleteCheckpoint" to="." method="on_ui_mouse_exited"]
 [connection signal="pressed" from="UI/DeleteCheckpoint" to="." method="delete_checkpoint"]
+[connection signal="mouse_entered" from="UI/PauseButton" to="." method="on_ui_mouse_entered"]
+[connection signal="mouse_exited" from="UI/PauseButton" to="." method="on_ui_mouse_exited"]
+[connection signal="pressed" from="UI/PauseButton" to="." method="pausebtn_pressed"]
 [connection signal="timeout" from="PracticeModeDelayReset" to="." method="on_timer_finished"]

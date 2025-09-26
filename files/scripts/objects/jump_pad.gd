@@ -2,6 +2,7 @@ extends Area2D
 class_name Pad
 
 @onready var texture: Sprite2D = $Texture
+@onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var particles: CPUParticles2D = $Particles
 @export_enum("Yellow", "Blue") var pad_type: String = "Yellow"
 
@@ -20,7 +21,10 @@ func _ready():
 func on_body_entered(body):
 	if body is CharacterBody2D: # Checks if its the player
 		if not has_used:
+			animation.play("hit")
 			has_used = true
+			body.emit_trail = true
+			body.trail_timer.start(0.5)
 			
 			match pad_type:
 				"Yellow":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://u17y26jq64ft"]
+[gd_scene load_steps=8 format=3 uid="uid://u17y26jq64ft"]
 
 [ext_resource type="Script" uid="uid://ip5y5kk4sita" path="res://files/scripts/objects/orb.gd" id="1_0xhph"]
 [ext_resource type="Texture2D" uid="uid://bsg1urxhgscn5" path="res://files/assets/sprites/orbs.png" id="1_16qd1"]
@@ -9,6 +9,42 @@ size = Vector2(236, 228)
 [sub_resource type="Curve" id="Curve_0xhph"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.23735416), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_0xhph"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 3.732131),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(3, 3), Vector2(2, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_7foqc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_brh5l"]
+_data = {
+&"RESET": SubResource("Animation_7foqc"),
+&"hit": SubResource("Animation_0xhph")
+}
 
 [node name="Orb" type="Area2D"]
 script = ExtResource("1_0xhph")
@@ -29,7 +65,12 @@ scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_0xhph")
 
 [node name="Texture" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
+scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("1_16qd1")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_brh5l")
+}

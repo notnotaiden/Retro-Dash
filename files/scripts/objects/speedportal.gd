@@ -2,6 +2,7 @@ extends Area2D
 class_name Speedportal
 
 @onready var texture: Sprite2D = $Texture
+@onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var particles: CPUParticles2D = $Particles
 @export_enum("0.75","1.0","1.2","1.5","1.75") var speed: String = "1.0"
 
@@ -35,6 +36,9 @@ func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
 		if not has_used:
 			has_used = true
+			animation.play("hit")
+			body.emit_trail = true
+			body.trail_timer.start(0.5)
 			
 			# Speed Portals
 			body.SPEED = body.SPEED * float(speed)

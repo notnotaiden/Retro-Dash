@@ -3,6 +3,7 @@ class_name Portal
 
 @onready var texture: Sprite2D = $Texture
 @onready var particles: CPUParticles2D = $Particle
+@onready var animation: AnimationPlayer = $AnimationPlayer
 @export_enum("Cube","Ship", "Ball", "Flipped Gravity") var gamemode_type: String = "Ship"
 
 var gamemode: int
@@ -36,7 +37,10 @@ func _ready():
 func on_body_entered(body):
 	if body is CharacterBody2D: # Check if its the player
 		if not has_used:
+			animation.play("hit")
 			has_used = true
+			body.emit_trail = true
+			body.trail_timer.start(0.5)
 			
 			var gamemodes: Array = [1, 2, 3]
 			if gamemode in gamemodes: # Check if the gamemode is cube, ship, or ball

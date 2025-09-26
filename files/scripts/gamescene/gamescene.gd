@@ -12,6 +12,9 @@ extends Node2D
 @onready var scene_particles: CPUParticles2D = $SceneParticles
 @onready var place_checkpoint_btn: Button  = $UI/PlaceCheckpoint
 @onready var delete_checkpoint_btn: Button = $UI/DeleteCheckpoint
+@onready var fade_out: ColorRect = $UI/FadeOutFinish
+@onready var complete_text: Label = $UI/CompleteText
+@onready var complete_ui: Control = $UI/CompleteScreen
 
 # Parallax
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -24,6 +27,7 @@ extends Node2D
 @onready var level_blocks_node: Node
 @onready var checkpoints_node: Node = $Checkpoints
 @onready var practice_timer: Timer = $PracticeModeDelayReset
+@onready var sound_player: AudioStreamPlayer = $SoundPlayer
 
 var camera_follow: bool = false
 ## Holds the state if the player is not touching a ui node
@@ -42,8 +46,10 @@ func _ready():
 	death_ui.restart_button.connect("pressed", on_player_restart)
 	# Pause UI resturn button pressed
 	pause_ui.return_button.connect("pressed", unpaused)
-	# Pause UI restart button pressed
+	# Pause UI practice button pressed
 	pause_ui.practice_button.connect("pressed", pause_practice)
+	# Complete UI restart button
+	complete_ui.restart_button.connect("pressed", on_complete_restart)
 	
 	# Update ground, ceiling, and bg color
 	ground_sprite.modulate = Color.ROYAL_BLUE
@@ -119,6 +125,26 @@ func _process(delta):
 	if GameProperties.practice_mode:
 		# Don't completely stop the music but js lower down the volume for the progress bar system
 		songplayer.volume_linear = 0.0
+	
+	# Finish mechanic
+	if progress_bar.value >= 99:
+		fade_out.color.a = lerp(fade_out.color.a, 1.0, 0.05)
+		
+		if not player.finished:
+			player.finished = true
+			sound_player.play()
+			
+			# Update complete screen properties
+			complete_ui.update(GameProperties.attempts, GameProperties.jumps)
+			
+			# Animation
+			var complete_text_tween_scale = get_tree().create_tween()
+			complete_text_tween_scale.tween_property(complete_text, "scale", Vector2(1.0, 1.0), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(3.5)
+			var complete_text_tween_alpha = get_tree().create_tween()
+			complete_text_tween_alpha.tween_property(complete_text, "modulate:a", 0.0, 1.0).set_ease(Tween.EASE_OUT).set_delay(4.5)
+			var complete_ui_tween = get_tree().create_tween()
+			complete_ui_tween.tween_property(complete_ui, "position:y", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE).set_delay(5.0)
+
 
 func _input(event):
 	if event is InputEventKey:
@@ -518,6 +544,20 @@ func on_timer_finished():
 func on_player_restart():
 	# Increment attempts
 	GameProperties.attempts += 1
+	# Restart Jumps
+	GameProperties.jumps = 0
+	# Restart dead bool
+	player.dead = false
+	
+	# Reload entire scene
+	get_tree().reload_current_scene()
+
+## Complete Mechanic:
+## Restarts everything after the player clicks restart
+## (Signal Function)
+func on_complete_restart():
+	# Restart attempts
+	GameProperties.attempts = 0
 	# Restart Jumps
 	GameProperties.jumps = 0
 	# Restart dead bool

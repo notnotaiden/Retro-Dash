@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bm4a5wn1vtijn"
+path="res://.godot/imported/Back on Track Remix.mp3-0ff6fc40378f2291f07dcad8baa24edd.mp3str"
+
+[deps]
+
+source_file="res://files/assets/music/Back on Track Remix.mp3"
+dest_files=["res://.godot/imported/Back on Track Remix.mp3-0ff6fc40378f2291f07dcad8baa24edd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

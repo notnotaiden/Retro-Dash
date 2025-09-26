@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b218b7ivplo1t"]
+[gd_scene load_steps=8 format=3 uid="uid://b218b7ivplo1t"]
 
 [ext_resource type="Script" uid="uid://c0n2snblbrimi" path="res://files/scripts/objects/jump_pad.gd" id="1_4p0uy"]
 [ext_resource type="Texture2D" uid="uid://c71q22o8uyjc7" path="res://files/assets/sprites/jump_pads.png" id="1_lncdl"]
@@ -9,6 +9,43 @@ size = Vector2(65, 10)
 [sub_resource type="Curve" id="Curve_4p0uy"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.06614792), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_4p0uy"]
+resource_name = "hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 8.574188),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(18.892157, 18.892157, 18.892157, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5bjip"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pr6px"]
+_data = {
+&"RESET": SubResource("Animation_5bjip"),
+&"hit": SubResource("Animation_4p0uy")
+}
 
 [node name="JumpPad" type="Area2D"]
 script = ExtResource("1_4p0uy")
@@ -35,5 +72,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_lncdl")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_pr6px")
+}
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]

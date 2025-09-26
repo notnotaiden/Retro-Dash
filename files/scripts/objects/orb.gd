@@ -2,6 +2,7 @@ extends Area2D
 class_name Orb
 
 @onready var texture: Sprite2D = $Texture
+@onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var particles: CPUParticles2D = $Particles
 @export_enum("Yellow", "Blue") var orb_type: String = "Yellow"
 
@@ -14,7 +15,7 @@ func _ready():
 	match orb_type:
 		"Yellow":
 			texture.region_rect = Rect2(0.0, 0.0, 32.0, 32.0)
-			particles.color = Color.YELLOW
+			particles.color = Color.LIGHT_GOLDENROD
 			orb = 1
 		"Blue":
 			texture.region_rect = Rect2(32.0, 0.0, 32.0, 32.0)
@@ -26,11 +27,16 @@ func _ready():
 ## Yellow: Makes the player jump mid air, Blue = switches gravity
 ## (General Function)
 func _process(_delta):
+	texture.scale = Vector2(2.0, 2.0)
+	
 	if Input.is_action_just_pressed("Player Jump"):
 		for body in get_overlapping_bodies():
 			if body is CharacterBody2D:
 				if not has_used:
+					animation.play("hit")
 					has_used = true
+					body.emit_trail = true
+					body.trail_timer.start(0.5)
 					
 					match orb:
 						1: # Yellow ( Extra Jump )

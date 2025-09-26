@@ -4,6 +4,10 @@ extends CharacterBody2D
 @onready var texture: Node2D = $SkinDisplayer
 @onready var hitbox: CollisionShape2D = $Hitbox
 @onready var death_particle: CPUParticles2D = $ExplosionParticle
+
+@onready var trail_particles: CPUParticles2D = $TrailParticles
+@onready var trail_timer: Timer = $StopEmittingTrails
+
 @onready var death_sfx: AudioStreamPlayer = $DeathSFX
 @onready var feet_particles: CPUParticles2D = $FeetParticles
 
@@ -20,6 +24,8 @@ var finished: bool = false
 var flipped_gravity: bool = false
 ## Holds the current gamemode the player is in
 @export var gamemode: int = 1
+
+var emit_trail: bool = false
 
 ## Holds the recently collided gamemode portal
 var gamemode_portal: Area2D
@@ -46,6 +52,12 @@ func _ready():
 	# Immediently instantiate a color trigger node so it doesn't throw an error
 	# Instantiate a new color trigger node and store it in color_trigger
 	color_trigger = COLOR_TRIGGER_SCENE_FILE.instantiate()
+
+func _process(_delta):
+	if emit_trail:
+		trail_particles.emitting = true
+	else:
+		trail_particles.emitting = false
 
 func _physics_process(delta):
 	# Apply gravity
@@ -366,3 +378,10 @@ func death_particles():
 	death_particle.emitting = true
 
 # End of System
+
+# Trail System
+## Trail System:
+## Stops emitting trail particles after timer timeout
+# (Signal Function)
+func on_stop_emitting_trails_timeout():
+	emit_trail = false
