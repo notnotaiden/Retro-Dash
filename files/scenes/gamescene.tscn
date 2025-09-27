@@ -118,6 +118,24 @@ position = Vector2(-4, -125)
 position = Vector2(577.5, 1.5)
 shape = SubResource("WorldBoundaryShape2D_u87vo")
 
+[node name="ParallaxGround2" type="Parallax2D" parent="." groups=["Ground"]]
+process_mode = 1
+z_index = 1
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="Ground" type="Sprite2D" parent="ParallaxGround2" groups=["Ground"]]
+position = Vector2(3, 914)
+texture = ExtResource("3_xig57")
+flip_v = true
+
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround2/Ground" groups=["Ground"]]
+position = Vector2(-4, -125)
+
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround2/Ground/Ground" groups=["Ground"]]
+position = Vector2(577.5, 1.5)
+shape = SubResource("WorldBoundaryShape2D_u87vo")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="FadeOutFinish" type="ColorRect" parent="UI"]

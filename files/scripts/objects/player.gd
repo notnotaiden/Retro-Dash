@@ -92,7 +92,7 @@ func _physics_process(delta):
 	if not on_menu:
 		player_move(delta)
 	if on_menu:
-		feet_particles.emitting = false
+		position.x += GameProperties.camera_speed_menu * delta
 	
 	if not dead:
 		move_and_slide()

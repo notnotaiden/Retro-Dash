@@ -160,13 +160,15 @@ VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_kbt6o")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_qn6ek")
 
 [node name="LevelPanel" type="Panel"]
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
-anchor_right = 0.5
+anchor_top = 0.5
+anchor_right = 0.50100005
+anchor_bottom = 0.5
 offset_left = -383.0
-offset_top = 110.0
-offset_right = 385.0
-offset_bottom = 601.0
+offset_top = -250.0
+offset_right = 383.71997
+offset_bottom = 241.0
 grow_horizontal = 2
 theme_override_styles/panel = ExtResource("1_4cjcl")
 script = ExtResource("2_pamsc")

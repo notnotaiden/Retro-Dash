@@ -1,6 +1,6 @@
 {
-	"Name": "Hysteria",
-	"Difficulty": -1.0,
+	"Name": "Retro Madness",
+	"Difficulty": 3,
 	"SongPath": "res://files/assets/music/StereoMadness2.mp3",
-	"ID": -1.0
+	"ID": 1
 }

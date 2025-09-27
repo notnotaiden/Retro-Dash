@@ -95,6 +95,14 @@ func _process(_delta):
 		play_practice_song()
 	else:
 		practice_music_player.stop()
+	
+	# Full screen mechanic
+	if Input.is_key_pressed(KEY_F11):
+		var window = get_window()
+		if window.mode == Window.MODE_FULLSCREEN:
+			window.mode = Window.MODE_WINDOWED
+		else:
+			window.mode = Window.MODE_FULLSCREEN
 
 # Level Load System
 ## Level Load System:

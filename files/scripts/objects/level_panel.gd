@@ -10,6 +10,8 @@ extends Panel
 @export var level_name: String = "LEVEL NAME"
 @export var difficulty: int = 1
 
+signal pressed
+
 # General Functions
 func _ready():
 	# Update level name text
@@ -34,9 +36,9 @@ func _ready():
 		8: # Harder
 			face.region_rect = Rect2(128.0, 0.0, 32.0, 32.0)
 		9: # Insane
-			face.region_rect = Rect2(128.0, 0.0, 32.0, 32.0)
-		10: # Demon
 			face.region_rect = Rect2(160.0, 0.0, 32.0, 32.0)
+		10: # Demon
+			face.region_rect = Rect2(192.0, 0.0, 32.0, 32.0)
 
 # Play level
 ## Play level System:
@@ -45,4 +47,4 @@ func _ready():
 func on_play_pressed():
 	GameProperties.level_path = level_path
 	
-	get_tree().change_scene_to_file("res://files/scenes/gamescene.tscn")
+	emit_signal("pressed")

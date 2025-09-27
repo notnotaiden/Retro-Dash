@@ -20,6 +20,7 @@ extends Node2D
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
 @onready var ceiling_sprite: Sprite2D = $ParallaxCeiling/Ceiling
 @onready var ground_sprite: Sprite2D = $ParallaxGround/Ground
+@onready var ground_sprite2: Sprite2D = $ParallaxGround2/Ground
 
 # Others
 @onready var songplayer: AudioStreamPlayer = $SongPlayer
@@ -56,6 +57,7 @@ func _ready():
 	
 	# Update ground, ceiling, and bg color
 	ground_sprite.modulate = Color.ROYAL_BLUE
+	ground_sprite2.modulate = Color.ROYAL_BLUE
 	ceiling_sprite.modulate = Color.ROYAL_BLUE
 	bg_sprite.modulate = Color.ROYAL_BLUE
 	
@@ -112,7 +114,7 @@ func _process(delta):
 	
 	# Pause System
 	if Input.is_key_pressed(KEY_ESCAPE):
-		if not player.dead:
+		if not player.dead or not player.finished:
 			get_tree().paused = true
 			paused()
 	
@@ -347,10 +349,12 @@ func color_change(color_trigger, delta):
 	if ground_change_weight > 0.0:
 		# Slowly transition onto it
 		ground_sprite.modulate = lerp(ground_sprite.modulate, ground_color, ground_change_weight)
+		ground_sprite2.modulate = lerp(ground_sprite.modulate, ground_color, ground_change_weight)
 		ceiling_sprite.modulate = lerp(ceiling_sprite.modulate, ground_color, ground_change_weight)
 	else:
 		# Immediently apply it
 		ground_sprite.modulate = ground_color
+		ground_sprite2.modulate = ground_color
 		ceiling_sprite.modulate = ground_color
 
 # End
@@ -371,17 +375,19 @@ func gamemode_boundary(gamemode):
 		2: # Ship
 			
 			# Clamp the ground first so it doesn't go past the max floor level
-			var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
-			ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
-			# Ceiling is just boundary_height above the ground
-			ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
+			if not player.gamemode_portal == null:
+				var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
+				ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+				# Ceiling is just boundary_height above the ground
+				ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
 		3: # Ball
 			
-			# Clamp the ground first so it doesn't go past the max floor level
-			var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
-			ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
-			# Ceiling is just boundary_height above the ground
-			ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
+			if not player.gamemode_portal == null:
+				# Clamp the ground first so it doesn't go past the max floor level
+				var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
+				ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+				# Ceiling is just boundary_height above the ground
+				ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
 	
 	# Make both the ceiling and ground transition smoothly (Since the ceiling is higher, make it go faster)
 	ceiling_sprite.position.y = lerp(ceiling_sprite.position.y, ceiling_pos_y, 0.15)
@@ -447,25 +453,27 @@ func camera_move():
 			# Find ceiling and ground position
 			
 			# Clamp the ground first so it doesn't go past the max floor level
-			var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
-			var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
-			# Ceiling is just boundary_height above the ground
-			var ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
+			if not player.gamemode_portal == null:
+				var boundary_height: float = GameProperties.SHIP_BOUNDARY_HEIGHT / 2.0
+				var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+				# Ceiling is just boundary_height above the ground
+				var ceiling_pos_y = ground_pos_y - GameProperties.SHIP_BOUNDARY_HEIGHT
 			
-			var offset: float = 10.0
-			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
+				var offset: float = 10.0
+				target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
 		3: # Ball
 			# Vertical follow (Makes the camera centered)
 			# Find ceiling and ground position
 			
 			# Clamp the ground first so it doesn't go past the max floor level
-			var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
-			var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
-			# Ceiling is just boundary_height above the ground
-			var ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
-			
-			var offset: float = 0.0
-			target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
+			if not player.gamemode_portal == null:
+				var boundary_height: float = GameProperties.BALL_BOUNDARY_HEIGHT / 2.0
+				var ground_pos_y = min(player.gamemode_portal.position.y + boundary_height, GameProperties.MAX_GROUND_YPOS)
+				# Ceiling is just boundary_height above the ground
+				var ceiling_pos_y = ground_pos_y - GameProperties.BALL_BOUNDARY_HEIGHT
+				
+				var offset: float = 0.0
+				target_y = (ceiling_pos_y + ground_pos_y) / 2.0 - offset
 	
 	# Smooth transition to position y
 	camera.position.y = lerp(camera.position.y, target_y, 0.05)

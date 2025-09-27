@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://gc2n7gfjmwr8"]
+[gd_scene load_steps=7 format=3 uid="uid://gc2n7gfjmwr8"]
 
 [ext_resource type="Script" uid="uid://tcneye87vea7" path="res://files/scripts/levelselect/levelselect.gd" id="1_bpkmi"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_r4vfl"]
 [ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="2_bpkmi"]
 [ext_resource type="PackedScene" uid="uid://nmv1fvq0qlmg" path="res://files/objects/level_panel.tscn" id="4_krj2y"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="5_7x172"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_krj2y"]
 
@@ -46,7 +47,126 @@ position = Vector2(640, 360)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="LevelPanel" parent="UI" instance=ExtResource("4_krj2y")]
+[node name="FadeOut" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Levels" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margins" type="MarginContainer" parent="UI/Levels"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -600.0
+offset_bottom = -320.0
+theme_override_constants/margin_left = 256
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Levels/Margins"]
+layout_mode = 2
+theme_override_constants/separation = 1280
+
+[node name="Level1" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level1" instance=ExtResource("4_krj2y")]
+layout_mode = 0
+anchors_preset = 0
+offset_top = 90.0
+offset_bottom = 581.0
+level_name = "RETRO MADNESS"
+difficulty = 3
+
+[node name="Level2" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level2" instance=ExtResource("4_krj2y")]
+layout_mode = 0
+anchors_preset = 0
+offset_top = 90.0
+offset_bottom = 581.0
+level_path = "res://files/levels/level2"
+level_name = "BACKBEAT"
+difficulty = 6
+
+[node name="Level3" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level3" instance=ExtResource("4_krj2y")]
+layout_mode = 0
+anchors_preset = 0
+offset_top = 90.0
+offset_bottom = 581.0
+level_path = "res://files/levels/level3"
+level_name = "FADE OUT"
+difficulty = 8
+
+[node name="Level4" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level4" instance=ExtResource("4_krj2y")]
+layout_mode = 0
+anchors_preset = 0
+offset_top = 90.0
+offset_bottom = 581.0
+level_path = "res://files/levels/level4"
+level_name = "POLARIS"
+difficulty = 10
+
+[node name="Back" type="Button" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 158.0
+offset_bottom = 71.0
+theme = ExtResource("5_7x172")
+theme_override_font_sizes/font_size = 20
+text = "BACK
+"
+
+[node name="Previous" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -90.0
+offset_right = -13.0
+offset_bottom = -14.0
+theme = ExtResource("5_7x172")
+theme_override_font_sizes/font_size = 20
+text = "PREVIOUS
+"
+
+[node name="Next" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -89.0
+offset_right = 180.0
+offset_bottom = -13.0
+theme = ExtResource("5_7x172")
+theme_override_font_sizes/font_size = 20
+text = "NEXT
+"
 
 [node name="FadeIn" type="ColorRect" parent="UI"]
 visible = false
@@ -56,3 +176,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="FadeOutDelay" type="Timer" parent="."]
+
+[connection signal="pressed" from="UI/Levels/Margins/HBoxContainer/Level1/LevelPanel" to="." method="on_play_pressed"]
+[connection signal="pressed" from="UI/Levels/Margins/HBoxContainer/Level2/LevelPanel" to="." method="on_play_pressed"]
+[connection signal="pressed" from="UI/Levels/Margins/HBoxContainer/Level3/LevelPanel" to="." method="on_play_pressed"]
+[connection signal="pressed" from="UI/Levels/Margins/HBoxContainer/Level4/LevelPanel" to="." method="on_play_pressed"]
+[connection signal="pressed" from="UI/Back" to="." method="on_back_pressed"]
+[connection signal="pressed" from="UI/Previous" to="." method="on_previous_pressed"]
+[connection signal="pressed" from="UI/Next" to="." method="on_next_pressed"]
+[connection signal="timeout" from="FadeOutDelay" to="." method="on_fade_out_delay_timeout"]

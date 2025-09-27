@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://8x2ybdpjnnkm"]
+[gd_scene load_steps=22 format=3 uid="uid://8x2ybdpjnnkm"]
 
 [ext_resource type="Texture2D" uid="uid://wyqulflh610" path="res://files/assets/sprites/retro_dash.png" id="1_2547t"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_oyrcy"]
@@ -11,6 +11,159 @@
 [ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="9_y27b4"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k3dd5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y27b4"]
+bg_color = Color(0.8666667, 0, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53hoy"]
+bg_color = Color(0.74883235, 0, 0.1434359, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3u1t"]
+bg_color = Color(0.86769885, 0, 0.17184411, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1ub4"]
+bg_color = Color(0.45038956, 0, 0.0697565, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xo5ut"]
+bg_color = Color(0.47843137, 0.87058824, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnfy5"]
+bg_color = Color(0.37581402, 0.6826376, 0.14553571, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h44fk"]
+bg_color = Color(0.47843137, 0.87058824, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhbxm"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3y0fr"]
+bg_color = Color(0.86323947, 0.86323947, 0.86323947, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpcbi"]
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="Theme" id="Theme_7m62k"]
+Button/constants/outline_size = 10
+Button/fonts/font = ExtResource("5_8iljj")
+Button/styles/focus = SubResource("StyleBoxFlat_y27b4")
+Button/styles/hover = SubResource("StyleBoxFlat_53hoy")
+Button/styles/normal = SubResource("StyleBoxFlat_j3u1t")
+Button/styles/pressed = SubResource("StyleBoxFlat_q1ub4")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_xo5ut")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_hnfy5")
+ProgressBar/constants/outline_size = 10
+ProgressBar/fonts/font = ExtResource("5_8iljj")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_h44fk")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_fhbxm")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_3y0fr")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_xpcbi")
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_xwwe5")
@@ -49,7 +202,7 @@ shape = SubResource("WorldBoundaryShape2D_k3dd5")
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 
-[node name="Gameplay" type="CanvasLayer" parent="."]
+[node name="Gameplay" type="Node" parent="."]
 
 [node name="Player" parent="Gameplay" instance=ExtResource("4_k3dd5")]
 position = Vector2(795, 589)
@@ -136,9 +289,7 @@ offset_right = 344.0
 offset_bottom = 91.0
 color = Color(0.38371027, 0.6878464, 0.1531902, 1)
 
-[node name="Bottom" type="Node" parent="UI"]
-
-[node name="Settings" type="Button" parent="UI/Bottom"]
+[node name="Settings" type="Button" parent="UI"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -148,7 +299,7 @@ offset_right = 84.0
 offset_bottom = -14.0
 theme = ExtResource("6_ivtes")
 
-[node name="Credits" type="Button" parent="UI/Bottom"]
+[node name="Credits" type="Button" parent="UI"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -167,38 +318,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.90000004)
 
-[node name="Engine" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -166.0
-offset_top = 5.0
-offset_right = -8.0
-offset_bottom = 32.0
-grow_horizontal = 0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("5_8iljj")
-theme_override_font_sizes/font_size = 30
-text = "Godot 4.5"
-horizontal_alignment = 2
-
-[node name="Version" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -112.0
-offset_top = 34.0
-offset_right = -7.0
-offset_bottom = 61.0
-grow_horizontal = 0
-theme_override_constants/outline_size = 10
-theme_override_fonts/font = ExtResource("5_8iljj")
-theme_override_font_sizes/font_size = 30
-text = "V0.0.0"
-horizontal_alignment = 2
-
-[node name="Settings" type="Panel" parent="UI"]
-visible = false
+[node name="SettingsUI" type="Panel" parent="UI"]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -212,7 +332,7 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("8_ivtes")
 
-[node name="Panel" type="Panel" parent="UI/Settings"]
+[node name="Panel" type="Panel" parent="UI/SettingsUI"]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 76.0
@@ -220,7 +340,7 @@ offset_right = 691.0
 offset_bottom = 291.0
 theme_override_styles/panel = ExtResource("9_y27b4")
 
-[node name="Label" type="Label" parent="UI/Settings"]
+[node name="Label" type="Label" parent="UI/SettingsUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.49100003
@@ -236,7 +356,7 @@ text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MusicSlider" type="HSlider" parent="UI/Settings"]
+[node name="MusicSlider" type="HSlider" parent="UI/SettingsUI"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 130.0
@@ -245,7 +365,7 @@ offset_bottom = 185.0
 theme = ExtResource("6_ivtes")
 value = 50.0
 
-[node name="Label" type="Label" parent="UI/Settings/MusicSlider"]
+[node name="Label" type="Label" parent="UI/SettingsUI/MusicSlider"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.49100003
@@ -259,7 +379,7 @@ theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "MUSIC"
 
-[node name="SoundSlider" type="HSlider" parent="UI/Settings"]
+[node name="SoundSlider" type="HSlider" parent="UI/SettingsUI"]
 layout_mode = 0
 offset_left = 57.0
 offset_top = 200.0
@@ -268,7 +388,7 @@ offset_bottom = 255.0
 theme = ExtResource("6_ivtes")
 value = 50.0
 
-[node name="Label" type="Label" parent="UI/Settings/SoundSlider"]
+[node name="Label" type="Label" parent="UI/SettingsUI/SoundSlider"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.49100003
@@ -282,7 +402,7 @@ theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "SOUND"
 
-[node name="Back" type="Button" parent="UI/Settings"]
+[node name="Back" type="Button" parent="UI/SettingsUI"]
 layout_mode = 0
 offset_left = 254.0
 offset_top = 365.0
@@ -293,8 +413,7 @@ theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "BACK"
 
-[node name="Credits" type="Panel" parent="UI"]
-visible = false
+[node name="CreditsUI" type="Panel" parent="UI"]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -308,7 +427,7 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("8_ivtes")
 
-[node name="Panel" type="Panel" parent="UI/Credits"]
+[node name="Panel" type="Panel" parent="UI/CreditsUI"]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 76.0
@@ -316,7 +435,7 @@ offset_right = 691.0
 offset_bottom = 346.0
 theme_override_styles/panel = ExtResource("9_y27b4")
 
-[node name="Label" type="Label" parent="UI/Credits"]
+[node name="Label" type="Label" parent="UI/CreditsUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.49100003
@@ -332,7 +451,7 @@ text = "CREDITS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Credits"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/CreditsUI"]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 98.0
@@ -340,7 +459,7 @@ offset_right = 665.0
 offset_bottom = 326.0
 theme = ExtResource("6_ivtes")
 
-[node name="Credits" type="Label" parent="UI/Credits/ScrollContainer"]
+[node name="Credits" type="Label" parent="UI/CreditsUI/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("5_8iljj")
@@ -377,7 +496,7 @@ THANK YOU FOR PLAYING!!
 
 Your cubes appreciate it 💙"
 
-[node name="Back" type="Button" parent="UI/Credits"]
+[node name="Back" type="Button" parent="UI/CreditsUI"]
 layout_mode = 0
 offset_left = 254.0
 offset_top = 365.0
@@ -388,6 +507,81 @@ theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "BACK"
 
+[node name="ExitUI" type="Panel" parent="UI"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.46800002
+anchor_top = 0.5
+anchor_right = 0.46800002
+anchor_bottom = 0.5
+offset_left = -187.04004
+offset_top = -71.0
+offset_right = 233.95996
+offset_bottom = 123.0
+theme_override_styles/panel = ExtResource("8_ivtes")
+
+[node name="Label" type="Label" parent="UI/ExitUI"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 8.0
+offset_right = 320.0
+offset_bottom = 35.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "ARE YOU SURE?"
+
+[node name="Yes" type="Button" parent="UI/ExitUI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 197.0
+offset_bottom = 173.0
+theme = SubResource("Theme_7m62k")
+theme_override_font_sizes/font_size = 30
+text = "YES"
+
+[node name="No" type="Button" parent="UI/ExitUI"]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 100.0
+offset_right = 392.0
+offset_bottom = 173.0
+theme = ExtResource("6_ivtes")
+theme_override_font_sizes/font_size = 30
+text = "NO
+"
+
+[node name="Engine" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -166.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 32.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "Godot 4.5"
+horizontal_alignment = 2
+
+[node name="Version" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -112.0
+offset_top = 34.0
+offset_right = -7.0
+offset_bottom = 61.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "V0.0.0"
+horizontal_alignment = 2
+
 [node name="PlayDelay" type="Timer" parent="."]
 
 [connection signal="mouse_entered" from="UI/Play" to="." method="on_mouse_enter"]
@@ -397,28 +591,37 @@ text = "BACK"
 [connection signal="mouse_exited" from="UI/Icons" to="." method="on_mouse_exit"]
 [connection signal="mouse_entered" from="UI/Exit" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Exit" to="." method="on_mouse_exit"]
-[connection signal="mouse_entered" from="UI/Bottom/Settings" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Bottom/Settings" to="." method="on_mouse_exit"]
-[connection signal="pressed" from="UI/Bottom/Settings" to="." method="show_settings"]
-[connection signal="mouse_entered" from="UI/Bottom/Credits" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Bottom/Credits" to="." method="on_mouse_exit"]
-[connection signal="pressed" from="UI/Bottom/Credits" to="." method="show_credits"]
+[connection signal="pressed" from="UI/Exit" to="." method="on_exit_pressed"]
 [connection signal="mouse_entered" from="UI/Settings" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Settings" to="." method="on_mouse_exit"]
-[connection signal="mouse_entered" from="UI/Settings/MusicSlider" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Settings/MusicSlider" to="." method="on_mouse_exit"]
-[connection signal="value_changed" from="UI/Settings/MusicSlider" to="." method="on_music_slider_dragged"]
-[connection signal="mouse_entered" from="UI/Settings/SoundSlider" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Settings/SoundSlider" to="." method="on_mouse_exit"]
-[connection signal="value_changed" from="UI/Settings/SoundSlider" to="." method="on_sound_slider_dragged"]
-[connection signal="mouse_entered" from="UI/Settings/Back" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Settings/Back" to="." method="on_mouse_exit"]
-[connection signal="pressed" from="UI/Settings/Back" to="." method="on_settings_back"]
+[connection signal="pressed" from="UI/Settings" to="." method="show_settings"]
 [connection signal="mouse_entered" from="UI/Credits" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Credits" to="." method="on_mouse_exit"]
-[connection signal="mouse_entered" from="UI/Credits/ScrollContainer" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Credits/ScrollContainer" to="." method="on_mouse_exit"]
-[connection signal="mouse_entered" from="UI/Credits/Back" to="." method="on_mouse_enter"]
-[connection signal="mouse_exited" from="UI/Credits/Back" to="." method="on_mouse_exit"]
-[connection signal="pressed" from="UI/Credits/Back" to="." method="on_credits_back"]
+[connection signal="pressed" from="UI/Credits" to="." method="show_credits"]
+[connection signal="mouse_entered" from="UI/SettingsUI" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/SettingsUI" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/SettingsUI/MusicSlider" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/SettingsUI/MusicSlider" to="." method="on_mouse_exit"]
+[connection signal="value_changed" from="UI/SettingsUI/MusicSlider" to="." method="on_music_slider_dragged"]
+[connection signal="mouse_entered" from="UI/SettingsUI/SoundSlider" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/SettingsUI/SoundSlider" to="." method="on_mouse_exit"]
+[connection signal="value_changed" from="UI/SettingsUI/SoundSlider" to="." method="on_sound_slider_dragged"]
+[connection signal="mouse_entered" from="UI/SettingsUI/Back" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/SettingsUI/Back" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/SettingsUI/Back" to="." method="on_settings_back"]
+[connection signal="mouse_entered" from="UI/CreditsUI" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/CreditsUI" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/CreditsUI/ScrollContainer" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/CreditsUI/ScrollContainer" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/CreditsUI/Back" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/CreditsUI/Back" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/CreditsUI/Back" to="." method="on_credits_back"]
+[connection signal="mouse_entered" from="UI/ExitUI" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/ExitUI" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/ExitUI/Yes" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/ExitUI/Yes" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/ExitUI/Yes" to="." method="on_exit_yes_pressed"]
+[connection signal="mouse_entered" from="UI/ExitUI/No" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/ExitUI/No" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/ExitUI/No" to="." method="on_exit_no_pressed"]
 [connection signal="timeout" from="PlayDelay" to="." method="on_play_delay_timeout"]

@@ -1,6 +1,6 @@
 {
-	"Name": "Dry Out 2",
-	"Difficulty": -8.0,
+	"Name": "Fade Out",
+	"Difficulty": 8.0,
 	"SongPath": "res://files/assets/music/Dry out 2.0.mp3",
-	"ID": -3.0
+	"ID": 3
 }
