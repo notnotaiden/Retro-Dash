@@ -26,6 +26,7 @@ var flipped_gravity: bool = false
 @export var gamemode: int = 1
 
 var emit_trail: bool = false
+var on_menu: bool = false
 
 ## Holds the recently collided gamemode portal
 var gamemode_portal: Area2D
@@ -84,11 +85,14 @@ func _physics_process(delta):
 	
 	if not finished:
 		if not get_parent().get_parent().on_ui:
-			# Jumping Mechanic
+			 # Jumping Mechanic
 			player_jump(delta)
 	
 	# Move cube infinitely to the side
-	player_move(delta)
+	if not on_menu:
+		player_move(delta)
+	if on_menu:
+		feet_particles.emitting = false
 	
 	if not dead:
 		move_and_slide()

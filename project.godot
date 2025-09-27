@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Retro Dash: Beta"
-config/version="0.1.0"
+config/version="0.2.5"
+run/main_scene="uid://8x2ybdpjnnkm"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameProperties="*res://files/scripts/autoloads/game_properties.gd"
+MainMenu="*res://files/scripts/autoloads/main_menu.gd"
 
 [display]
 

@@ -38,6 +38,9 @@ var CHECKPOINT_FILE: PackedScene = preload("res://files/objects/checkpoint.tscn"
 
 # General Functions
 func _ready():
+	GameProperties.playing = true
+	GameProperties.load_level_data()
+	
 	# Adding level to the scene
 	load_level()
 	
@@ -133,6 +136,7 @@ func _process(delta):
 		if not player.finished:
 			player.finished = true
 			sound_player.play()
+			sound_player.volume_linear = GameProperties.user_settings["settings"]["sound_vol"]
 			
 			# Update complete screen properties
 			complete_ui.update(GameProperties.attempts, GameProperties.jumps)
@@ -557,7 +561,7 @@ func on_player_restart():
 ## (Signal Function)
 func on_complete_restart():
 	# Restart attempts
-	GameProperties.attempts = 0
+	GameProperties.attempts = 1
 	# Restart Jumps
 	GameProperties.jumps = 0
 	# Restart dead bool

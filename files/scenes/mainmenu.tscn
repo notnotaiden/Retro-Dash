@@ -1,0 +1,424 @@
+[gd_scene load_steps=11 format=3 uid="uid://8x2ybdpjnnkm"]
+
+[ext_resource type="Texture2D" uid="uid://wyqulflh610" path="res://files/assets/sprites/retro_dash.png" id="1_2547t"]
+[ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_oyrcy"]
+[ext_resource type="Script" uid="uid://cm7s876fo3o1l" path="res://files/scripts/mainmenu/mainmenu.gd" id="1_xwwe5"]
+[ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="3_8iljj"]
+[ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="4_k3dd5"]
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="5_8iljj"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="6_ivtes"]
+[ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="8_ivtes"]
+[ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="9_y27b4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k3dd5"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_xwwe5")
+
+[node name="ParallaxBG" type="Parallax2D" parent="."]
+process_mode = 1
+scroll_scale = Vector2(0.1, 0.1)
+scroll_offset = Vector2(215, 66)
+repeat_size = Vector2(260, 190)
+repeat_times = 10
+
+[node name="BG" type="Sprite2D" parent="ParallaxBG"]
+modulate = Color(0, 0.42745098, 1, 1)
+position = Vector2(640, 360)
+texture = ExtResource("1_oyrcy")
+
+[node name="ParallaxGround" type="Parallax2D" parent="." groups=["Ground"]]
+process_mode = 1
+z_index = 1
+scroll_offset = Vector2(19, 90)
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="Ground" type="Sprite2D" parent="ParallaxGround" groups=["Ground"]]
+modulate = Color(0, 0.4288597, 1, 1)
+position = Vector2(4, 665)
+texture = ExtResource("3_8iljj")
+
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround/Ground" groups=["Ground"]]
+position = Vector2(-4, -125)
+
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/Ground/Ground" groups=["Ground"]]
+position = Vector2(577.5, 1.5)
+shape = SubResource("WorldBoundaryShape2D_k3dd5")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Gameplay" type="CanvasLayer" parent="."]
+
+[node name="Player" parent="Gameplay" instance=ExtResource("4_k3dd5")]
+position = Vector2(795, 589)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="FadeOut" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Logo" type="TextureRect" parent="UI"]
+offset_left = 8.0
+offset_top = 11.000004
+offset_right = 1078.0
+offset_bottom = 190.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_2547t")
+
+[node name="Play" type="Button" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = -124.0
+offset_right = 381.0
+offset_bottom = -30.0
+grow_vertical = 2
+theme = ExtResource("6_ivtes")
+theme_override_font_sizes/font_size = 40
+text = "PLAY"
+
+[node name="Shadow" type="ColorRect" parent="UI/Play"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 78.0
+offset_right = 344.0
+offset_bottom = 91.0
+color = Color(0.38371027, 0.6878464, 0.1531902, 1)
+
+[node name="Icons" type="Button" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = -16.0
+offset_right = 381.0
+offset_bottom = 78.0
+grow_vertical = 2
+theme = ExtResource("6_ivtes")
+theme_override_font_sizes/font_size = 40
+text = "ICONS"
+
+[node name="Shadow" type="ColorRect" parent="UI/Icons"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 78.0
+offset_right = 344.0
+offset_bottom = 91.0
+color = Color(0.38371027, 0.6878464, 0.1531902, 1)
+
+[node name="Exit" type="Button" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = 92.0
+offset_right = 381.0
+offset_bottom = 186.0
+grow_vertical = 2
+theme = ExtResource("6_ivtes")
+theme_override_font_sizes/font_size = 40
+text = "EXIT
+"
+
+[node name="Shadow" type="ColorRect" parent="UI/Exit"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 78.0
+offset_right = 344.0
+offset_bottom = 91.0
+color = Color(0.38371027, 0.6878464, 0.1531902, 1)
+
+[node name="Bottom" type="Node" parent="UI"]
+
+[node name="Settings" type="Button" parent="UI/Bottom"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -92.0
+offset_right = 84.0
+offset_bottom = -14.0
+theme = ExtResource("6_ivtes")
+
+[node name="Credits" type="Button" parent="UI/Bottom"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 98.0
+offset_top = -92.0
+offset_right = 172.0
+offset_bottom = -14.0
+theme = ExtResource("6_ivtes")
+
+[node name="Fadein" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.90000004)
+
+[node name="Engine" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -166.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 32.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "Godot 4.5"
+horizontal_alignment = 2
+
+[node name="Version" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -112.0
+offset_top = 34.0
+offset_right = -7.0
+offset_bottom = 61.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "V0.0.0"
+horizontal_alignment = 2
+
+[node name="Settings" type="Panel" parent="UI"]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -808.0
+offset_top = 440.0
+offset_right = -62.0
+offset_bottom = 908.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("8_ivtes")
+
+[node name="Panel" type="Panel" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 76.0
+offset_right = 691.0
+offset_bottom = 291.0
+theme_override_styles/panel = ExtResource("9_y27b4")
+
+[node name="Label" type="Label" parent="UI/Settings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_right = 0.49100003
+offset_left = -363.286
+offset_top = 5.0
+offset_right = 374.714
+offset_bottom = 49.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 50
+text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 130.0
+offset_right = 670.0
+offset_bottom = 185.0
+theme = ExtResource("6_ivtes")
+value = 50.0
+
+[node name="Label" type="Label" parent="UI/Settings/MusicSlider"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_right = 0.49100003
+offset_left = -298.474
+offset_top = -17.0
+offset_right = -64.474
+offset_bottom = 27.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "MUSIC"
+
+[node name="SoundSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 200.0
+offset_right = 671.0
+offset_bottom = 255.0
+theme = ExtResource("6_ivtes")
+value = 50.0
+
+[node name="Label" type="Label" parent="UI/Settings/SoundSlider"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_right = 0.49100003
+offset_left = -298.474
+offset_top = -17.0
+offset_right = -64.474
+offset_bottom = 27.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "SOUND"
+
+[node name="Back" type="Button" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 365.0
+offset_right = 478.0
+offset_bottom = 452.0
+theme = ExtResource("6_ivtes")
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "BACK"
+
+[node name="Credits" type="Panel" parent="UI"]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -808.0
+offset_top = 440.0
+offset_right = -62.0
+offset_bottom = 908.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("8_ivtes")
+
+[node name="Panel" type="Panel" parent="UI/Credits"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 76.0
+offset_right = 691.0
+offset_bottom = 346.0
+theme_override_styles/panel = ExtResource("9_y27b4")
+
+[node name="Label" type="Label" parent="UI/Credits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_right = 0.49100003
+offset_left = -361.286
+offset_top = 5.0
+offset_right = 372.714
+offset_bottom = 49.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 50
+text = "CREDITS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Credits"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 98.0
+offset_right = 665.0
+offset_bottom = 326.0
+theme = ExtResource("6_ivtes")
+
+[node name="Credits" type="Label" parent="UI/Credits/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "DEVELOPERS:
+
+- NotNotAiden (PROGRAMMER)
+- Warp (ART AND DESIGN)
+
+CREDITS TO THESE ARTISTS
+(THEY'RE AWESOME!):
+
+- Waterflame (STEREO MADNESS 2)
+- Aliondark (POLARGEIST AD REMIX)
+- DJVI (DRY OUT 2.0)
+- Supersoniker (BACK ON TRACK
+REMIX)
+- zami (STAY INSIDE ME REMIX)
+- Kenaz [GD] (GEOMETRY DASH
+MAIN MENU THEME ELECTRONIC REMIX)
+
+INSPIRED BY:
+- Geometry Dash by Robtop Games
+
+NOTE:
+
+This game was created for the
+Beginner's Jam Aut2025
+hosted by Shadow Lev on itch.io.
+So updates are very unlikely
+to happen.
+
+THANK YOU FOR PLAYING!!
+
+Your cubes appreciate it 💙"
+
+[node name="Back" type="Button" parent="UI/Credits"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 365.0
+offset_right = 478.0
+offset_bottom = 452.0
+theme = ExtResource("6_ivtes")
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "BACK"
+
+[node name="PlayDelay" type="Timer" parent="."]
+
+[connection signal="mouse_entered" from="UI/Play" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Play" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Play" to="." method="on_play_pressed"]
+[connection signal="mouse_entered" from="UI/Icons" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Icons" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/Exit" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Exit" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/Bottom/Settings" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Bottom/Settings" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Bottom/Settings" to="." method="show_settings"]
+[connection signal="mouse_entered" from="UI/Bottom/Credits" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Bottom/Credits" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Bottom/Credits" to="." method="show_credits"]
+[connection signal="mouse_entered" from="UI/Settings" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Settings" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/Settings/MusicSlider" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Settings/MusicSlider" to="." method="on_mouse_exit"]
+[connection signal="value_changed" from="UI/Settings/MusicSlider" to="." method="on_music_slider_dragged"]
+[connection signal="mouse_entered" from="UI/Settings/SoundSlider" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Settings/SoundSlider" to="." method="on_mouse_exit"]
+[connection signal="value_changed" from="UI/Settings/SoundSlider" to="." method="on_sound_slider_dragged"]
+[connection signal="mouse_entered" from="UI/Settings/Back" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Settings/Back" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Settings/Back" to="." method="on_settings_back"]
+[connection signal="mouse_entered" from="UI/Credits" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Credits" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/Credits/ScrollContainer" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Credits/ScrollContainer" to="." method="on_mouse_exit"]
+[connection signal="mouse_entered" from="UI/Credits/Back" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Credits/Back" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Credits/Back" to="." method="on_credits_back"]
+[connection signal="timeout" from="PlayDelay" to="." method="on_play_delay_timeout"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://gc2n7gfjmwr8"]
+
+[ext_resource type="Script" uid="uid://tcneye87vea7" path="res://files/scripts/levelselect/levelselect.gd" id="1_bpkmi"]
+[ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_r4vfl"]
+[ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="2_bpkmi"]
+[ext_resource type="PackedScene" uid="uid://nmv1fvq0qlmg" path="res://files/objects/level_panel.tscn" id="4_krj2y"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_krj2y"]
+
+[node name="LevelSelect" type="Node2D"]
+script = ExtResource("1_bpkmi")
+
+[node name="ParallaxBG" type="Parallax2D" parent="."]
+process_mode = 1
+scroll_scale = Vector2(0.1, 0.1)
+scroll_offset = Vector2(215, 66)
+repeat_size = Vector2(260, 190)
+repeat_times = 10
+
+[node name="BG" type="Sprite2D" parent="ParallaxBG"]
+modulate = Color(0, 0.42745098, 1, 1)
+position = Vector2(640, 360)
+texture = ExtResource("1_r4vfl")
+
+[node name="ParallaxGround" type="Parallax2D" parent="." groups=["Ground"]]
+process_mode = 1
+z_index = 1
+scroll_offset = Vector2(19, 90)
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="Ground" type="Sprite2D" parent="ParallaxGround" groups=["Ground"]]
+modulate = Color(0, 0.4288597, 1, 1)
+position = Vector2(4, 665)
+texture = ExtResource("2_bpkmi")
+
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround/Ground" groups=["Ground"]]
+position = Vector2(-4, -125)
+
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/Ground/Ground" groups=["Ground"]]
+position = Vector2(577.5, 1.5)
+shape = SubResource("WorldBoundaryShape2D_krj2y")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="LevelPanel" parent="UI" instance=ExtResource("4_krj2y")]
+
+[node name="FadeIn" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

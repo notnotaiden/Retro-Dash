@@ -1,0 +1,269 @@
+[gd_scene load_steps=18 format=3 uid="uid://nmv1fvq0qlmg"]
+
+[ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="1_4cjcl"]
+[ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="2_mnses"]
+[ext_resource type="Script" uid="uid://b37qwd2wrb2m3" path="res://files/scripts/objects/level_panel.gd" id="2_pamsc"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="3_2diyn"]
+[ext_resource type="Texture2D" uid="uid://b0ybewdnqs4p2" path="res://files/assets/sprites/difficulty_faces.png" id="4_o4p24"]
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="4_pamsc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pamsc"]
+bg_color = Color(0.47843137, 0.87058824, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4p24"]
+bg_color = Color(0.40328282, 0.7325269, 0.15370587, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6nbp"]
+bg_color = Color(0.47843137, 0.87058824, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qodxg"]
+bg_color = Color(0.29012427, 0.5310817, 0.11306653, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_giyts"]
+bg_color = Color(0.47843137, 0.87058824, 0.17254902, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7wjx"]
+bg_color = Color(0.37581402, 0.6826376, 0.14553571, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amdbv"]
+bg_color = Color(0.9255881, 0.63822544, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvoxf"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbt6o"]
+bg_color = Color(0.86323947, 0.86323947, 0.86323947, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qn6ek"]
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="Theme" id="Theme_66xl3"]
+Button/constants/outline_size = 10
+Button/fonts/font = ExtResource("4_pamsc")
+Button/styles/focus = SubResource("StyleBoxFlat_pamsc")
+Button/styles/hover = SubResource("StyleBoxFlat_o4p24")
+Button/styles/normal = SubResource("StyleBoxFlat_a6nbp")
+Button/styles/pressed = SubResource("StyleBoxFlat_qodxg")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_giyts")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_w7wjx")
+ProgressBar/fonts/font = ExtResource("4_pamsc")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_amdbv")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_kvoxf")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_kbt6o")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_qn6ek")
+
+[node name="LevelPanel" type="Panel"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -383.0
+offset_top = 110.0
+offset_right = 385.0
+offset_bottom = 601.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_4cjcl")
+script = ExtResource("2_pamsc")
+
+[node name="DifficultyPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 33.0
+offset_right = 168.0
+offset_bottom = 160.0
+theme_override_styles/panel = ExtResource("2_mnses")
+
+[node name="Face" type="Sprite2D" parent="DifficultyPanel"]
+position = Vector2(66.99999, 65)
+scale = Vector2(2.8, 2.8)
+texture = ExtResource("4_o4p24")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="LevelNamePanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 187.0
+offset_top = 34.0
+offset_right = 733.0
+offset_bottom = 161.0
+theme_override_styles/panel = ExtResource("2_mnses")
+
+[node name="Name" type="Label" parent="LevelNamePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 528.0
+offset_bottom = 112.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_pamsc")
+theme_override_font_sizes/font_size = 60
+text = "LEVEL NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatsPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 185.0
+offset_right = 738.0
+offset_bottom = 343.0
+theme_override_styles/panel = ExtResource("2_mnses")
+
+[node name="NormalProgress" type="ProgressBar" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 42.0
+offset_right = 671.0
+offset_bottom = 69.0
+theme = ExtResource("3_2diyn")
+value = 50.0
+
+[node name="Label" type="Label" parent="StatsPanel/NormalProgress"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -29.0
+offset_right = 163.0
+offset_bottom = -6.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_pamsc")
+theme_override_font_sizes/font_size = 25
+text = "NORMAL MODE"
+
+[node name="PracticeProgress" type="ProgressBar" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 111.0
+offset_right = 671.0
+offset_bottom = 138.0
+theme = SubResource("Theme_66xl3")
+theme_override_constants/outline_size = 10
+value = 50.0
+
+[node name="Label" type="Label" parent="StatsPanel/PracticeProgress"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -29.0
+offset_right = 163.0
+offset_bottom = -6.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_pamsc")
+theme_override_font_sizes/font_size = 25
+text = "PRACTICE MODE"
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 383.0
+offset_right = 513.0
+offset_bottom = 472.0
+theme = ExtResource("3_2diyn")
+theme_override_font_sizes/font_size = 30
+text = "PLAY"
+
+[connection signal="pressed" from="Play" to="." method="on_play_pressed"]

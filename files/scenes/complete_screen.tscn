@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh51c8xeu0ig7"]
+[gd_scene load_steps=6 format=3 uid="uid://bh51c8xeu0ig7"]
 
 [ext_resource type="Script" uid="uid://pkao8ccvnne4" path="res://files/scripts/ui/complete_screen.gd" id="1_74p1o"]
 [ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="1_n7nmr"]
 [ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="2_rmy7y"]
-[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/ui_theme.tres" id="2_v0llu"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="2_v0llu"]
+[ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="4_61wkw"]
 
 [node name="CompleteScreen" type="Control"]
 layout_mode = 3
@@ -31,21 +32,23 @@ theme_override_styles/panel = ExtResource("1_n7nmr")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 230
+theme_override_constants/margin_left = 180
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 230
+theme_override_constants/margin_right = 180
 theme_override_constants/margin_bottom = 100
 
 [node name="Content" type="VBoxContainer" parent="Panel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 230
+theme_override_constants/separation = 180
 
 [node name="Label" type="VBoxContainer" parent="Panel/Margin/Content"]
 layout_mode = 2
-theme_override_constants/separation = 80
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="Panel/Margin/Content/Label"]
 layout_mode = 2
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 20
 theme_override_fonts/font = ExtResource("2_rmy7y")
 theme_override_font_sizes/font_size = 50
 text = "LEVEL COMPLETE"
@@ -59,12 +62,12 @@ offset_left = -126.0
 offset_top = -4.0
 offset_right = 511.0
 offset_bottom = 160.0
-theme_override_styles/panel = ExtResource("1_n7nmr")
+theme_override_styles/panel = ExtResource("4_61wkw")
 
 [node name="Margins" type="MarginContainer" parent="Panel/Margin/Content/Label/Panel/Panel"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
@@ -74,12 +77,14 @@ theme_override_constants/separation = 10
 
 [node name="Attempts" type="Label" parent="Panel/Margin/Content/Label/Panel/Panel/Margins/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_rmy7y")
 theme_override_font_sizes/font_size = 40
 text = "Attempts: -1"
 
 [node name="Jumps" type="Label" parent="Panel/Margin/Content/Label/Panel/Panel/Margins/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_rmy7y")
 theme_override_font_sizes/font_size = 40
 text = "Jumps: -1"

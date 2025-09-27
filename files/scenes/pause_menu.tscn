@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cown771khe0pp"]
+[gd_scene load_steps=6 format=3 uid="uid://cown771khe0pp"]
 
 [ext_resource type="Script" uid="uid://cscadkq3lkcak" path="res://files/scripts/ui/pause_menu.gd" id="1_2on1c"]
-[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/ui_theme.tres" id="1_tc3tl"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="1_tc3tl"]
 [ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="2_2p3qn"]
 [ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="4_paw12"]
+[ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="5_rcgby"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -41,13 +42,13 @@ theme_override_styles/panel = ExtResource("2_2p3qn")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 190
-theme_override_constants/margin_right = 420
-theme_override_constants/margin_bottom = 150
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 340
+theme_override_constants/margin_bottom = 380
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 80
 
 [node name="Label" type="VBoxContainer" parent="Panel/Margin/VBox"]
 layout_mode = 2
@@ -60,20 +61,37 @@ layout_mode = 0
 offset_left = -191.0
 offset_right = 421.0
 offset_bottom = 41.875
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("4_paw12")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 text = "GAME PAUSED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Buttons" type="VBoxContainer" parent="Panel/Margin/VBox"]
+[node name="Panel" type="Panel" parent="Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel/Margin/VBox/Panel"]
+layout_mode = 0
+offset_left = -62.0
+offset_top = -4.0
+offset_right = 282.0
+offset_bottom = 354.0
+theme_override_styles/panel = ExtResource("5_rcgby")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Margin/VBox/Panel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 65
+theme_override_constants/margin_top = 30
+
+[node name="Buttons" type="VBoxContainer" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 100
 
-[node name="Panel" type="Panel" parent="Panel/Margin/VBox/Buttons"]
+[node name="Panel" type="Panel" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons"]
 layout_mode = 2
 
-[node name="ReturnButton" type="Button" parent="Panel/Margin/VBox/Buttons/Panel"]
+[node name="ReturnButton" type="Button" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons/Panel"]
 layout_mode = 0
 offset_left = -37.0
 offset_right = 257.0
@@ -81,10 +99,10 @@ offset_bottom = 88.0
 theme_override_font_sizes/font_size = 30
 text = "RETURN"
 
-[node name="Panel2" type="Panel" parent="Panel/Margin/VBox/Buttons"]
+[node name="Panel2" type="Panel" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons"]
 layout_mode = 2
 
-[node name="PracticeButton" type="Button" parent="Panel/Margin/VBox/Buttons/Panel2"]
+[node name="PracticeButton" type="Button" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons/Panel2"]
 layout_mode = 0
 offset_left = -37.0
 offset_right = 257.0
@@ -92,10 +110,10 @@ offset_bottom = 88.0
 theme_override_font_sizes/font_size = 30
 text = "PRACTICE"
 
-[node name="Panel3" type="Panel" parent="Panel/Margin/VBox/Buttons"]
+[node name="Panel3" type="Panel" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons"]
 layout_mode = 2
 
-[node name="HomeButton" type="Button" parent="Panel/Margin/VBox/Buttons/Panel3"]
+[node name="HomeButton" type="Button" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons/Panel3"]
 layout_mode = 0
 offset_left = -37.0
 offset_right = 257.0

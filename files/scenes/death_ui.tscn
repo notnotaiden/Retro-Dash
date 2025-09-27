@@ -1,20 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cqod1o7ku1gik"]
 
 [ext_resource type="Script" uid="uid://qramkd65jyn0" path="res://files/scripts/ui/death_ui.gd" id="1_7ojci"]
-[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/ui_theme.tres" id="2_4ownd"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="2_4ownd"]
 [ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="2_kfted"]
+[ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="3_5dwdw"]
 [ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="3_6j4xj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ojci"]
-bg_color = Color(0.09019608, 0.09019608, 0.09019608, 0.89411765)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [node name="DeathUI" type="Control"]
 process_mode = 3
@@ -43,24 +33,24 @@ theme_override_styles/panel = ExtResource("2_kfted")
 
 [node name="Margins" type="MarginContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 400
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 70
 theme_override_constants/margin_bottom = 90
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margins"]
 layout_mode = 2
-theme_override_constants/separation = 120
+theme_override_constants/separation = 30
 
 [node name="PanelLabels" type="PanelContainer" parent="Panel/Margins/VBox"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_7ojci")
+theme_override_styles/panel = ExtResource("3_5dwdw")
 
 [node name="MarginsLabels" type="MarginContainer" parent="Panel/Margins/VBox/PanelLabels"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_right = 170
 theme_override_constants/margin_bottom = 30
 
 [node name="Labels" type="VBoxContainer" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels"]
@@ -69,19 +59,20 @@ theme_override_constants/separation = 0
 
 [node name="AttemptsTxt" type="Label" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_6j4xj")
 theme_override_font_sizes/font_size = 30
 text = "Attempts: 1"
 
 [node name="JumpsTxt" type="Label" parent="Panel/Margins/VBox/PanelLabels/MarginsLabels/Labels"]
 layout_mode = 2
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("3_6j4xj")
 theme_override_font_sizes/font_size = 30
 text = "Jumps: 1"
 
 [node name="MarginsButtons" type="MarginContainer" parent="Panel/Margins/VBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 150
 
 [node name="Buttons" type="HBoxContainer" parent="Panel/Margins/VBox/MarginsButtons"]
 layout_mode = 2

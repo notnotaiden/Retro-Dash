@@ -5,7 +5,7 @@ extends Node
 var user_settings: Dictionary = {
 	"settings": {
 		"sound_vol": 1.0,
-		"music_vol": 0.7
+		"music_vol": 1.0
 	},
 	"customization": {
 		"p1_color": Color.YELLOW,
@@ -63,6 +63,9 @@ const SHIP_MAXANGLE_DOWN: float = 60.0
 ## The max y velocity the player could go for the ship gamemode
 const SHIP_MAXVELO_y: float = 1000.0
 
+# Main Menu Properties
+const camera_speed_menu: float = 500.0
+
 # Holds the amount of attempts and jumps you currently have on this playthrough
 var attempts: int = 1
 var jumps: int = 0
@@ -70,19 +73,19 @@ var jumps: int = 0
 # Animations
 var orb_scale: float = 3.0
 
+## Holds the state to check if the player is currently playing a level
+var playing: bool = false
 var practice_mode: bool = false
 var practice_music_player: AudioStreamPlayer = AudioStreamPlayer.new()
 ## Holds an array of checkpoints nodes placed on the scene
 var placed_checkpoints: Array = []
 
 # Holds the level data of the current level
-var level_path: String = "res://files/levels/level1"  # Just change the path to the level folder
+var level_path: String = "res://files/levels/level1" # Just change the path to the level folder
 var level_data: Dictionary = {}
 
 # General Functions
 func _ready():
-	load_level_data()
-	
 	add_child(practice_music_player)
 	# Update practice music player stream
 	practice_music_player.stream = load("res://files/assets/music/practice.mp3")
