@@ -22,6 +22,7 @@ var random_color: Color
 
 # General Functions
 func _ready():
+	GameProperties.playing = false
 	fade_in.visible = true
 	
 	# Generate new random color
@@ -78,7 +79,7 @@ func on_play_pressed():
 
 # Fade out
 ## Fade out:
-## Fades out the screen
+## Fades out the screen and teleports the user to a new scene, either Gamescene or the Main Menu
 ## (Main Function)
 func start_fade_out():
 	# Make the fade out on top of the UI elements
@@ -91,12 +92,9 @@ func start_fade_out():
 	tween.tween_property(fade_out, "color:a", 1.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	
 	fade_out_delay.start(1.0)
-
-## Fade out:
-## Teleports the user to another scene upon timer timeout
-## (Signal Function)
-func on_fade_out_delay_timeout():
-	get_tree().change_scene_to_file(scene_path)
+	
+	await fade_out_delay.timeout
+	get_tree().change_scene_to_file.call_deferred(scene_path)
 
 # End of System
 

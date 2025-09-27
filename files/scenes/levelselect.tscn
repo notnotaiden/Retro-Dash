@@ -87,8 +87,15 @@ layout_mode = 2
 [node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level1" instance=ExtResource("4_krj2y")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 90.0
+offset_right = 766.72
 offset_bottom = 581.0
+grow_horizontal = 1
 level_name = "RETRO MADNESS"
 difficulty = 3
 
@@ -98,11 +105,19 @@ layout_mode = 2
 [node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level2" instance=ExtResource("4_krj2y")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 90.0
+offset_right = 766.72
 offset_bottom = 581.0
+grow_horizontal = 1
 level_path = "res://files/levels/level2"
 level_name = "BACKBEAT"
 difficulty = 6
+level_id = 2
 
 [node name="Level3" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
 layout_mode = 2
@@ -110,11 +125,19 @@ layout_mode = 2
 [node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level3" instance=ExtResource("4_krj2y")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 90.0
+offset_right = 766.72
 offset_bottom = 581.0
+grow_horizontal = 1
 level_path = "res://files/levels/level3"
 level_name = "FADE OUT"
 difficulty = 8
+level_id = 3
 
 [node name="Level4" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
 layout_mode = 2
@@ -122,11 +145,19 @@ layout_mode = 2
 [node name="LevelPanel" parent="UI/Levels/Margins/HBoxContainer/Level4" instance=ExtResource("4_krj2y")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 90.0
+offset_right = 766.72
 offset_bottom = 581.0
+grow_horizontal = 1
 level_path = "res://files/levels/level4"
 level_name = "POLARIS"
 difficulty = 10
+level_id = 4
 
 [node name="Back" type="Button" parent="UI"]
 offset_left = 10.0
@@ -139,7 +170,7 @@ text = "BACK
 "
 
 [node name="Previous" type="Button" parent="UI"]
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -154,7 +185,7 @@ text = "PREVIOUS
 "
 
 [node name="Next" type="Button" parent="UI"]
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5

@@ -4,16 +4,26 @@ extends Panel
 @onready var name_txt: Label = $LevelNamePanel/Name
 @onready var face: Sprite2D = $DifficultyPanel/Face
 
+@onready var normal_stats: ProgressBar = $StatsPanel/NormalProgress
+@onready var practice_stats: ProgressBar = $StatsPanel/PracticeProgress
+
 ## Each level panel has a unique level path that basically holds a string path 
 ## to their respective level
 @export var level_path: String = "res://files/levels/level1"
 @export var level_name: String = "LEVEL NAME"
 @export var difficulty: int = 1
+@export var level_id: int = 1
+
 
 signal pressed
 
 # General Functions
 func _ready():
+	# Get percent values
+	if not GameProperties.user_data == null:
+		normal_stats.value = GameProperties.user_data["level%d" % [level_id]]["normal"]
+		practice_stats.value = GameProperties.user_data["level%d" % [level_id]]["practice"]
+	
 	# Update level name text
 	name_txt.text = level_name.to_upper()
 	
@@ -46,5 +56,6 @@ func _ready():
 ## (Signal Function)
 func on_play_pressed():
 	GameProperties.level_path = level_path
+	GameProperties.current_level_id = level_id
 	
 	emit_signal("pressed")

@@ -28,6 +28,26 @@ var user_settings: Dictionary = {
 	},
 }
 
+## Holds the user data
+var user_data: Dictionary = {
+	"level1": {
+		"normal": 0.0,
+		"practice": 0.0
+	},
+	"level2": {
+		"normal": 0.0,
+		"practice": 0.0
+	},
+	"level3": {
+		"normal": 0.0,
+		"practice": 0.0
+	},
+	"level4": {
+		"normal": 0.0,
+		"practice": 0.0
+	},
+}
+
 ## The position the player starts with in every attempt
 const START_POS: Vector2 = Vector2(-64.0, 499.0)
 ## The max y position the ground can go
@@ -83,12 +103,15 @@ var placed_checkpoints: Array = []
 # Holds the level data of the current level
 var level_path: String = "res://files/levels/level1" # Just change the path to the level folder
 var level_data: Dictionary = {}
+var current_level_id: int
 
 # General Functions
 func _ready():
 	add_child(practice_music_player)
 	# Update practice music player stream
 	practice_music_player.stream = load("res://files/assets/music/practice.mp3")
+	
+	load_user_data()
 
 func _process(_delta):
 	if practice_mode:
@@ -103,6 +126,90 @@ func _process(_delta):
 			window.mode = Window.MODE_WINDOWED
 		else:
 			window.mode = Window.MODE_FULLSCREEN
+
+# User Dataa System
+## User Data System:
+## Saves the user settings file on the user data folder
+## (Main Function)
+func save_user_data():
+	# Saves user settings
+	var config = ConfigFile.new()
+	
+	# Settings
+	config.set_value("settings", "sound_vol", user_settings["settings"]["sound_vol"])
+	config.set_value("settings", "music_vol", user_settings["settings"]["music_vol"])
+	
+	# Customization: Color
+	config.set_value("color", "p1", user_settings["customization"]["p1_color"])
+	config.set_value("color", "p2", user_settings["customization"]["p2_color"])
+	
+	# Customization: cube_skin
+	config.set_value("cube_skin", "outline", user_settings["customization"]["cube_skin"]["outline"])
+	config.set_value("cube_skin", "p1", user_settings["customization"]["cube_skin"]["p1"])
+	config.set_value("cube_skin", "p2", user_settings["customization"]["cube_skin"]["p2"])
+	
+	# Customization: ship_skin
+	config.set_value("ship_skin", "outline", user_settings["customization"]["ship_skin"]["outline"])
+	config.set_value("ship_skin", "p1", user_settings["customization"]["ship_skin"]["p1"])
+	config.set_value("ship_skin", "p2", user_settings["customization"]["ship_skin"]["p2"])
+	
+	# Customization: ball_skin
+	config.set_value("ball_skin", "outline", user_settings["customization"]["ball_skin"]["outline"])
+	config.set_value("ball_skin", "p1", user_settings["customization"]["ball_skin"]["p1"])
+	config.set_value("ball_skin", "p2", user_settings["customization"]["ball_skin"]["p2"])
+	
+	config.save("user://user_settings.cfg")
+	
+	# Saving User data
+	var file = FileAccess.open("user://user_data.json", FileAccess.WRITE)
+	if file:
+		var json_string = JSON.stringify(user_data)
+		var encrypted_json = Marshalls.utf8_to_base64(json_string)
+		file.store_string(encrypted_json)
+		file.close()
+
+## User Data System:
+## Loads the user settings file on the user data folder
+## (Main Function)
+func load_user_data():
+	# Loads user settings
+	var config = ConfigFile.new()
+	if config.load("user://user_settings.cfg") == OK:
+		# Settings
+		user_settings["settings"]["sound_vol"] = config.get_value("settings", "sound_vol", 1.0)
+		user_settings["settings"]["music_vol"] = config.get_value("settings", "music_vol", 1.0)
+		
+		# Customization: color
+		user_settings["customization"]["p1_color"] = config.get_value("color", "p1", Color.YELLOW)
+		user_settings["customization"]["p2_color"] = config.get_value("color", "p2", Color.DEEP_SKY_BLUE)
+		
+		# Customization: cube_skin
+		user_settings["customization"]["cube_skin"]["outline"] = config.get_value("cube_skin", "outline", Rect2(0,0,32,32))
+		user_settings["customization"]["cube_skin"]["p1"] = config.get_value("cube_skin", "p1", Rect2(32,0,32,32))
+		user_settings["customization"]["cube_skin"]["p2"] = config.get_value("cube_skin", "p2", Rect2(64,0,32,32))
+	
+		# Customization: ship_skin
+		user_settings["customization"]["ship_skin"]["outline"] = config.get_value("ship_skin", "outline", Rect2(96,0,32,32))
+		user_settings["customization"]["ship_skin"]["p1"] = config.get_value("ship_skin", "p1", Rect2(0,32,32,32))
+		user_settings["customization"]["ship_skin"]["p2"] = config.get_value("ship_skin", "p2", Rect2(32,32,32,32))
+	
+		# Customization: ball_skin
+		user_settings["customization"]["ball_skin"]["outline"] = config.get_value("ball_skin", "outline", Rect2(64,32,32,32))
+		user_settings["customization"]["ball_skin"]["p1"] = config.get_value("ball_skin", "p1", Rect2(96,32,32,32))
+		user_settings["customization"]["ball_skin"]["p2"] = config.get_value("ball_skin", "p2", Rect2(0,64,32,32))
+	
+	# Loads user data
+	if FileAccess.file_exists("user://user_data.json"):
+		var file = FileAccess.open("user://user_data.json", FileAccess.READ)
+		if file:
+			var content = file.get_as_text()
+			var decrypted_file = Marshalls.base64_to_utf8(content)
+			var parsed_json = JSON.parse_string(decrypted_file)
+			if typeof(parsed_json) == TYPE_DICTIONARY:
+				user_data = parsed_json
+			file.close()
+
+# End of System
 
 # Level Load System
 ## Level Load System:

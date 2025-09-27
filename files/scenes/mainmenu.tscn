@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8x2ybdpjnnkm"]
+[gd_scene load_steps=27 format=3 uid="uid://8x2ybdpjnnkm"]
 
 [ext_resource type="Texture2D" uid="uid://wyqulflh610" path="res://files/assets/sprites/retro_dash.png" id="1_2547t"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_oyrcy"]
@@ -9,6 +9,11 @@
 [ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="6_ivtes"]
 [ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="8_ivtes"]
 [ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="9_y27b4"]
+[ext_resource type="PackedScene" uid="uid://dshfptxfmwf7m" path="res://files/objects/skin_displayer.tscn" id="10_53hoy"]
+[ext_resource type="Script" uid="uid://yg62lrn43uiv" path="res://files/scripts/mainmenu/icons_ui.gd" id="10_j3u1t"]
+[ext_resource type="PackedScene" uid="uid://ccjje6i6qqx4p" path="res://files/objects/icon_button.tscn" id="12_q1ub4"]
+[ext_resource type="Theme" uid="uid://dyk24h3vqlged" path="res://files/assets/resources/gray_buttons_theme.tres" id="13_xo5ut"]
+[ext_resource type="Texture2D" uid="uid://86emn6yqayfl" path="res://files/assets/sprites/skins/skin_display.png" id="14_hnfy5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k3dd5"]
 
@@ -210,6 +215,7 @@ position = Vector2(795, 589)
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="FadeOut" type="ColorRect" parent="UI"]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -319,6 +325,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.90000004)
 
 [node name="SettingsUI" type="Panel" parent="UI"]
+visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -414,6 +421,7 @@ theme_override_font_sizes/font_size = 30
 text = "BACK"
 
 [node name="CreditsUI" type="Panel" parent="UI"]
+visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -552,6 +560,266 @@ theme_override_font_sizes/font_size = 30
 text = "NO
 "
 
+[node name="IconsUI" type="Panel" parent="UI"]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.588
+anchor_right = 1.0
+anchor_bottom = 0.588
+offset_left = 43.0
+offset_top = -267.36
+offset_right = 877.0
+offset_bottom = 287.64
+theme_override_styles/panel = ExtResource("8_ivtes")
+script = ExtResource("10_j3u1t")
+
+[node name="Label" type="Label" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 5.0
+offset_right = 495.0
+offset_bottom = 32.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "ICON SELECT"
+
+[node name="GamemodeLabel" type="Label" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 631.0
+offset_top = 254.0
+offset_right = 824.0
+offset_bottom = 281.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "Gamemodes:"
+
+[node name="PreviewPanel" type="Panel" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 624.0
+offset_top = 59.0
+offset_right = 811.0
+offset_bottom = 223.0
+theme_override_styles/panel = ExtResource("9_y27b4")
+
+[node name="Label" type="Label" parent="UI/IconsUI/PreviewPanel"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = -33.0
+offset_right = 152.0
+offset_bottom = -6.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "PREVIEW:"
+
+[node name="SkinDisplayer" parent="UI/IconsUI/PreviewPanel" instance=ExtResource("10_53hoy")]
+position = Vector2(91, 79)
+scale = Vector2(1.3, 1.3)
+
+[node name="ColorPanel" type="Panel" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 59.0
+offset_right = 600.0
+offset_bottom = 267.0
+theme_override_styles/panel = ExtResource("9_y27b4")
+
+[node name="IconPanel" type="Panel" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 285.0
+offset_right = 601.0
+offset_bottom = 532.0
+theme_override_styles/panel = ExtResource("9_y27b4")
+
+[node name="P1Color" type="ColorPickerButton" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 108.0
+offset_right = 577.0
+offset_bottom = 148.0
+
+[node name="Label" type="Label" parent="UI/IconsUI/P1Color"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -33.0
+offset_right = 141.0
+offset_bottom = -6.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "P1 COLOR"
+
+[node name="P2Color" type="ColorPickerButton" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 189.0
+offset_right = 577.0
+offset_bottom = 233.0
+
+[node name="Label" type="Label" parent="UI/IconsUI/P2Color"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -33.0
+offset_right = 141.0
+offset_bottom = -6.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "P2 COLOR"
+
+[node name="Icons" type="VBoxContainer" parent="UI/IconsUI"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 60.0
+offset_top = 298.0
+offset_right = 140.0
+offset_bottom = 455.0
+theme_override_constants/separation = 76
+
+[node name="Cube" type="HBoxContainer" parent="UI/IconsUI/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="Icon1" type="Panel" parent="UI/IconsUI/Icons/Cube"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Cube/Icon1" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+outline_coords = Rect2(0, 0, 32, 32)
+p1_coords = Rect2(32, 0, 32, 32)
+p2_coords = Rect2(64, 0, 32, 32)
+display_coords = Rect2(0, 0, 32, 32)
+
+[node name="Icon2" type="Panel" parent="UI/IconsUI/Icons/Cube"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Cube/Icon2" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+outline_coords = Rect2(32, 64, 32, 32)
+p1_coords = Rect2(64, 64, 32, 32)
+p2_coords = Rect2(96, 64, 32, 32)
+display_coords = Rect2(0, 32, 32, 32)
+
+[node name="Ship" type="HBoxContainer" parent="UI/IconsUI/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="Icon1" type="Panel" parent="UI/IconsUI/Icons/Ship"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Ship/Icon1" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+type = "ship"
+outline_coords = Rect2(96, 0, 32, 32)
+p1_coords = Rect2(0, 32, 32, 32)
+p2_coords = Rect2(32, 32, 32, 32)
+display_coords = Rect2(32, 0, 32, 32)
+
+[node name="Icon2" type="Panel" parent="UI/IconsUI/Icons/Ship"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Ship/Icon2" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+type = "ship"
+outline_coords = Rect2(96, 96, 32, 32)
+p1_coords = Rect2(0, 128, 32, 32)
+p2_coords = Rect2(32, 128, 32, 32)
+display_coords = Rect2(32, 32, 32, 32)
+
+[node name="Ball" type="HBoxContainer" parent="UI/IconsUI/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="Icon1" type="Panel" parent="UI/IconsUI/Icons/Ball"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Ball/Icon1" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+type = "ball"
+outline_coords = Rect2(64, 32, 32, 32)
+p1_coords = Rect2(96, 32, 32, 32)
+p2_coords = Rect2(0, 64, 32, 32)
+display_coords = Rect2(64, 0, 32, 32)
+
+[node name="Icon2" type="Panel" parent="UI/IconsUI/Icons/Ball"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Ball/Icon2" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+type = "ball"
+outline_coords = Rect2(0, 96, 32, 32)
+p1_coords = Rect2(32, 96, 32, 32)
+p2_coords = Rect2(64, 96, 32, 32)
+display_coords = Rect2(64, 32, 32, 32)
+
+[node name="Gamemodes" type="VBoxContainer" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 616.0
+offset_top = 293.0
+offset_right = 616.0
+offset_bottom = 293.0
+theme_override_constants/separation = 80
+
+[node name="Cube" type="Panel" parent="UI/IconsUI/Gamemodes"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/IconsUI/Gamemodes/Cube"]
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 64.0
+theme = ExtResource("13_xo5ut")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/IconsUI/Gamemodes/Cube/Button"]
+position = Vector2(31, 31)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("14_hnfy5")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Ship" type="Panel" parent="UI/IconsUI/Gamemodes"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/IconsUI/Gamemodes/Ship"]
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 64.0
+theme = ExtResource("13_xo5ut")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/IconsUI/Gamemodes/Ship/Button"]
+position = Vector2(31.500008, 32.5)
+scale = Vector2(1.5937513, 1.5937501)
+texture = ExtResource("14_hnfy5")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="Ball" type="Panel" parent="UI/IconsUI/Gamemodes"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/IconsUI/Gamemodes/Ball"]
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 64.0
+theme = ExtResource("13_xo5ut")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/IconsUI/Gamemodes/Ball/Button"]
+position = Vector2(31.500008, 32.5)
+scale = Vector2(1.5937513, 1.5937501)
+texture = ExtResource("14_hnfy5")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
+
+[node name="Back" type="Button" parent="UI/IconsUI"]
+layout_mode = 0
+offset_left = 702.0
+offset_top = 492.0
+offset_right = 825.0
+offset_bottom = 541.0
+theme = ExtResource("6_ivtes")
+text = "BACK"
+
 [node name="Engine" type="Label" parent="UI"]
 anchors_preset = 1
 anchor_left = 1.0
@@ -589,6 +857,7 @@ horizontal_alignment = 2
 [connection signal="pressed" from="UI/Play" to="." method="on_play_pressed"]
 [connection signal="mouse_entered" from="UI/Icons" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Icons" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Icons" to="." method="on_icon_pressed"]
 [connection signal="mouse_entered" from="UI/Exit" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Exit" to="." method="on_mouse_exit"]
 [connection signal="pressed" from="UI/Exit" to="." method="on_exit_pressed"]
@@ -624,4 +893,12 @@ horizontal_alignment = 2
 [connection signal="mouse_entered" from="UI/ExitUI/No" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/ExitUI/No" to="." method="on_mouse_exit"]
 [connection signal="pressed" from="UI/ExitUI/No" to="." method="on_exit_no_pressed"]
+[connection signal="color_changed" from="UI/IconsUI/P1Color" to="UI/IconsUI" method="on_p1_color_changed"]
+[connection signal="color_changed" from="UI/IconsUI/P2Color" to="UI/IconsUI" method="on_p2_color_changed"]
+[connection signal="pressed" from="UI/IconsUI/Gamemodes/Cube/Button" to="UI/IconsUI" method="on_cube_pressed"]
+[connection signal="pressed" from="UI/IconsUI/Gamemodes/Ship/Button" to="UI/IconsUI" method="on_ship_pressed"]
+[connection signal="pressed" from="UI/IconsUI/Gamemodes/Ball/Button" to="UI/IconsUI" method="on_ball_pressed"]
+[connection signal="mouse_entered" from="UI/IconsUI/Back" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/IconsUI/Back" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/IconsUI/Back" to="." method="on_icon_back_pressed"]
 [connection signal="timeout" from="PlayDelay" to="." method="on_play_delay_timeout"]

@@ -11,20 +11,29 @@ extends Node2D
 @onready var exit: Button = $UI/Exit
 @onready var settings: Button = $UI/Settings
 @onready var credits: Button = $UI/Credits
+
 @onready var logo: TextureRect = $UI/Logo
+
 @onready var fade_in: ColorRect = $UI/Fadein
+
 @onready var settings_ui: Panel = $UI/SettingsUI
 @onready var settings_back: Button = $UI/SettingsUI/Back
 @onready var sound_slider: HSlider = $UI/SettingsUI/SoundSlider
 @onready var music_slider: HSlider = $UI/SettingsUI/MusicSlider
+
 @onready var credits_ui: Panel = $UI/CreditsUI
 @onready var credits_back: Button = $UI/CreditsUI/Back
+
 @onready var ui_layer: CanvasLayer = $UI
+
 @onready var fade_out: ColorRect = $UI/FadeOut
+
 @onready var exit_ui: Panel = $UI/ExitUI
 
 @onready var ground_sprite: Sprite2D = $ParallaxGround/Ground
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
+
+@onready var icons_ui: Panel = $UI/IconsUI
 
 @onready var play_delay: Timer = $PlayDelay
 
@@ -62,9 +71,11 @@ func _ready():
 
 func _on_window_size_changed():
 	if not on_settings:
-		settings_ui.position.y = get_window().size.y + 10
+		settings_ui.position.y = get_window().size.y + 100
 	if not on_credits:
-		credits_ui.position.y = get_window().size.y + 10
+		credits_ui.position.y = get_window().size.y + 100
+	if not on_icons:
+		icons_ui.position.x = get_window().size.x + 100
 
 func _process(delta):
 	# Fade in
@@ -93,7 +104,7 @@ func _process(delta):
 
 # Play System
 ## Play System:
-## Plays a fade out animation
+## Plays a fade out animation and teleports the user to the level select scene
 ## (Signal Function)
 func on_play_pressed():
 	if not on_screen:
@@ -105,12 +116,9 @@ func on_play_pressed():
 		tween.tween_property(fade_out, "color:a", 1.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		
 		play_delay.start(1.0)
-
-## Play System:
-## Sends the user to the level select scene after the timer has timed out
-## (Signal Function)
-func on_play_delay_timeout():
-	get_tree().change_scene_to_file("res://files/scenes/levelselect.tscn")
+	
+	await play_delay.timeout
+	get_tree().change_scene_to_file.call_deferred("res://files/scenes/levelselect.tscn")
 
 # Runtime Animation
 ## Runtime Animation:
@@ -195,7 +203,7 @@ func show_settings():
 		return
 	
 	settings_ui.visible = true
-	settings_ui.position.y = get_window().size.y + 10
+	settings_ui.position.y = get_window().size.y + 100
 	
 	var tween = create_tween()
 	tween.tween_property(settings_ui, "position:y", get_window().size.y / 4.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
@@ -209,12 +217,14 @@ func show_settings():
 ## (Signal Function)
 func on_sound_slider_dragged(value):
 	GameProperties.user_settings["settings"]["sound_vol"] = value / 100.0
+	GameProperties.save_user_data()
 
 ## Settings System:
 ## Changes the music volume settings
 ## (Signal Function)
 func on_music_slider_dragged(value):
 	GameProperties.user_settings["settings"]["music_vol"] = value / 100.0
+	GameProperties.save_user_data()
 
 ## Settings System:
 ## Moves the settings UI back to offscreen
@@ -229,7 +239,7 @@ func on_settings_back():
 	music_slider.release_focus()
 	
 	var tween = create_tween()
-	tween.tween_property(settings_ui, "position:y", get_window().size.y + 10, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(settings_ui, "position:y", get_window().size.y + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 # End of System
 
@@ -248,7 +258,7 @@ func show_credits():
 		return
 	
 	credits_ui.visible = true
-	credits_ui.position.y = get_window().size.y + 10
+	credits_ui.position.y = get_window().size.y + 100
 	
 	var tween = create_tween()
 	tween.tween_property(credits_ui, "position:y", get_window().size.y / 4.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
@@ -259,6 +269,34 @@ func on_credits_back():
 	on_credits = false
 	
 	var tween = create_tween()
-	tween.tween_property(credits_ui, "position:y", get_window().size.y + 10, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(credits_ui, "position:y", get_window().size.y + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 # End of System
+
+# SIcons Select
+## Icon Select:
+## Shows the icon select UI
+## (Signal Function)
+func on_icon_pressed():
+	if not on_screen:
+		on_screen = true
+	else:
+		return 
+	
+	on_icons = true
+	icons_ui.position.x = get_window().size.x + 100
+	
+	var tween = create_tween()
+	tween.tween_property(icons_ui, "position:x", get_window().size.x / 3.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+## Icon Select:
+## Hides the icon select UI
+## (Signal Function)
+func on_icon_back_pressed():
+	on_screen = false
+	on_icons = false
+	
+	var tween = create_tween()
+	tween.tween_property(icons_ui, "position:x", get_window().size.x + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+# End

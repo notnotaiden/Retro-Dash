@@ -100,3 +100,16 @@ offset_bottom = 70.0
 theme = ExtResource("2_4ownd")
 theme_override_font_sizes/font_size = 30
 text = "Home"
+
+[node name="NewBest" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 374.0
+offset_top = 173.0
+offset_right = 910.0
+offset_bottom = 217.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6j4xj")
+theme_override_font_sizes/font_size = 50
+text = "NEW BEST!"
+horizontal_alignment = 1

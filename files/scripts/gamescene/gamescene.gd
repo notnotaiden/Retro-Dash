@@ -12,7 +12,7 @@ extends Node2D
 @onready var scene_particles: CPUParticles2D = $SceneParticles
 @onready var place_checkpoint_btn: Button  = $UI/PlaceCheckpoint
 @onready var delete_checkpoint_btn: Button = $UI/DeleteCheckpoint
-@onready var fade_out: ColorRect = $UI/FadeOutFinish
+@onready var fade_out: ColorRect = $UI/FadeOut
 @onready var complete_text: Label = $UI/CompleteText
 @onready var complete_ui: Control = $UI/CompleteScreen
 
@@ -29,6 +29,7 @@ extends Node2D
 @onready var checkpoints_node: Node = $Checkpoints
 @onready var practice_timer: Timer = $PracticeModeDelayReset
 @onready var sound_player: AudioStreamPlayer = $SoundPlayer
+@onready var homedelay: Timer = $HomeDelay
 
 var camera_follow: bool = false
 ## Holds the state if the player is not touching a ui node
@@ -48,12 +49,18 @@ func _ready():
 	# Connecting signals
 	# Death UI restart button pressed
 	death_ui.restart_button.connect("pressed", on_player_restart)
+	# Death UI home button pressed
+	death_ui.home_button.connect("pressed", on_home_pressed)
 	# Pause UI resturn button pressed
 	pause_ui.return_button.connect("pressed", unpaused)
 	# Pause UI practice button pressed
 	pause_ui.practice_button.connect("pressed", pause_practice)
+	# Pause UI home button pressed
+	pause_ui.home_button.connect("pressed", on_home_pressed)
 	# Complete UI restart button
 	complete_ui.restart_button.connect("pressed", on_complete_restart)
+	# Complete UI home button
+	complete_ui.home_button.connect("pressed", on_home_pressed)
 	
 	# Update ground, ceiling, and bg color
 	ground_sprite.modulate = Color.ROYAL_BLUE
@@ -137,6 +144,7 @@ func _process(delta):
 		
 		if not player.finished:
 			player.finished = true
+			new_best()
 			sound_player.play()
 			sound_player.volume_linear = GameProperties.user_settings["settings"]["sound_vol"]
 			
@@ -151,6 +159,55 @@ func _process(delta):
 			var complete_ui_tween = get_tree().create_tween()
 			complete_ui_tween.tween_property(complete_ui, "position:y", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE).set_delay(5.0)
 
+# Home Mechanic
+## Home Mechanic:
+## Fades out the screen and teleports the user back to the level select screen
+## (Main Function)
+func on_home_pressed():
+	# Unpauses scene
+	get_tree().paused = false
+	songplayer.stop()
+	
+	fade_out.z_index = 5
+	player.dead = true # Prevents the player from dying while the transition happens
+	
+	var tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(fade_out, "color:a", 1.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	homedelay.start(1.0)
+	
+	await homedelay.timeout
+	get_tree().change_scene_to_file.call_deferred("res://files/scenes/levelselect.tscn")
+
+# End
+
+# New Best System
+## New Best System:
+## Updates user data and stores the new best progress
+## (Main Function)
+func new_best():
+	var level_data = GameProperties.user_data["level%d" % [GameProperties.current_level_id]]
+	
+	if not GameProperties.practice_mode:
+		if progress_bar.value > level_data["normal"]:
+			death_ui.show_new_best()
+			
+			if progress_bar.value >= 99:
+				level_data["normal"] = 100.0
+			else:
+				level_data["normal"] = progress_bar.value
+			
+			GameProperties.save_user_data()
+	else:
+		if progress_bar.value > level_data["practice"]:
+			if progress_bar.value >= 99:
+				level_data["normal"] = 100.0
+			else:
+				level_data["practice"] = progress_bar.value
+			
+			GameProperties.save_user_data()
+
+# End of System
 
 func _input(event):
 	if event is InputEventKey:
@@ -505,6 +562,8 @@ func on_player_death():
 		tween.tween_property(death_ui, "position:y", 0.0, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
 	else:
 		practice_timer.start(1.0)
+	
+	new_best()
 
 ## Death Mechanic:
 ## Restarts everything upon timer finish (Practice mode)
