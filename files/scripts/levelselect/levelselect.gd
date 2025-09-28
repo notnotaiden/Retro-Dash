@@ -56,6 +56,10 @@ func _input(event):
 				on_previous_pressed()
 			if event.keycode == KEY_RIGHT or event.keycode == KEY_D:
 				on_next_pressed()
+			
+			# Back system
+			if event.keycode == KEY_ESCAPE:
+				on_back_pressed()
 
 # Back System
 ## Back System:

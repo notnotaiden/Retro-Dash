@@ -106,6 +106,10 @@ func _process(delta):
 		random_color =  Color(randf(), randf(), randf())
 	
 	player.get_node("SkinDisplayer").change_skin(1)
+	
+	# Exit system
+	if Input.is_key_pressed(KEY_ESCAPE):
+		on_exit_pressed()
 
 # Play System
 ## Play System:

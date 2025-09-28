@@ -12,13 +12,14 @@ extends Panel
 ## Each level panel has a unique level path that basically holds a string path 
 ## to their respective level
 @export var level_path: String = "res://files/levels/level1"
-@export var level_name: String = "LEVEL NAME"
-@export var level_length_in_seconds: float = 0.0
-@export var difficulty: int = 1
-@export var level_id: int = 1
 @export var unlockable: bool = false
 @export var level_id_to_unlock: Array = []
 @export var tooltip_string: String = ""
+
+var level_name: String = "LEVEL NAME"
+var level_length_in_seconds: float = 0.0
+var difficulty: int = 1
+var level_id: int = 1
 
 signal pressed
 
@@ -28,6 +29,9 @@ func _ready():
 	if not GameProperties.user_data == null:
 		normal_stats.value = GameProperties.user_data["level%d" % [level_id]]["normal"]
 		practice_stats.value = GameProperties.user_data["level%d" % [level_id]]["practice"]
+	
+	# Find the level json file
+	load_level_data()
 	
 	# Update level name text
 	name_txt.text = level_name.to_upper()
@@ -73,6 +77,36 @@ func _ready():
 		length_text.text = "%d:%d SECONDS LONG" % [minutes, secs]
 	else:
 		length_text.text = "%d:%d MINUTE LONG" % [minutes, secs]
+
+# Load Level Data
+## Load Level Data:
+## Loads the user data
+## (Main Function)
+func load_level_data():
+	var level_data: Dictionary
+	
+	# Load level data
+	var level_json_file_path = level_path.path_join("level.json")
+	if FileAccess.file_exists(level_json_file_path):
+		var file = FileAccess.open(level_json_file_path, FileAccess.READ)
+		if file:
+			var content = file.get_as_text()
+			var json = JSON.parse_string(content)
+			if typeof(json) == TYPE_DICTIONARY:
+				level_data = json
+	else:
+		return
+	
+	# Load stream
+	var stream = load(level_data["SongPath"])
+	
+	# Update properties
+	level_name = level_data["Name"]
+	difficulty = level_data["Difficulty"]
+	level_id = level_data["ID"]
+	level_length_in_seconds = stream.get_length()
+
+# End
 
 # Play level
 ## Play level System:
