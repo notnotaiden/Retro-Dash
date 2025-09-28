@@ -66,14 +66,20 @@ func on_icon_pressed(icon):
 	if icon.unlocked:
 		match icon.type:
 			"cube":
+				current_gamemode = 1
+				
 				GameProperties.user_settings["customization"]["cube_skin"]["outline"] = icon.outline_coords
 				GameProperties.user_settings["customization"]["cube_skin"]["p1"] = icon.p1_coords
 				GameProperties.user_settings["customization"]["cube_skin"]["p2"] = icon.p2_coords
 			"ship":
+				current_gamemode = 2
+				
 				GameProperties.user_settings["customization"]["ship_skin"]["outline"] = icon.outline_coords
 				GameProperties.user_settings["customization"]["ship_skin"]["p1"] = icon.p1_coords
 				GameProperties.user_settings["customization"]["ship_skin"]["p2"] = icon.p2_coords
 			"ball":
+				current_gamemode = 3
+				
 				GameProperties.user_settings["customization"]["ball_skin"]["outline"] = icon.outline_coords
 				GameProperties.user_settings["customization"]["ball_skin"]["p1"] = icon.p1_coords
 				GameProperties.user_settings["customization"]["ball_skin"]["p2"] = icon.p2_coords

@@ -23,11 +23,12 @@ func _process(_delta):
 		return
 	
 	if parent.GRAVITY < 0.0:
-		outline.flip_v = true
-		p1.flip_v = true
-		p2.flip_v = true
 		
 		if parent.gamemode == 2:
+			outline.flip_v = true
+			p1.flip_v = true
+			p2.flip_v = true
+			
 			ship_outline.flip_v = true
 			ship_p1.flip_v = true
 			ship_p2.flip_v = true

@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://v3oq3vplq71l"]
+
+[ext_resource type="Script" uid="uid://clg2mxt6nm35i" path="res://files/scripts/intro/intro.gd" id="1_ait3d"]
+[ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="2_rnvrj"]
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="3_411o1"]
+
+[node name="Intro" type="Node2D"]
+script = ExtResource("1_ait3d")
+
+[node name="Disclaimer" type="CanvasLayer" parent="."]
+
+[node name="BG" type="ColorRect" parent="Disclaimer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Disclaimer" type="Panel" parent="Disclaimer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = -99.0
+offset_right = 224.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_rnvrj")
+
+[node name="Text" type="Label" parent="Disclaimer/Disclaimer"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 16.0
+offset_right = 435.0
+offset_bottom = 177.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_411o1")
+theme_override_font_sizes/font_size = 28
+text = "DISCLAIMER:
+
+Some features we're
+rushed so expect things
+to be full of bugs"
+horizontal_alignment = 1
+
+[node name="GuideText" type="Label" parent="Disclaimer"]
+anchors_preset = -1
+anchor_left = 0.50100005
+anchor_top = 0.96500003
+anchor_right = 0.50100005
+anchor_bottom = 0.96500003
+offset_left = -640.28
+offset_top = -38.80005
+offset_right = 638.72
+offset_bottom = 0.19995117
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_411o1")
+theme_override_font_sizes/font_size = 35
+text = "Press any key to continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tip" type="Label" parent="Disclaimer"]
+anchors_preset = -1
+anchor_left = 0.50100005
+anchor_top = 0.96500003
+anchor_right = 0.50100005
+anchor_bottom = 0.96500003
+offset_left = -639.28
+offset_top = -354.80005
+offset_right = 639.72
+offset_bottom = -315.80005
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_411o1")
+theme_override_font_sizes/font_size = 35
+text = "Wearing headphones is highly recommended"
+horizontal_alignment = 1
+vertical_alignment = 1

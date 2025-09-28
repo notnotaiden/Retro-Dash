@@ -25,6 +25,7 @@ func on_body_entered(body):
 			has_used = true
 			body.emit_trail = true
 			body.trail_timer.start(0.5)
+			body.velocity.y = 0.0 # Prevents the player jumping from overriding the boost
 			
 			match pad_type:
 				"Yellow":

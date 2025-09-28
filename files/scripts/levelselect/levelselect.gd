@@ -73,7 +73,7 @@ func on_back_pressed():
 ## (Signal Function)
 func on_play_pressed():
 	start_fade_out()
-	scene_path = "res://files/scenes/gamescene.tscn"
+	scene_path = "res://files/scenes/loading_screen.tscn"
 
 # End
 

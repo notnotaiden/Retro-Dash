@@ -71,11 +71,14 @@ func _ready():
 
 func _on_window_size_changed():
 	if not on_settings:
-		settings_ui.position.y = get_window().size.y + 100
+		settings_ui.offset_top = 440
+		settings_ui.offset_bottom = 908
 	if not on_credits:
-		credits_ui.position.y = get_window().size.y + 100
+		credits_ui.offset_top = 440
+		credits_ui.offset_bottom = 908
 	if not on_icons:
-		icons_ui.position.x = get_window().size.x + 100
+		icons_ui.offset_left = 43
+		icons_ui.offset_right = 877
 
 func _process(delta):
 	# Fade in
@@ -125,29 +128,47 @@ func on_play_pressed():
 ## Moves the UI buttons to their respective positions upon runtime
 ## (Main Function)
 func runtime_anim():
-	play.position.x = -500
-	icons.position.x = -500
-	exit.position.x = -500
+	play.offset_left = -500
+	play.offset_right = -153
 	
-	settings.position.y = settings.position.y + 800
-	credits.position.y = credits.position.y + 800
+	icons.offset_left = -500
+	icons.offset_right = -153
 	
-	logo.position.y = -200
+	exit.offset_left = -500
+	exit.offset_right = -153
 	
-	var play_tween = create_tween()
-	play_tween.tween_property(play, "position:x", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
-	var icons_tween = create_tween()
-	icons_tween.tween_property(icons, "position:x", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
-	var exit_tween = create_tween()
-	exit_tween.tween_property(exit, "position:x", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	settings.offset_top = 69
+	settings.offset_bottom = 147
+	credits.offset_top = 69
+	credits.offset_bottom = 147
 	
-	var settings_tween = create_tween()
-	settings_tween.tween_property(settings, "position:y", settings.position.y - 800, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
-	var credits_tween = create_tween()
-	credits_tween.tween_property(credits, "position:y", credits.position.y - 800, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
+	logo.offset_top = -260
+	logo.offset_bottom = -81
 	
-	var logo_tween = create_tween()
-	logo_tween.tween_property(logo, "position:y", 11.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	var tween = create_tween()
+	# Play
+	tween.tween_property(play, "offset_left", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	tween.parallel().tween_property(play, "offset_right", 381, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	
+	# Icons
+	tween.parallel().tween_property(icons, "offset_left", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
+	tween.parallel().tween_property(icons, "offset_right", 381, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
+	
+	# Exit
+	tween.parallel().tween_property(exit, "offset_left", 34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	tween.parallel().tween_property(exit, "offset_right", 381, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	
+	# Settings
+	tween.parallel().tween_property(settings, "offset_top", -92, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	tween.parallel().tween_property(settings, "offset_bottom", -14, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	
+	# Credits
+	tween.parallel().tween_property(credits, "offset_top", -92, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
+	tween.parallel().tween_property(credits, "offset_bottom", -14, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
+	
+	# Logo
+	tween.parallel().tween_property(logo, "offset_top", 11.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
+	tween.parallel().tween_property(logo, "offset_bottom", 190, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
 
 # End of System
 
@@ -206,7 +227,8 @@ func show_settings():
 	settings_ui.position.y = get_window().size.y + 100
 	
 	var tween = create_tween()
-	tween.tween_property(settings_ui, "position:y", get_window().size.y / 4.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(settings_ui, "offset_top", -192, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(settings_ui, "offset_bottom", 276, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	
 	# Update sliders value
 	sound_slider.value = GameProperties.user_settings["settings"]["sound_vol"] * 100
@@ -239,7 +261,8 @@ func on_settings_back():
 	music_slider.release_focus()
 	
 	var tween = create_tween()
-	tween.tween_property(settings_ui, "position:y", get_window().size.y + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(settings_ui, "offset_top", 440, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(settings_ui, "offset_bottom", 908, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 # End of System
 
@@ -261,7 +284,8 @@ func show_credits():
 	credits_ui.position.y = get_window().size.y + 100
 	
 	var tween = create_tween()
-	tween.tween_property(credits_ui, "position:y", get_window().size.y / 4.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(credits_ui, "offset_top", -192, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(credits_ui, "offset_bottom", 276, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 func on_credits_back():
 	credits_back.release_focus()
@@ -269,7 +293,8 @@ func on_credits_back():
 	on_credits = false
 	
 	var tween = create_tween()
-	tween.tween_property(credits_ui, "position:y", get_window().size.y + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(credits_ui, "offset_top", 440, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(credits_ui, "offset_bottom", 908, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 # End of System
 
@@ -287,7 +312,8 @@ func on_icon_pressed():
 	icons_ui.position.x = get_window().size.x + 100
 	
 	var tween = create_tween()
-	tween.tween_property(icons_ui, "position:x", get_window().size.x / 3.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(icons_ui, "offset_left", -868, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(icons_ui, "offset_right", -34, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 ## Icon Select:
 ## Hides the icon select UI
@@ -297,6 +323,6 @@ func on_icon_back_pressed():
 	on_icons = false
 	
 	var tween = create_tween()
-	tween.tween_property(icons_ui, "position:x", get_window().size.x + 100, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-
+	tween.tween_property(icons_ui, "offset_left", 43, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(icons_ui, "offset_right", 867, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 # End

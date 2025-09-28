@@ -172,6 +172,13 @@ offset_bottom = 241.0
 grow_horizontal = 2
 theme_override_styles/panel = ExtResource("1_4cjcl")
 script = ExtResource("2_pamsc")
+level_path = null
+level_name = null
+difficulty = null
+level_id = null
+unlockable = null
+level_id_to_unlock = null
+tooltip_string = null
 
 [node name="DifficultyPanel" type="Panel" parent="."]
 layout_mode = 0
@@ -267,5 +274,16 @@ offset_bottom = 472.0
 theme = ExtResource("3_2diyn")
 theme_override_font_sizes/font_size = 30
 text = "PLAY"
+
+[node name="Length" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 757.0
+offset_bottom = 36.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("4_pamsc")
+theme_override_font_sizes/font_size = 20
+text = "1:36 MINUTE LONG"
 
 [connection signal="pressed" from="Play" to="." method="on_play_pressed"]

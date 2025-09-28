@@ -15,6 +15,7 @@ extends Node2D
 @onready var fade_out: ColorRect = $UI/FadeOut
 @onready var complete_text: Label = $UI/CompleteText
 @onready var complete_ui: Control = $UI/CompleteScreen
+@onready var fade_in: ColorRect = $UI/FadeIn
 
 # Parallax
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -45,6 +46,13 @@ func _ready():
 	
 	# Adding level to the scene
 	load_level()
+	
+	# Fade in
+	if GameProperties.attempts == 1:
+		# Fade in
+		fade_in.color.a = 1.0
+		var tween = create_tween()
+		tween.tween_property(fade_in, "color:a", 0.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	
 	# Connecting signals
 	# Death UI restart button pressed

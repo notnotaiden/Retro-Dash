@@ -216,7 +216,7 @@ func rotate_texture(on_floor: bool, delta: float):
 		if gamemode == 1: # Cube
 			var snapped_rotation: float
 			# Round to nearest 0 or 180 rotation degress
-			snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0 * sign(GRAVITY)
+			snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
 			
 			# Transition smoothly
 			texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
@@ -341,7 +341,11 @@ func player_death_collide():
 					global_position.y = top_y * sign(GRAVITY)
 				
 				# Round to nearest 0 or 180 rotation degress
-				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				var snapped_rotation
+				if not gamemode == 3:
+					snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				else:
+					snapped_rotation = texture.rotation_degrees
 				
 				# Transition smoothly
 				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
@@ -353,7 +357,11 @@ func player_death_collide():
 					global_position.y = top_y - 1 * sign(GRAVITY)
 				
 				# Round to nearest 0 or 180 rotation degress
-				var snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				var snapped_rotation
+				if not gamemode == 3:
+					snapped_rotation = round(texture.rotation_degrees / 90.0) * 90.0
+				else:
+					snapped_rotation = texture.rotation_degrees
 				
 				# Transition smoothly
 				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)

@@ -1,0 +1,105 @@
+[gd_scene load_steps=8 format=3 uid="uid://cugvsiv8i6fvp"]
+
+[ext_resource type="Script" uid="uid://dobn83lpwm8p5" path="res://files/scripts/loading/loading_screen.gd" id="1_2q5jb"]
+[ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_beye7"]
+[ext_resource type="Texture2D" uid="uid://7qwwwjy33rhu" path="res://files/assets/sprites/ground.png" id="2_2q5jb"]
+[ext_resource type="Texture2D" uid="uid://do4cbih4rnejk" path="res://files/assets/sprites/loading_text.png" id="4_inn5k"]
+[ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="5_25xon"]
+[ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="6_4q08i"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_inn5k"]
+
+[node name="LoadingScreen" type="Node2D"]
+script = ExtResource("1_2q5jb")
+
+[node name="ParallaxBG" type="Parallax2D" parent="."]
+process_mode = 1
+scroll_scale = Vector2(0.1, 0.1)
+scroll_offset = Vector2(215, 66)
+repeat_size = Vector2(260, 190)
+repeat_times = 10
+
+[node name="BG" type="Sprite2D" parent="ParallaxBG"]
+modulate = Color(0, 0.42745098, 1, 1)
+position = Vector2(640, 360)
+texture = ExtResource("1_beye7")
+
+[node name="ParallaxGround" type="Parallax2D" parent="." groups=["Ground"]]
+process_mode = 1
+z_index = 1
+scroll_offset = Vector2(19, 90)
+repeat_size = Vector2(1350, 0)
+repeat_times = 5
+
+[node name="Ground" type="Sprite2D" parent="ParallaxGround" groups=["Ground"]]
+modulate = Color(0, 0.4288597, 1, 1)
+position = Vector2(4, 665)
+texture = ExtResource("2_2q5jb")
+
+[node name="Ground" type="StaticBody2D" parent="ParallaxGround/Ground" groups=["Ground"]]
+position = Vector2(-4, -125)
+
+[node name="Hitbox" type="CollisionShape2D" parent="ParallaxGround/Ground/Ground" groups=["Ground"]]
+position = Vector2(577.5, 1.5)
+shape = SubResource("WorldBoundaryShape2D_inn5k")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="LoadingText" type="TextureRect" parent="UI"]
+offset_right = 853.0
+offset_bottom = 179.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_inn5k")
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 93.0
+offset_top = -94.0
+offset_right = -91.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_25xon")
+theme_override_font_sizes/font_size = 30
+
+[node name="Label" type="Label" parent="UI/ProgressBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.503
+anchor_right = 0.503
+offset_left = -281.28802
+offset_top = -28.0
+offset_right = 281.71198
+offset_bottom = -5.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_4q08i")
+theme_override_font_sizes/font_size = 20
+text = "PLEASE WAIT AS THE LEVEL LOADS IN THE BACKGROUND"
+
+[node name="FadeOut" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="FadeIn" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="SendDelay" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="TransitionDelay" type="Timer" parent="."]
+wait_time = 2.0

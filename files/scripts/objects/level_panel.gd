@@ -2,8 +2,10 @@ extends Panel
 
 # Reference scene nodes
 @onready var name_txt: Label = $LevelNamePanel/Name
+@onready var length_text: Label = $Length
 @onready var face: Sprite2D = $DifficultyPanel/Face
 
+@onready var play: Button = $Play
 @onready var normal_stats: ProgressBar = $StatsPanel/NormalProgress
 @onready var practice_stats: ProgressBar = $StatsPanel/PracticeProgress
 
@@ -11,9 +13,12 @@ extends Panel
 ## to their respective level
 @export var level_path: String = "res://files/levels/level1"
 @export var level_name: String = "LEVEL NAME"
+@export var level_length_in_seconds: float = 0.0
 @export var difficulty: int = 1
 @export var level_id: int = 1
-
+@export var unlockable: bool = false
+@export var level_id_to_unlock: Array = []
+@export var tooltip_string: String = ""
 
 signal pressed
 
@@ -49,6 +54,25 @@ func _ready():
 			face.region_rect = Rect2(160.0, 0.0, 32.0, 32.0)
 		10: # Demon
 			face.region_rect = Rect2(192.0, 0.0, 32.0, 32.0)
+	
+	# Unlockable level system
+	play.tooltip_text = tooltip_string
+	
+	if unlockable:
+		for level_id in level_id_to_unlock:
+			if GameProperties.user_data["level%d" % [level_id]]["normal"] >= 100:
+				play.disabled = false
+			else:
+				play.disabled = true
+	
+	# Length System
+	var minutes = int(level_length_in_seconds) / 60
+	var secs = int(level_length_in_seconds) % 60
+	
+	if minutes <= 0:
+		length_text.text = "%d:%d SECONDS LONG" % [minutes, secs]
+	else:
+		length_text.text = "%d:%d MINUTE LONG" % [minutes, secs]
 
 # Play level
 ## Play level System:

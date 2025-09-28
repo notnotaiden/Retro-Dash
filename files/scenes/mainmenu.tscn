@@ -224,6 +224,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
 [node name="Logo" type="TextureRect" parent="UI"]
+anchors_preset = -1
 offset_left = 8.0
 offset_top = 11.000004
 offset_right = 1078.0
@@ -232,7 +233,7 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("1_2547t")
 
 [node name="Play" type="Button" parent="UI"]
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 34.0
@@ -306,7 +307,8 @@ offset_bottom = -14.0
 theme = ExtResource("6_ivtes")
 
 [node name="Credits" type="Button" parent="UI"]
-anchors_preset = 2
+custom_minimum_size = Vector2(0, 6.625)
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 98.0
@@ -325,7 +327,6 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.90000004)
 
 [node name="SettingsUI" type="Panel" parent="UI"]
-visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -421,8 +422,7 @@ theme_override_font_sizes/font_size = 30
 text = "BACK"
 
 [node name="CreditsUI" type="Panel" parent="UI"]
-visible = false
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -518,13 +518,13 @@ text = "BACK"
 [node name="ExitUI" type="Panel" parent="UI"]
 visible = false
 anchors_preset = -1
-anchor_left = 0.46800002
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 0.46800002
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -187.04004
+offset_left = -228.0
 offset_top = -71.0
-offset_right = 233.95996
+offset_right = 193.0
 offset_bottom = 123.0
 theme_override_styles/panel = ExtResource("8_ivtes")
 
@@ -702,6 +702,8 @@ outline_coords = Rect2(32, 64, 32, 32)
 p1_coords = Rect2(64, 64, 32, 32)
 p2_coords = Rect2(96, 64, 32, 32)
 display_coords = Rect2(0, 32, 32, 32)
+level_id_to_unlock = 1
+tooltip_string = "Complete Retro Madness on Normal Mode to unlock"
 
 [node name="Ship" type="HBoxContainer" parent="UI/IconsUI/Icons"]
 layout_mode = 2
@@ -728,6 +730,8 @@ outline_coords = Rect2(96, 96, 32, 32)
 p1_coords = Rect2(0, 128, 32, 32)
 p2_coords = Rect2(32, 128, 32, 32)
 display_coords = Rect2(32, 32, 32, 32)
+level_id_to_unlock = 3
+tooltip_string = "Complete Fade Out on Normal Mode to unlock"
 
 [node name="Ball" type="HBoxContainer" parent="UI/IconsUI/Icons"]
 layout_mode = 2
@@ -754,6 +758,8 @@ outline_coords = Rect2(0, 96, 32, 32)
 p1_coords = Rect2(32, 96, 32, 32)
 p2_coords = Rect2(64, 96, 32, 32)
 display_coords = Rect2(64, 32, 32, 32)
+level_id_to_unlock = 2
+tooltip_string = "Complete Backbeat on Normal Mode to unlock"
 
 [node name="Gamemodes" type="VBoxContainer" parent="UI/IconsUI"]
 layout_mode = 0

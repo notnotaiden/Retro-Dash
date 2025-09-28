@@ -27,8 +27,6 @@ func _ready():
 ## Yellow: Makes the player jump mid air, Blue = switches gravity
 ## (General Function)
 func _process(_delta):
-	texture.scale = Vector2(2.0, 2.0)
-	
 	if Input.is_action_just_pressed("Player Jump"):
 		for body in get_overlapping_bodies():
 			if body is CharacterBody2D:
