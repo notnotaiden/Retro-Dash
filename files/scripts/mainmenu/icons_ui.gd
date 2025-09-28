@@ -85,3 +85,4 @@ func on_icon_pressed(icon):
 				GameProperties.user_settings["customization"]["ball_skin"]["p2"] = icon.p2_coords
 	
 	skin_displayer.change_skin(current_gamemode)
+	GameProperties.save_user_data()

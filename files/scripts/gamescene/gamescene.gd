@@ -47,13 +47,6 @@ func _ready():
 	# Adding level to the scene
 	load_level()
 	
-	# Fade in
-	if GameProperties.attempts == 1:
-		# Fade in
-		fade_in.color.a = 1.0
-		var tween = create_tween()
-		tween.tween_property(fade_in, "color:a", 0.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	
 	# Connecting signals
 	# Death UI restart button pressed
 	death_ui.restart_button.connect("pressed", on_player_restart)
@@ -101,6 +94,17 @@ func _ready():
 	
 	# Update attempts text
 	attempts_text.text = "Attempt %d" % [GameProperties.attempts]
+	
+	# Fade in
+	if GameProperties.attempts == 1:
+		# Fade in
+		fade_in.z_index = 10
+		fade_in.color.a = 1.0
+		var tween = create_tween()
+		tween.tween_property(fade_in, "color:a", 0.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		
+		await tween.finished
+		fade_in.queue_free()
 
 func _process(delta):
 	# Camera follow

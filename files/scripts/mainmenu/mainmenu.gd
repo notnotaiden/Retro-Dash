@@ -104,6 +104,8 @@ func _process(delta):
 	if ground_sprite.modulate.is_equal_approx(random_color):
 		# Generate new color
 		random_color =  Color(randf(), randf(), randf())
+	
+	player.get_node("SkinDisplayer").change_skin(1)
 
 # Play System
 ## Play System:

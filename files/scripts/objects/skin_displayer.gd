@@ -12,6 +12,8 @@ extends Node2D
 @onready var ship_p1: Sprite2D = $Ship/P1
 @onready var ship_p2: Sprite2D = $Ship/P2
 
+@onready var fire_particles: CPUParticles2D = $Ship/FireParticles
+
 @onready var parent: CharacterBody2D
 
 # General Functions
@@ -25,6 +27,8 @@ func _process(_delta):
 	if parent.GRAVITY < 0.0:
 		
 		if parent.gamemode == 2:
+			fire_particles.position.y = 0.0
+			
 			outline.flip_v = true
 			p1.flip_v = true
 			p2.flip_v = true
@@ -47,6 +51,8 @@ func _process(_delta):
 		p2.flip_v = false
 		
 		if parent.gamemode == 2:
+			fire_particles.position.y = 25.0
+			
 			ship_outline.flip_v = false
 			ship_p1.flip_v = false
 			ship_p2.flip_v = false
