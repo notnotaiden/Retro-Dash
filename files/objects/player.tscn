@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpouvfyqk0wgw" path="res://files/scripts/objects/player.gd" id="1_mpttn"]
 [ext_resource type="PackedScene" uid="uid://dshfptxfmwf7m" path="res://files/objects/skin_displayer.tscn" id="2_mpttn"]
-[ext_resource type="AudioStream" uid="uid://ctkmxymbu6k53" path="res://files/assets/sound/death_sfx.ogg" id="3_b3t1j"]
+[ext_resource type="AudioStream" uid="uid://d2jhqxjbsxcy" path="res://files/assets/sound/death_sfx.mp3" id="3_b3t1j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3v0qd"]
 size = Vector2(80, 80)

@@ -17,11 +17,15 @@ grow_vertical = 2
 script = ExtResource("1_2on1c")
 
 [node name="BGDim" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = -193.0
-offset_top = -809.0
-offset_right = 1540.0
-offset_bottom = 1553.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -3.8710003
+anchor_right = 1.0
+anchor_bottom = 4.2060003
+offset_top = 0.12011719
+offset_bottom = -0.3203125
+grow_horizontal = 2
+grow_vertical = 2
 tooltip_text = "THE PRACTICE MODE FEATURE IS VERY BUGGY AND WILL BE FIXED IN LATER VERSIONS"
 color = Color(0, 0, 0, 0.36862746)
 

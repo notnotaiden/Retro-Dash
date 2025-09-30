@@ -97,13 +97,13 @@ offset_right = 766.72
 offset_bottom = 581.0
 grow_horizontal = 1
 level_path = "res://files/levels/level1"
+unlockable = false
+level_id_to_unlock = []
+tooltip_string = ""
 level_name = "RETRO MADNESS"
 level_length_in_seconds = 104.0
 difficulty = 3
 level_id = 1
-unlockable = false
-level_id_to_unlock = []
-tooltip_string = ""
 
 [node name="Level2" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
 layout_mode = 2
@@ -121,13 +121,13 @@ offset_right = 766.72
 offset_bottom = 581.0
 grow_horizontal = 1
 level_path = "res://files/levels/level2"
+unlockable = false
+level_id_to_unlock = []
+tooltip_string = ""
 level_name = "BACKBEAT"
 level_length_in_seconds = 105.0
 difficulty = 6
 level_id = 2
-unlockable = false
-level_id_to_unlock = []
-tooltip_string = ""
 
 [node name="Level3" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
 layout_mode = 2
@@ -145,13 +145,13 @@ offset_right = 766.72
 offset_bottom = 581.0
 grow_horizontal = 1
 level_path = "res://files/levels/level3"
+unlockable = false
+level_id_to_unlock = []
+tooltip_string = ""
 level_name = "FADE OUT"
 level_length_in_seconds = 82.0
 difficulty = 8
 level_id = 3
-unlockable = false
-level_id_to_unlock = []
-tooltip_string = ""
 
 [node name="Level4" type="Panel" parent="UI/Levels/Margins/HBoxContainer"]
 layout_mode = 2
@@ -169,13 +169,13 @@ offset_right = 766.72
 offset_bottom = 581.0
 grow_horizontal = 1
 level_path = "res://files/levels/level4"
+unlockable = true
+level_id_to_unlock = [1, 2, 3]
+tooltip_string = "Complete Retro Madness, Backbeat, and Fade Out on Normal Mode to play"
 level_name = "POLARIS"
 level_length_in_seconds = 18.0
 difficulty = 10
 level_id = 4
-unlockable = true
-level_id_to_unlock = [1, 2, 3]
-tooltip_string = "Complete Retro Madness, Backbeat, and Fade Out on Normal Mode to play"
 
 [node name="Back" type="Button" parent="UI"]
 offset_left = 10.0

@@ -24,7 +24,7 @@ extends Node2D
 @onready var ground_sprite2: Sprite2D = $ParallaxGround2/Ground
 
 # Others
-@onready var songplayer: AudioStreamPlayer = $SongPlayer
+@onready var songplayer: AudioStreamPlayer
 @onready var level_node: Node = $Level
 @onready var level_blocks_node: Node
 @onready var checkpoints_node: Node = $Checkpoints
@@ -78,7 +78,19 @@ func _ready():
 	# Check state on runtime
 	camera_check_state()
 	# Load song
-	load_song(GameProperties.level_data)
+	match GameProperties.current_level_id:
+		1:
+			$Level1.play()
+			songplayer = $Level1
+		2:
+			$Level2.play()
+			songplayer = $Level2
+		3:
+			$Level3.play()
+			songplayer = $Level3
+		4:
+			$Level4.play()
+			songplayer = $Level4
 	
 	# Practice mode
 	if GameProperties.practice_mode:
@@ -157,7 +169,7 @@ func _process(delta):
 		songplayer.volume_linear = 0.0
 	
 	# Finish mechanic
-	if progress_bar.value >= 99:
+	if progress_bar.value >= 98:
 		fade_out.color.a = lerp(fade_out.color.a, 1.0, 0.05)
 		
 		if not player.finished:
@@ -478,21 +490,12 @@ func load_song(data: Dictionary):
 	if not FileAccess.file_exists(data["SongPath"]):
 		return
 	
-	# Create new mp3 stream
-	var mp3_stream = AudioStreamMP3.new()
-	# Access file
-	var file = FileAccess.open(data["SongPath"], FileAccess.READ)
-	
-	# Get mp3 data
-	mp3_stream.data = file.get_buffer(file.get_length())
-	if mp3_stream.data.is_empty():
-		return
+	# Create new ogg stream
 	
 	# Update songplayer stream
 	songplayer.volume_linear = GameProperties.user_settings["settings"]["music_vol"]
-	songplayer.stream = mp3_stream
+	songplayer.stream = load(data["SongPath"])
 	songplayer.play()
-	file.close()
 
 # Camera Follow Mechanic
 ## Camera Follow Mechanic:

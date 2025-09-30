@@ -1,7 +1,7 @@
 extends Node
 
 var song = AudioStreamPlayer.new()
-var stream = preload("res://files/assets/music/mainmenu.mp3")
+var stream = preload("res://files/assets/music/mainmenu.ogg")
 
 # General Functions
 func _ready():

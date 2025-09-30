@@ -16,10 +16,10 @@ extends Panel
 @export var level_id_to_unlock: Array = []
 @export var tooltip_string: String = ""
 
-var level_name: String = "LEVEL NAME"
-var level_length_in_seconds: float = 0.0
-var difficulty: int = 1
-var level_id: int = 1
+@export var level_name: String = "LEVEL NAME"
+@export var level_length_in_seconds: float = 0.0
+@export var difficulty: int = 1
+@export var level_id: int = 1
 
 signal pressed
 

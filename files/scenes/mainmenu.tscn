@@ -20,7 +20,7 @@
 [ext_resource type="StyleBox" uid="uid://bt6g1cn4kamv6" path="res://files/assets/resources/flat_button.tres" id="12_xpcbi"]
 [ext_resource type="Theme" uid="uid://dyk24h3vqlged" path="res://files/assets/resources/gray_buttons_theme.tres" id="13_xo5ut"]
 [ext_resource type="Texture2D" uid="uid://86emn6yqayfl" path="res://files/assets/sprites/skins/skin_display.png" id="14_hnfy5"]
-[ext_resource type="AudioStream" uid="uid://dve86v67tqv8l" path="res://files/assets/sound/one-more-game-sfx.mp3" id="19_7m62k"]
+[ext_resource type="AudioStream" uid="uid://cer6gmvjsdapu" path="res://files/assets/sound/one-more-game-sfx.ogg" id="21_vffaa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k3dd5"]
 
@@ -970,7 +970,7 @@ horizontal_alignment = 2
 [node name="PlayDelay" type="Timer" parent="."]
 
 [node name="OneMoreGame" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("19_7m62k")
+stream = ExtResource("21_vffaa")
 
 [connection signal="mouse_entered" from="UI/Play" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Play" to="." method="on_mouse_exit"]

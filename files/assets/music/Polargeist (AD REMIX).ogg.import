@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dihtalrcqgi25"
+path="res://.godot/imported/Polargeist (AD REMIX).ogg-2afd27b60118d5937c4bed8dc0736d6b.oggvorbisstr"
+
+[deps]
+
+source_file="res://files/assets/music/Polargeist (AD REMIX).ogg"
+dest_files=["res://.godot/imported/Polargeist (AD REMIX).ogg-2afd27b60118d5937c4bed8dc0736d6b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

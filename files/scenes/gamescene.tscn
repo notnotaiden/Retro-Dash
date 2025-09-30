@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=25 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
@@ -11,10 +11,14 @@
 [ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="7_xig57"]
 [ext_resource type="Theme" uid="uid://dicl3ck7dwn80" path="res://files/assets/resources/black_theme.tres" id="8_w3l22"]
 [ext_resource type="Texture2D" uid="uid://cjyufr1vcd5bu" path="res://files/assets/sprites/buttons_icons.png" id="9_rf8pn"]
-[ext_resource type="AudioStream" uid="uid://bnw6blivq0762" path="res://files/assets/sound/complete.mp3" id="10_fr3gv"]
 [ext_resource type="PackedScene" uid="uid://bh51c8xeu0ig7" path="res://files/scenes/complete_screen.tscn" id="10_lp4b5"]
 [ext_resource type="Texture2D" uid="uid://1en1mxvahhjq" path="res://files/assets/sprites/jumper.jpg" id="13_5os5a"]
-[ext_resource type="AudioStream" uid="uid://byupehfgdaiyw" path="res://files/assets/sound/jumpscare.mp3" id="15_b1m4e"]
+[ext_resource type="AudioStream" uid="uid://cyuffa11b744t" path="res://files/assets/sound/complete.ogg" id="14_b1m4e"]
+[ext_resource type="AudioStream" uid="uid://dmf816g0js5fo" path="res://files/assets/music/StereoMadness2.ogg" id="14_yso28"]
+[ext_resource type="AudioStream" uid="uid://u7dchxm6ualv" path="res://files/assets/sound/jumpscare.ogg" id="15_b1m4e"]
+[ext_resource type="AudioStream" uid="uid://bfpfykcb3vnsu" path="res://files/assets/music/Back on Track Remix.ogg" id="15_hofc0"]
+[ext_resource type="AudioStream" uid="uid://cymjtujwdg8ek" path="res://files/assets/music/Dry out 2.0.ogg" id="16_bbr3o"]
+[ext_resource type="AudioStream" uid="uid://dihtalrcqgi25" path="res://files/assets/music/Polargeist (AD REMIX).ogg" id="17_68ai6"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
@@ -294,8 +298,21 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("13_5os5a")
 
-[node name="SongPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Level1" type="AudioStreamPlayer" parent="."]
 process_mode = 1
+stream = ExtResource("14_yso28")
+
+[node name="Level2" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("15_hofc0")
+
+[node name="Level3" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("16_bbr3o")
+
+[node name="Level4" type="AudioStreamPlayer" parent="."]
+process_mode = 1
+stream = ExtResource("17_68ai6")
 
 [node name="SceneParticles" type="CPUParticles2D" parent="."]
 process_mode = 1
@@ -314,7 +331,7 @@ process_mode = 1
 
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 1
-stream = ExtResource("10_fr3gv")
+stream = ExtResource("14_b1m4e")
 
 [node name="HomeDelay" type="Timer" parent="."]
 process_mode = 3
