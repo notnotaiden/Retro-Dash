@@ -14,6 +14,9 @@ func _ready():
 	
 	tip.modulate.a = 0.0
 	presents.modulate.a = 0.0
+	
+	# Start loading the target scene in a separate thread
+	ResourceLoader.load_threaded_request("res://files/scenes/mainmenu.tscn")
 
 func _process(_delta):
 	# Continue
@@ -32,4 +35,5 @@ func _process(_delta):
 			tween.parallel().tween_property(presents, "modulate:a", 0.0, 2.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(8.0)
 			
 			await tween.finished
-			get_tree().change_scene_to_file("res://files/scenes/mainmenu.tscn")
+			var packed_scene = ResourceLoader.load_threaded_get("res://files/scenes/mainmenu.tscn")
+			get_tree().change_scene_to_packed(packed_scene)

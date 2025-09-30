@@ -35,6 +35,7 @@ var color_trigger: Area2D
 var COLOR_TRIGGER_SCENE_FILE: PackedScene = preload("res://files/objects/color_trigger.tscn")
 
 signal player_death
+var grace_period: bool = true
 
 # General Functions
 func _ready():
@@ -367,6 +368,12 @@ func player_death_collide():
 				texture.rotation_degrees = lerp(texture.rotation_degrees, snapped_rotation, 0.2)
 				
 				velocity.y = 0.0
+			# Makes the player die when the velocity x is below or equal to 0
+			elif velocity.x <= 0.0:
+				if not dead:
+					emit_signal("player_death")
+					death_particles()
+					dead = true
 			elif abs(normal.x) > 0.5 and normal.y > -0.5: # The player has collided with the sides of the block
 				if not dead:
 					emit_signal("player_death")

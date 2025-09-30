@@ -45,10 +45,19 @@ func _process(_delta):
 			outline.position.y = 23.0
 			p1.position.y = 23.0
 			p2.position.y = 23.0
+		else:
+			outline.position.y = 0.0
+			p1.position.y = 0.0
+			p2.position.y = 0.0
+		
 	else:
 		outline.flip_v = false
 		p1.flip_v = false
 		p2.flip_v = false
+		
+		outline.position.y = 0.0
+		p1.position.y = 0.0
+		p2.position.y = 0.0
 		
 		if parent.gamemode == 2:
 			fire_particles.position.y = 25.0
@@ -61,10 +70,6 @@ func _process(_delta):
 			ship_outline.position.y = 38.0
 			ship_p1.position.y = 38.0
 			ship_p2.position.y = 38.0
-			
-			outline.position.y = 0.0
-			p1.position.y = 0.0
-			p2.position.y = 0.0
 
 # Change Skin System
 ## Change Skin System:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://8x2ybdpjnnkm"]
+[gd_scene load_steps=40 format=3 uid="uid://8x2ybdpjnnkm"]
 
 [ext_resource type="Texture2D" uid="uid://wyqulflh610" path="res://files/assets/sprites/retro_dash.png" id="1_2547t"]
 [ext_resource type="Texture2D" uid="uid://c03nycwquudoo" path="res://files/assets/sprites/bg.png" id="1_oyrcy"]
@@ -7,15 +7,44 @@
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="4_k3dd5"]
 [ext_resource type="FontFile" uid="uid://csgb3uaucubi4" path="res://files/assets/fonts/VCR_OSD_MONO_1.001.ttf" id="5_8iljj"]
 [ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="6_ivtes"]
+[ext_resource type="Texture2D" uid="uid://cjyufr1vcd5bu" path="res://files/assets/sprites/buttons_icons.png" id="7_h44fk"]
+[ext_resource type="Texture2D" uid="uid://b51a8358nh721" path="res://files/assets/sprites/github.png" id="8_fhbxm"]
 [ext_resource type="StyleBox" uid="uid://rjj0ne76uoxq" path="res://files/assets/resources/panel.tres" id="8_ivtes"]
 [ext_resource type="StyleBox" uid="uid://bamri1iq3oyfh" path="res://files/assets/resources/panedarkened.tres" id="9_y27b4"]
 [ext_resource type="PackedScene" uid="uid://dshfptxfmwf7m" path="res://files/objects/skin_displayer.tscn" id="10_53hoy"]
 [ext_resource type="Script" uid="uid://yg62lrn43uiv" path="res://files/scripts/mainmenu/icons_ui.gd" id="10_j3u1t"]
+[ext_resource type="Texture2D" uid="uid://dfu1ftvsq5gnb" path="res://files/assets/sprites/one-more-game.jpg" id="12_3y0fr"]
+[ext_resource type="Texture2D" uid="uid://bevhrmslp1otq" path="res://files/assets/sprites/checkbox.png" id="12_hrwlu"]
 [ext_resource type="PackedScene" uid="uid://ccjje6i6qqx4p" path="res://files/objects/icon_button.tscn" id="12_q1ub4"]
+[ext_resource type="Script" uid="uid://cet0i0fvru5uj" path="res://files/scripts/mainmenu/dont_button.gd" id="12_vffaa"]
+[ext_resource type="StyleBox" uid="uid://bt6g1cn4kamv6" path="res://files/assets/resources/flat_button.tres" id="12_xpcbi"]
 [ext_resource type="Theme" uid="uid://dyk24h3vqlged" path="res://files/assets/resources/gray_buttons_theme.tres" id="13_xo5ut"]
 [ext_resource type="Texture2D" uid="uid://86emn6yqayfl" path="res://files/assets/sprites/skins/skin_display.png" id="14_hnfy5"]
+[ext_resource type="AudioStream" uid="uid://dve86v67tqv8l" path="res://files/assets/sound/one-more-game-sfx.mp3" id="19_7m62k"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k3dd5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vffaa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4rwiu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lvgri"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7576a"]
+
+[sub_resource type="Theme" id="Theme_xefqt"]
+Button/styles/focus = SubResource("StyleBoxEmpty_vffaa")
+Button/styles/hover = SubResource("StyleBoxEmpty_4rwiu")
+Button/styles/normal = SubResource("StyleBoxEmpty_lvgri")
+Button/styles/pressed = SubResource("StyleBoxEmpty_7576a")
+
+[sub_resource type="Theme" id="Theme_4rwiu"]
+CheckBox/styles/disabled = null
+CheckBox/styles/focus = ExtResource("12_xpcbi")
+CheckBox/styles/hover = ExtResource("12_xpcbi")
+CheckBox/styles/hover_pressed = ExtResource("12_xpcbi")
+CheckBox/styles/normal = ExtResource("12_xpcbi")
+CheckBox/styles/pressed = ExtResource("12_xpcbi")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y27b4"]
 bg_color = Color(0.8666667, 0, 0.17254902, 1)
@@ -305,6 +334,13 @@ offset_right = 84.0
 offset_bottom = -14.0
 theme = ExtResource("6_ivtes")
 
+[node name="Icon" type="Sprite2D" parent="UI/Settings"]
+position = Vector2(38, 39)
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("7_h44fk")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
 [node name="Credits" type="Button" parent="UI"]
 custom_minimum_size = Vector2(0, 6.625)
 anchors_preset = 2
@@ -315,6 +351,31 @@ offset_top = -92.0
 offset_right = 172.0
 offset_bottom = -14.0
 theme = ExtResource("6_ivtes")
+
+[node name="Icon" type="Sprite2D" parent="UI/Credits"]
+position = Vector2(39, 40)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("7_h44fk")
+region_enabled = true
+region_rect = Rect2(38, 0, 20, 32)
+
+[node name="Github" type="Button" parent="UI"]
+custom_minimum_size = Vector2(0, 6.625)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 185.0
+offset_top = -92.0
+offset_right = 259.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme = ExtResource("6_ivtes")
+
+[node name="Icon" type="Sprite2D" parent="UI/Github"]
+position = Vector2(38, 39)
+scale = Vector2(0.027, 0.027)
+texture = ExtResource("8_fhbxm")
+region_rect = Rect2(38, 0, 20, 32)
 
 [node name="Fadein" type="ColorRect" parent="UI"]
 visible = false
@@ -344,7 +405,7 @@ layout_mode = 0
 offset_left = 33.0
 offset_top = 76.0
 offset_right = 691.0
-offset_bottom = 291.0
+offset_bottom = 348.0
 theme_override_styles/panel = ExtResource("9_y27b4")
 
 [node name="Label" type="Label" parent="UI/SettingsUI"]
@@ -420,7 +481,37 @@ theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "BACK"
 
+[node name="DontButton" type="Button" parent="UI/SettingsUI"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 246.0
+offset_right = 105.0
+offset_bottom = 293.0
+theme = SubResource("Theme_xefqt")
+flat = true
+script = ExtResource("12_vffaa")
+
+[node name="Texture" type="Sprite2D" parent="UI/SettingsUI/DontButton"]
+position = Vector2(25, 24)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("12_hrwlu")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="DontLabel" type="Label" parent="UI/SettingsUI"]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 254.0
+offset_right = 220.0
+offset_bottom = 281.0
+theme = SubResource("Theme_4rwiu")
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_8iljj")
+theme_override_font_sizes/font_size = 30
+text = "Don't."
+
 [node name="CreditsUI" type="Panel" parent="UI"]
+visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -513,6 +604,15 @@ theme = ExtResource("6_ivtes")
 theme_override_fonts/font = ExtResource("5_8iljj")
 theme_override_font_sizes/font_size = 30
 text = "BACK"
+
+[node name="OneMoreGame" type="TextureRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_3y0fr")
 
 [node name="ExitUI" type="Panel" parent="UI"]
 visible = false
@@ -704,6 +804,18 @@ display_coords = Rect2(0, 32, 32, 32)
 level_id_to_unlock = 1
 tooltip_string = "Complete Retro Madness on Normal Mode to unlock"
 
+[node name="Icon3" type="Panel" parent="UI/IconsUI/Icons/Cube"]
+layout_mode = 2
+
+[node name="IconButton" parent="UI/IconsUI/Icons/Cube/Icon3" instance=ExtResource("12_q1ub4")]
+layout_mode = 0
+outline_coords = Rect2(64, 128, 32, 32)
+p1_coords = Rect2(96, 128, 32, 32)
+p2_coords = Rect2(0, 160, 32, 32)
+display_coords = Rect2(0, 64, 32, 32)
+level_id_to_unlock = 4
+tooltip_string = "Complete Polaris on Normal Mode to unlock"
+
 [node name="Ship" type="HBoxContainer" parent="UI/IconsUI/Icons"]
 layout_mode = 2
 theme_override_constants/separation = 80
@@ -857,6 +969,9 @@ horizontal_alignment = 2
 
 [node name="PlayDelay" type="Timer" parent="."]
 
+[node name="OneMoreGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_7m62k")
+
 [connection signal="mouse_entered" from="UI/Play" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Play" to="." method="on_mouse_exit"]
 [connection signal="pressed" from="UI/Play" to="." method="on_play_pressed"]
@@ -872,6 +987,9 @@ horizontal_alignment = 2
 [connection signal="mouse_entered" from="UI/Credits" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/Credits" to="." method="on_mouse_exit"]
 [connection signal="pressed" from="UI/Credits" to="." method="show_credits"]
+[connection signal="mouse_entered" from="UI/Github" to="." method="on_mouse_enter"]
+[connection signal="mouse_exited" from="UI/Github" to="." method="on_mouse_exit"]
+[connection signal="pressed" from="UI/Github" to="." method="open_github"]
 [connection signal="mouse_entered" from="UI/SettingsUI" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/SettingsUI" to="." method="on_mouse_exit"]
 [connection signal="mouse_entered" from="UI/SettingsUI/MusicSlider" to="." method="on_mouse_enter"]
@@ -883,6 +1001,7 @@ horizontal_alignment = 2
 [connection signal="mouse_entered" from="UI/SettingsUI/Back" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/SettingsUI/Back" to="." method="on_mouse_exit"]
 [connection signal="pressed" from="UI/SettingsUI/Back" to="." method="on_settings_back"]
+[connection signal="pressed" from="UI/SettingsUI/DontButton" to="UI/SettingsUI/DontButton" method="_on_pressed"]
 [connection signal="mouse_entered" from="UI/CreditsUI" to="." method="on_mouse_enter"]
 [connection signal="mouse_exited" from="UI/CreditsUI" to="." method="on_mouse_exit"]
 [connection signal="mouse_entered" from="UI/CreditsUI/ScrollContainer" to="." method="on_mouse_enter"]

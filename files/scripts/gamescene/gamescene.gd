@@ -32,9 +32,15 @@ extends Node2D
 @onready var sound_player: AudioStreamPlayer = $SoundPlayer
 @onready var homedelay: Timer = $HomeDelay
 
+# Jumpscare
+@onready var jumpscare_jpg: TextureRect = $UI/JUMPSCARE
+@onready var jumpscare_sound: AudioStreamPlayer = $JumpscareSound
+
 var camera_follow: bool = false
 ## Holds the state if the player is not touching a ui node
 var on_ui: bool = false
+
+var rng
 
 ## Checkpoint node
 var CHECKPOINT_FILE: PackedScene = preload("res://files/objects/checkpoint.tscn")
@@ -557,6 +563,9 @@ func on_player_death():
 	# Stop song
 	songplayer.stop()
 	
+	# Trigger jumpscare
+	jumpscare()
+	
 	# Camera shake
 	if not player.dead:
 		camera.apply_shake(9.0)
@@ -625,6 +634,9 @@ func on_timer_finished():
 ## Restarts everything after the player clicks restart
 ## (Signal Function)
 func on_player_restart():
+	# Random chance a jumpscare will happen
+	rng = randi_range(1, 1000)
+	
 	# Increment attempts
 	GameProperties.attempts += 1
 	# Restart Jumps
@@ -665,3 +677,24 @@ func on_ui_mouse_exited():
 	on_ui = false
 
 # End of system
+
+# Jumpscare System
+## Jumpscare System:
+## Plays an fnaf jumpscare
+## (Main Function)
+func jumpscare():
+	if not GameProperties.user_settings["settings"]["troll_mode"]:
+		return
+	
+	var jumpscare_holdout = Timer.new()
+	add_child(jumpscare_holdout)
+	var lucky_numbers: Array = [7]
+	
+	if rng in lucky_numbers:
+		jumpscare_holdout.start(2.0)
+		jumpscare_jpg.visible = true
+		
+		jumpscare_sound.play()
+	
+	await jumpscare_holdout.timeout
+	jumpscare_jpg.visible = false

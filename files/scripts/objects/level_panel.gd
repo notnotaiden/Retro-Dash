@@ -63,11 +63,11 @@ func _ready():
 	play.tooltip_text = tooltip_string
 	
 	if unlockable:
+		play.disabled = false
 		for level_id in level_id_to_unlock:
-			if GameProperties.user_data["level%d" % [level_id]]["normal"] >= 100:
-				play.disabled = false
-			else:
+			if GameProperties.user_data["level%d" % [level_id]]["normal"] < 100:
 				play.disabled = true
+				break
 	
 	# Length System
 	var minutes = int(level_length_in_seconds) / 60

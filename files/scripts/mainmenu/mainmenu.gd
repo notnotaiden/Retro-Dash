@@ -11,6 +11,7 @@ extends Node2D
 @onready var exit: Button = $UI/Exit
 @onready var settings: Button = $UI/Settings
 @onready var credits: Button = $UI/Credits
+@onready var github: Button = $UI/Github
 
 @onready var logo: TextureRect = $UI/Logo
 
@@ -29,6 +30,8 @@ extends Node2D
 @onready var fade_out: ColorRect = $UI/FadeOut
 
 @onready var exit_ui: Panel = $UI/ExitUI
+@onready var one_more_game_jpg: TextureRect = $UI/OneMoreGame
+@onready var one_more_game_sfx: AudioStreamPlayer = $OneMoreGame
 
 @onready var ground_sprite: Sprite2D = $ParallaxGround/Ground
 @onready var bg_sprite: Sprite2D = $ParallaxBG/BG
@@ -147,6 +150,8 @@ func runtime_anim():
 	settings.offset_bottom = 147
 	credits.offset_top = 69
 	credits.offset_bottom = 147
+	github.offset_top = 69
+	github.offset_bottom = 147
 	
 	logo.offset_top = -260
 	logo.offset_bottom = -81
@@ -172,11 +177,22 @@ func runtime_anim():
 	tween.parallel().tween_property(credits, "offset_top", -92, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
 	tween.parallel().tween_property(credits, "offset_bottom", -14, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.4)
 	
+	# Github
+	tween.parallel().tween_property(github, "offset_top", -92, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	tween.parallel().tween_property(github, "offset_bottom", -14, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.5)
+	
 	# Logo
 	tween.parallel().tween_property(logo, "offset_top", 11.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
 	tween.parallel().tween_property(logo, "offset_bottom", 190, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_delay(0.3)
 
 # End of System
+
+# Github
+## Github System
+## Opens an external link upon button press
+## (Signal Function)
+func open_github():
+	OS.shell_open("https://github.com/notnotaiden/Retro-Dash")
 
 # On UI System
 ## On UI System:
@@ -198,6 +214,10 @@ func on_mouse_exit():
 ## (Signal Function)
 func on_exit_pressed():
 	if not on_screen:
+		if GameProperties.user_settings["settings"]["troll_mode"]:
+			one_more_game_sfx.play()
+			one_more_game_jpg.visible = true
+		
 		on_screen = true
 		exit_ui.visible = true
 
@@ -205,6 +225,10 @@ func on_exit_pressed():
 ## Hides the confirmation UI (No Option)
 ## (Signal Function)
 func on_exit_no_pressed():
+	if GameProperties.user_settings["settings"]["troll_mode"]:
+		one_more_game_sfx.stop()
+		one_more_game_jpg.visible = false
+	
 	on_screen = false
 	exit_ui.visible = false
 

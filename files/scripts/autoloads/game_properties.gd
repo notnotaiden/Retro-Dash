@@ -5,7 +5,8 @@ extends Node
 var user_settings: Dictionary = {
 	"settings": {
 		"sound_vol": 1.0,
-		"music_vol": 1.0
+		"music_vol": 1.0,
+		"troll_mode": false
 	},
 	"customization": {
 		"p1_color": Color.YELLOW,
@@ -50,6 +51,7 @@ var user_data: Dictionary = {
 
 ## The position the player starts with in every attempt
 const START_POS: Vector2 = Vector2(-64.0, 499.0)
+const NORMAL_SPEED: float = 42000.0
 ## The max y position the ground can go
 const MAX_GROUND_YPOS: float = 665.0
 # Gamemode boundaries offset
@@ -138,6 +140,7 @@ func save_user_data():
 	# Settings
 	config.set_value("settings", "sound_vol", user_settings["settings"]["sound_vol"])
 	config.set_value("settings", "music_vol", user_settings["settings"]["music_vol"])
+	config.set_value("settings", "troll_mode", user_settings["settings"]["troll_mode"])
 	
 	# Customization: Color
 	config.set_value("color", "p1", user_settings["customization"]["p1_color"])
@@ -178,6 +181,7 @@ func load_user_data():
 		# Settings
 		user_settings["settings"]["sound_vol"] = config.get_value("settings", "sound_vol", 1.0)
 		user_settings["settings"]["music_vol"] = config.get_value("settings", "music_vol", 1.0)
+		user_settings["settings"]["troll_mode"] = config.get_value("settings", "troll_mode", false)
 		
 		# Customization: color
 		user_settings["customization"]["p1_color"] = config.get_value("color", "p1", Color.YELLOW)

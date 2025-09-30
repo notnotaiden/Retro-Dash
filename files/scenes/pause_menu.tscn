@@ -22,6 +22,7 @@ offset_left = -193.0
 offset_top = -809.0
 offset_right = 1540.0
 offset_bottom = 1553.0
+tooltip_text = "THE PRACTICE MODE FEATURE IS VERY BUGGY AND WILL BE FIXED IN LATER VERSIONS"
 color = Color(0, 0, 0, 0.36862746)
 
 [node name="Panel" type="PanelContainer" parent="."]
@@ -108,6 +109,7 @@ offset_left = -37.0
 offset_right = 257.0
 offset_bottom = 88.0
 theme_override_font_sizes/font_size = 30
+disabled = true
 text = "PRACTICE"
 
 [node name="Panel3" type="Panel" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons"]

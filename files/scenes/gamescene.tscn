@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c70mbn36mvo4n"]
+[gd_scene load_steps=21 format=3 uid="uid://c70mbn36mvo4n"]
 
 [ext_resource type="Script" uid="uid://cv773ro1sd54r" path="res://files/scripts/gamescene/gamescene.gd" id="1_fvvnh"]
 [ext_resource type="PackedScene" uid="uid://cruwwsh44nrac" path="res://files/objects/player.tscn" id="1_u87vo"]
@@ -10,8 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://cown771khe0pp" path="res://files/scenes/pause_menu.tscn" id="7_vcuyv"]
 [ext_resource type="Theme" uid="uid://n7dt8mjg02qd" path="res://files/assets/resources/colored_theme.tres" id="7_xig57"]
 [ext_resource type="Theme" uid="uid://dicl3ck7dwn80" path="res://files/assets/resources/black_theme.tres" id="8_w3l22"]
+[ext_resource type="Texture2D" uid="uid://cjyufr1vcd5bu" path="res://files/assets/sprites/buttons_icons.png" id="9_rf8pn"]
 [ext_resource type="AudioStream" uid="uid://bnw6blivq0762" path="res://files/assets/sound/complete.mp3" id="10_fr3gv"]
 [ext_resource type="PackedScene" uid="uid://bh51c8xeu0ig7" path="res://files/scenes/complete_screen.tscn" id="10_lp4b5"]
+[ext_resource type="Texture2D" uid="uid://1en1mxvahhjq" path="res://files/assets/sprites/jumper.jpg" id="13_5os5a"]
+[ext_resource type="AudioStream" uid="uid://byupehfgdaiyw" path="res://files/assets/sound/jumpscare.mp3" id="15_b1m4e"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dnfnw"]
 
@@ -198,6 +201,13 @@ offset_right = -3.0
 offset_bottom = -29.0
 theme = ExtResource("8_w3l22")
 
+[node name="Icon" type="Sprite2D" parent="UI/PlaceCheckpoint"]
+position = Vector2(48, 45)
+scale = Vector2(1.7500005, 1.9375005)
+texture = ExtResource("9_rf8pn")
+region_enabled = true
+region_rect = Rect2(96, 0, 32, 32)
+
 [node name="Keybind" type="Label" parent="UI/PlaceCheckpoint"]
 layout_mode = 0
 offset_left = 34.0
@@ -221,6 +231,20 @@ offset_right = 99.0
 offset_bottom = -28.0
 theme = ExtResource("8_w3l22")
 
+[node name="Icon2" type="Sprite2D" parent="UI/DeleteCheckpoint"]
+position = Vector2(48, 45)
+scale = Vector2(1.7500005, 1.9375005)
+texture = ExtResource("9_rf8pn")
+region_enabled = true
+region_rect = Rect2(96, 0, 32, 32)
+
+[node name="Icon" type="Sprite2D" parent="UI/DeleteCheckpoint"]
+position = Vector2(48, 45)
+scale = Vector2(1.7500005, 1.9375005)
+texture = ExtResource("9_rf8pn")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
+
 [node name="Keybind" type="Label" parent="UI/DeleteCheckpoint"]
 layout_mode = 0
 offset_left = 34.0
@@ -242,6 +266,14 @@ offset_right = -0.60009766
 offset_bottom = 80.0
 theme = ExtResource("8_w3l22")
 
+[node name="Icon" type="Sprite2D" parent="UI/PauseButton"]
+position = Vector2(37, 38)
+rotation = 1.5707964
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("9_rf8pn")
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 32)
+
 [node name="DeathUI" parent="UI" instance=ExtResource("5_vuyq8")]
 visible = false
 
@@ -252,6 +284,15 @@ visible = false
 process_mode = 3
 offset_top = 1280.0
 offset_bottom = 1280.0
+
+[node name="JUMPSCARE" type="TextureRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_5os5a")
 
 [node name="SongPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 1
@@ -277,6 +318,9 @@ stream = ExtResource("10_fr3gv")
 
 [node name="HomeDelay" type="Timer" parent="."]
 process_mode = 3
+
+[node name="JumpscareSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_b1m4e")
 
 [connection signal="player_death" from="Gameplay/Player" to="." method="on_player_death"]
 [connection signal="mouse_entered" from="UI/PlaceCheckpoint" to="." method="on_ui_mouse_entered"]
