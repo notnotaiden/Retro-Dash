@@ -223,6 +223,9 @@ func load_level_data():
 	# Find json file path
 	var json_file = level_path.path_join("level.json")
 	
+	if not FileAccess.file_exists(json_file):
+		return
+	
 	var file = FileAccess.open(json_file, FileAccess.READ)
 	var json_text = file.get_as_text()
 	level_data = JSON.parse_string(json_text)

@@ -335,8 +335,9 @@ offset_bottom = -14.0
 theme = ExtResource("6_ivtes")
 
 [node name="Icon" type="Sprite2D" parent="UI/Settings"]
+modulate = Color(2.0032377, 2.0032377, 2.0032377, 1)
 position = Vector2(38, 39)
-scale = Vector2(1.7, 1.7)
+scale = Vector2(1.8, 1.8)
 texture = ExtResource("7_h44fk")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
@@ -387,6 +388,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.90000004)
 
 [node name="SettingsUI" type="Panel" parent="UI"]
+visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5

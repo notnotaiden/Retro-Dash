@@ -113,7 +113,6 @@ offset_left = -37.0
 offset_right = 257.0
 offset_bottom = 88.0
 theme_override_font_sizes/font_size = 30
-disabled = true
 text = "PRACTICE"
 
 [node name="Panel3" type="Panel" parent="Panel/Margin/VBox/Panel/PanelContainer/MarginContainer/Buttons"]

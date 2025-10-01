@@ -47,6 +47,11 @@ var CHECKPOINT_FILE: PackedScene = preload("res://files/objects/checkpoint.tscn"
 
 # General Functions
 func _ready():
+	# Reset attempts
+	GameProperties.attempts = 1
+	# Restart Jumps
+	GameProperties.jumps = 0
+	
 	GameProperties.playing = true
 	GameProperties.load_level_data()
 	
@@ -103,6 +108,8 @@ func _ready():
 			# Retrieves the last camera position
 			var checkpoint = GameProperties.placed_checkpoints[ GameProperties.placed_checkpoints.size() - 1]
 			camera.position = checkpoint["camera_pos"]
+			ground_sprite.position = checkpoint["ground_pos"]
+			ceiling_sprite.position = checkpoint["ceiling_pos"]
 			
 			# Recreating checkpoint nodes
 			recreate_checkpoints()
@@ -169,7 +176,7 @@ func _process(delta):
 		songplayer.volume_linear = 0.0
 	
 	# Finish mechanic
-	if progress_bar.value >= 98:
+	if progress_bar.value >= 99:
 		fade_out.color.a = lerp(fade_out.color.a, 1.0, 0.05)
 		
 		if not player.finished:
@@ -197,6 +204,8 @@ func on_home_pressed():
 	# Unpauses scene
 	get_tree().paused = false
 	songplayer.stop()
+	
+	GameProperties.practice_mode = false
 	
 	fade_out.z_index = 5
 	player.dead = true # Prevents the player from dying while the transition happens
@@ -261,6 +270,8 @@ func place_checkpoint():
 	# Update checkpoint data
 	new_checkpoint.data["position"] = player.global_position
 	new_checkpoint.data["camera_pos"] = camera.global_position
+	new_checkpoint.data["ground_pos"] = ground_sprite.global_position
+	new_checkpoint.data["ceiling_pos"] = ceiling_sprite.global_position
 	new_checkpoint.data["velocity"] = player.velocity
 	new_checkpoint.data["song_playback"] = songplayer.get_playback_position()
 	new_checkpoint.data["gravity"] = player.GRAVITY
@@ -269,6 +280,8 @@ func place_checkpoint():
 	var checkpoint_data: Dictionary = {
 		"position": player.global_position,
 		"camera_pos": camera.global_position,
+		"ground_pos": ground_sprite.global_position,
+		"ceiling_pos": ceiling_sprite.global_position,
 		"velocity": player.velocity,
 		"song_playback": songplayer.get_playback_position(),
 		"gravity": player.GRAVITY,
@@ -313,6 +326,8 @@ func recreate_checkpoints():
 		# Update checkpoint data
 		new_checkpoint.data["position"] = checkpoint["position"]
 		new_checkpoint.data["camera_pos"] = checkpoint["camera_pos"]
+		new_checkpoint.data["ground_pos"] = checkpoint["ground_pos"]
+		new_checkpoint.data["ceiling_pos"] = checkpoint["ceiling_pos"]
 		new_checkpoint.data["velocity"] = checkpoint["velocity"]
 		new_checkpoint.data["song_playback"] = checkpoint["song_playback"]
 		new_checkpoint.data["gravity"] = checkpoint["gravity"]
