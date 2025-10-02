@@ -2,6 +2,7 @@ extends Sprite2D
 
 @export var data: Dictionary = {
 	"position": Vector2(0, 0),
+	"speed": 0.0,
 	"camera_pos": Vector2(0, 0),
 	"ground_pos": Vector2(0, 0),
 	"ceiling_pos": Vector2(0, 0),

@@ -113,6 +113,7 @@ func return_by_death(): # Re:Zero *wink*
 	
 	# Update the player's gameplay state
 	position = checkpoint["position"]
+	SPEED = checkpoint["speed"]
 	velocity = checkpoint["velocity"]
 	GRAVITY = checkpoint["gravity"]
 	gamemode = checkpoint["gamemode"]

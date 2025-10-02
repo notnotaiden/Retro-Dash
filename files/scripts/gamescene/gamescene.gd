@@ -47,11 +47,6 @@ var CHECKPOINT_FILE: PackedScene = preload("res://files/objects/checkpoint.tscn"
 
 # General Functions
 func _ready():
-	# Reset attempts
-	GameProperties.attempts = 1
-	# Restart Jumps
-	GameProperties.jumps = 0
-	
 	GameProperties.playing = true
 	GameProperties.load_level_data()
 	
@@ -205,6 +200,11 @@ func on_home_pressed():
 	get_tree().paused = false
 	songplayer.stop()
 	
+	# Reset attempts
+	GameProperties.attempts = 1
+	# Restart Jumps
+	GameProperties.jumps = 0
+	
 	GameProperties.practice_mode = false
 	
 	fade_out.z_index = 5
@@ -269,6 +269,7 @@ func place_checkpoint():
 	
 	# Update checkpoint data
 	new_checkpoint.data["position"] = player.global_position
+	new_checkpoint.data["speed"] = player.SPEED
 	new_checkpoint.data["camera_pos"] = camera.global_position
 	new_checkpoint.data["ground_pos"] = ground_sprite.global_position
 	new_checkpoint.data["ceiling_pos"] = ceiling_sprite.global_position
@@ -279,6 +280,7 @@ func place_checkpoint():
 	
 	var checkpoint_data: Dictionary = {
 		"position": player.global_position,
+		"speed": player.SPEED,
 		"camera_pos": camera.global_position,
 		"ground_pos": ground_sprite.global_position,
 		"ceiling_pos": ceiling_sprite.global_position,
@@ -325,6 +327,7 @@ func recreate_checkpoints():
 		
 		# Update checkpoint data
 		new_checkpoint.data["position"] = checkpoint["position"]
+		new_checkpoint.data["speed"] = checkpoint["speed"]
 		new_checkpoint.data["camera_pos"] = checkpoint["camera_pos"]
 		new_checkpoint.data["ground_pos"] = checkpoint["ground_pos"]
 		new_checkpoint.data["ceiling_pos"] = checkpoint["ceiling_pos"]
@@ -519,8 +522,9 @@ func load_song(data: Dictionary):
 func camera_check_state():
 	# When first entering the level, do not immediently make the camera follow the player
 	if GameProperties.attempts == 1:
-		var viewport_width_half: float = get_viewport().size.x / 2.0
-		if player.position.x >= ( viewport_width_half / 1.7 ):
+		var viewport_width: float = get_viewport().size.x
+		var viewport_width_forth: float = get_viewport().size.x / 1.5
+		if player.position.x >= ( viewport_width - viewport_width_forth ):
 			camera_follow = true
 	else:
 		camera_follow = true
